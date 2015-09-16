@@ -1,0 +1,129 @@
+/*
+To customize the look and feel of Ionic, you can override the variables
+in ionic's _variables.scss file.
+
+For example, you might change some of the default colors:
+
+$light:                           #fff !default;
+$stable:                          #f8f8f8 !default;
+$positive:                        #387ef5 !default;
+$calm:                            #11c1f3 !default;
+$balanced:                        #33cd5f !default;
+$energized:                       #ffc900 !default;
+$assertive:                       #ef473a !default;
+$royal:                           #886aea !default;
+$dark:                            #444 !default;
+*/
+
+$base-background-color: #f8f8f8 !default;
+//$base-background-color: #CC3300 !default;
+$bar-height: 50px !default;
+
+
+
+// The path for our ionicons font files, relative to the built CSS in www/css
+$ionicons-font-path: "../lib/ionic/fonts" !default;
+
+// Include all of Ionic
+@import "www/lib/ionic/scss/ionic";
+
+
+// Needed for maps
+.scroll {
+    height: 100%;
+}
+
+.scroll-content {
+  overflow: visible !important;
+}
+
+.bar.bar-dark {
+  background-color: rgba(0,0,0,.62) !important; /* or transparent, or background:none */
+}
+ 
+/* Map */
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+#minimap {
+	width: 100%;
+	height: 200px;
+}
+ 
+/* Place detail */
+$place-image-height: 280px;
+$action-container-height: 70px;
+
+
+.place-detail-container div.main-place-image {
+	margin-top: -$bar-height * 2;
+    width:100%; 
+    height: $place-image-height; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;	
+}
+
+.place-detail-container div.place-action-container {
+	margin-top: -$action-container-height;
+	height: $action-container-height;
+	border-top: 0.5px solid rgba(255, 255, 255, .3);
+    background-color: rgba(0,0,0,.70) !important; /* or transparent, or background:none */
+}
+
+.place-detail-container div.button-bar div.button-bar-action-text {
+	margin-top: -15px;
+	font-size: 12px;
+}
+
+
+/* snippet */
+.place-detail-container .list {
+	margin: 12px 0;
+}
+
+.place-detail-container .list a {
+	text-decoration: none;
+}
+
+/* address button */
+.place-detail-container .button-full {
+	border-top-width: 0;
+}
+
+.place-detail-container .place-detail-link .button {
+	margin: 0 auto;
+	text-align: left;
+}
+
+.place-detail-container .address-link .button {
+	line-height: 13px;
+	font-size: 13px;
+	padding: 12px;
+}
+
+.place-detail-container .yelp-link .button {
+	line-height: 20px;
+	padding: 8px;
+}
+
+.place-detail-container .address-link .button .subtle-text {
+	color: #999999;
+}
+
+/* yelp button */
+div.stars {
+    background-image: url('http://www.whatsnom.com/images/stars_map.png');
+    height: 16px;
+    width: 83px;
+}
+
+.place-detail-container .yelp-link div.stars {
+	margin-top: -4px;
+}
+
+
+
+

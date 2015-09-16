@@ -1,0 +1,22 @@
+<ion-view view-title="{{list.name}}">
+  <ion-content>
+    <ion-list>
+      <ion-item 
+	    class="item-remove-animate item-avatar item-icon-right" 
+		ng-repeat="entry in list.entries" 
+		type="item-text-wrap" 
+		href="#/tab/lists/{{list.id}}/{{entry.spot_id}}">
+        <img ng-src="{{entry.thumbnail}}"> 
+        <h2><span ng-if="entry.position">{{entry.position}}. </span>{{entry.name}}</h2>
+        <p>{{entry.snippet}}</p>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+        <ion-option-button 
+		  class="button-royal" 
+		  ng-click="remove(list)">
+          Save
+        </ion-option-button>
+      </ion-item>
+    </ion-list>
+	
+  </ion-content>
+</ion-view>

@@ -1,0 +1,91 @@
+<ion-view view-title="{{place.name}}">
+  <ion-content class="place-detail-container">
+    <div ng-if="place.profile_pic"
+	  class="main-place-image"
+      style="background-image: url('{{place.profile_pic}}')">
+	  &nbsp;
+    </div>
+    <div class="place-action-container">
+		<div class="button-bar">
+		    <a  
+			  ng-if="displayParams.phoneString && place.phone" 
+			  href="tel: {{place.phone}}"
+			  class="button button-icon button-positive icon ion-ios-telephone">
+				<div class="button-bar-action-text">
+					Call
+				</div>
+			</a>
+		    <a class="button button-icon button-positive icon ion-bookmark">
+				<div class="button-bar-action-text">
+					Save
+				</div>
+			</a>
+		    <a 
+			  ng-if="place.yelp_seat_me || place.opentable_id"
+			  href="#/tab/lists/{{listPlaceWasViewedFrom.id}}/{{place.id}}/reserve"
+			  class="button button-icon button-positive icon ion-ios-bookmarks">
+				<div class="button-bar-action-text">
+					Book
+				</div>
+			</a>
+		</div>
+  	  </div>
+	  
+	  <!-- Snippet -->
+		  <div ng-if="listEntryForPlace && listEntryForPlace.snippet">
+  		  	<div class="item item-text-wrap">
+  				{{listEntryForPlace.snippet}}
+  			</div>
+		  </div>
+	  
+	  <!-- Lists and Reviews -->
+  	  <div class="list">	  
+		<a
+		  class="item item-divider item-icon-right"
+		  ng-if="listPlaceWasViewedFrom"
+		  href="#/tab/lists/{{listPlaceWasViewedFrom.id}}">
+		    #{{listEntryForPlace.position}} {{listPlaceWasViewedFrom.entry_name}}
+	 	  <i class="button-small icon ion-chevron-right"></i>
+		</a>
+		<div class="place-detail-link"
+		    ng-if="place.yelp_id">
+			<a 
+			  ng-if="place.yelp_id"
+			  class="button button-full button-light item-icon-right" 
+			  target="_blank"
+			  ng-click="openExternalURL('http://m.yelp.com/biz/{{place.yelp_id}}')">
+			  <div>
+		        {{place.review_count}} Yelp Reviews
+	   		  </div>			
+		 	  <i class="icon">
+			    <div 
+		          class="stars" 
+				  style="background-position: 0px {{displayParams.starRatingOffset}}px;">
+			    </div>
+	          </i>
+		    </a>
+	      </div>
+	  </div>
+	  	  
+	  <!-- Map and Address -->	  
+	  <div class="list">
+		  <div id="minimap" class="item"></div>
+		  <div class="place-detail-link address-link"
+		    ng-if="place.latitude">
+			<a 
+			  class="button button-full button-light item-icon-right" 
+			  ng-click="openExternalURL('http://maps.apple.com/?q=+{{place.latitude}},{{place.longitude}}')">
+
+			
+				<div ng-if="displayParams.displayableAddress">
+		          {{displayParams.displayableAddress}}
+	   		    </div>
+				<div ng-if="displayParams.displayableNeighborhood" class="subtle-text">
+				  {{displayParams.displayableNeighborhood}}
+	   		    </div>
+					<i class="icon ion-ios-navigate-outline"></i>
+		    </a>
+	        </div>
+  		</div>
+  </ion-content>
+</ion-view>

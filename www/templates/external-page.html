@@ -1,0 +1,14 @@
+<ion-view view-title="{{externalPageTitle}}">
+  <ion-content  
+	padding="false" 
+	overflow-scroll="true">
+		<div 
+		  ng-if="pageType == 'site' || pageType == 'reserve'"
+		  data-tap-disabled="true" 
+		  style=" -webkit-overflow-scrolling:touch; overflow-y: scroll !important; width:100%;height: 100%;">
+		    <iframe style="width:100%;height: 100%;" src="{{externalTargetURLSafe}}">
+		    	<p>Your browser does not support iframes.</p>
+		    </iframe>
+		</div>
+  </ion-content>
+</ion-view>
