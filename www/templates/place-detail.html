@@ -45,7 +45,8 @@
 		  ng-if="listPlaceWasViewedFrom"
 		  href="#/tab/lists/{{listPlaceWasViewedFrom.id}}">
 		    #{{listEntryForPlace.position}} {{listPlaceWasViewedFrom.entry_name}}
-	 	  <i class="button-small icon ion-chevron-right"></i>
+			<span ng-if="place.city_name"> in {{place.city_name}}</span>
+	 	  <i class="button-small icon ion-ios-list-outline" style="right: -2px;"></i>
 		</a>
 		<div class="place-detail-link"
 		    ng-if="place.yelp_id">

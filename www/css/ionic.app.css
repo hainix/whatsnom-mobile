@@ -7717,13 +7717,13 @@ a.button {
 
 #minimap {
   width: 100%;
-  height: 200px; }
+  height: 100px; }
 
 /* Place detail */
 .place-detail-container div.main-place-image {
   margin-top: -100px;
   width: 100%;
-  height: 280px;
+  height: 320px;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover; }
@@ -7757,7 +7757,8 @@ a.button {
 .place-detail-container .address-link .button {
   line-height: 13px;
   font-size: 13px;
-  padding: 12px; }
+  padding: 12px;
+  padding-right: 50px; }
 
 .place-detail-container .yelp-link .button {
   line-height: 20px;
