@@ -15,9 +15,11 @@
 					Call
 				</div>
 			</a>
-		    <a class="button button-icon button-positive icon ion-bookmark">
+		    <a 
+			ng-click="saveEntry({{listEntryForPlace.id}})"
+			class="button button-icon button-positive icon ion-bookmark">
 				<div class="button-bar-action-text">
-					Save
+					{{saveEntryActionText}}
 				</div>
 			</a>
 		    <a 

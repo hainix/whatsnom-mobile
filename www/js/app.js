@@ -43,19 +43,6 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     templateUrl: 'templates/tabs.html'
   })
 
-  // Each tab has its own nav history stack:
-  /*
-  .state('tab.dash', {
-    url: '/dash',
-    views: {
-      'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
-        controller: 'DashCtrl'
-      }
-    }
-  })
-  */
-  
   .state('tab.lists', {
       url: '/lists',
       views: {
@@ -65,6 +52,17 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         }
       }
     })
+	
+    .state('tab.saved', {
+      url: '/saved',
+      views: {
+        'tab-saved': {
+          templateUrl: 'templates/tab-saved.html',
+          controller: 'SavedCtrl'
+        }
+      }
+    })
+	
     .state('tab.list-detail', {
       url: '/lists/:listId',
       views: {
@@ -75,11 +73,11 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
       }
     })
     .state('tab.place-detail', {
-      url: '/lists/:listId/:placeId',
+      url: '/lists/:listId/:entryId',
       views: {
         'tab-lists': {
-          templateUrl: 'templates/place-detail.html',
-          controller: 'PlaceDetailCtrl'
+          templateUrl: 'templates/entry-detail.html',
+          controller: 'EntryDetailCtrl'
         }
       }
     })
@@ -101,16 +99,20 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         }
       }
     })
-
-  .state('tab.account', {
-    url: '/account',
-    views: {
-      'tab-account': {
-        templateUrl: 'templates/tab-account.html',
-        controller: 'AccountCtrl'
+	
+    .state('tab.saved-place-detail', {
+      url: '/saved/:listId/:entryId',
+      views: {
+        'tab-saved': {
+          templateUrl: 'templates/entry-detail.html',
+          controller: 'EntryDetailCtrl'
+        }
       }
-    }
-  });
+    })
+
+  
+  ; // End stateProvider
+  
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/lists');

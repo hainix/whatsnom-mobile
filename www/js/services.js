@@ -1,40 +1,43 @@
 angular.module('starter.services', [])
 
-.factory('Lists', function($http, $rootScope) {
-	$http.jsonp(
-	  'http://www.whatsnom.com/api/combined.php?format=json&callback=JSON_CALLBACK'
-	).success(function (data) {
-	  $rootScope.lists = data;
-	});
+.factory('Lists', function($http, $rootScope, $q) {
 	
+	// TODO (remove override when actually shipping)
+	window.localStorage['fbuid'] = 10104624213101750;
+
   return {
-    all: function() {
-		return $rootScope.lists;
+	  
+	loadBookmarksToRootScope: function() {
+		// TODO: break this out into a function and call
+		// TODO: defer
+		$http.jsonp(
+		  'http://www.whatsnom.com/api/get_bookmarks.php?uid=' + window.localStorage['fbuid'] +'&format=json&callback=JSON_CALLBACK'
+		).success(function (data) {
+	  	  $rootScope.bookmarks = data;
+		  console.log('bookmark fetch:');
+	      console.log(data);
+		}).error(function (data, status, headers, config) {
+	      console.log(status);
+	    });
+	},
+	  
+    loadListsToRootScope: function() {
+		// We store lists in local memory (rootScope) for performance
+		// TODO: defer
+		$http.jsonp(
+		  'http://www.whatsnom.com/api/combined.php?uid=' + window.localStorage['fbuid'] +'&format=json&callback=JSON_CALLBACK'
+		).success(function (data) {
+		  console.log('init list data fetch:');
+	      console.log(data);
+	  	  $rootScope.lists = data.lists;
+		}).error(function (data, status, headers, config) {
+	      console.log(status);
+	    });
     },
     remove: function(list) {
       lists.splice(lists.indexOf(list), 1);
     },
-	getPlace: function(listId, placeId) {
-		// TODO share func
-		var list = null;
-		angular.forEach($rootScope.lists, function(value, key) {
-		  if (listId in value['items']) {
-			  list = value['items'][listId];
-			  return;
-		  }
-		});
-		$rootScope.list = list;
-		var listEntryForPlace = null;
-		angular.forEach($rootScope.list['entries'], function(value, key) {
-		  if (value['spot_id'] == placeId) {
-			  listEntryForPlace = value;
-			  return;
-		  }
-		});
-		$rootScope.listEntryForPlace = listEntryForPlace;
-		$rootScope.place = $rootScope.listEntryForPlace['place'];
-		return $rootScope.place;
-	},
+	
     getList: function(listId) {
 	  var list = null;
 	  angular.forEach($rootScope.lists, function(value, key) {
