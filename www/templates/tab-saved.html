@@ -1,14 +1,12 @@
 <ion-view view-title="Saved" cache-view="true">
   <ion-content>
-    <ion-refresher pulling-text="Pull to refresh" on-refresh="pullToRefreshBookmarks()">
-	</ion-refresher>
     <ion-list>
 	  <ion-item ng-if="!bookmarks || bookmarks.length == 0" style="text-align: center;">
 	  	<span ng-if="hideFBLoginButton">You haven't saved any places yet</span>
 	  	<span ng-if="!hideFBLoginButton">Log in to save places</span>
 	  </ion-item>
     
-	  <ion-list ng-repeat="list in bookmarks" ng-if="bookmarks">
+	  <ion-list ng-repeat="list in bookmarks" ng-if="bookmarks" show-delete="shouldShowDelete">
 	      <a 
 		    href="#/tab/saved/{{list.id}}"
   		    class="item item-divider item-icon-right">
@@ -26,8 +24,8 @@
 	        <p>{{entry.place.snippet}}</p>
 	        <i class="icon ion-chevron-right icon-accessory"></i>
 	        <ion-option-button 
-			  class="button-royal" 
-			  ng-click="remove(list)">
+			  class="button-assertive" 
+			  ng-click="removeEntry(entry.id)">
 	          Remove
 	        </ion-option-button>
 	      </ion-item>

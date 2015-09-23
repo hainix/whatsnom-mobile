@@ -18,10 +18,40 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 	}	
 })
 
-.controller('ListDetailCtrl', function($scope, $stateParams, Lists, $ionicHistory) {
+.controller('ListDetailCtrl', function($scope, $stateParams, Lists, $ionicHistory, $ionicPopup, $state, $http, $ionicListDelegate) {
 	$scope.currentStateName = $ionicHistory.currentStateName();
-	console.log('current state in list detail controller', $scope.currentStateName);
-	Lists.getList($stateParams.listId);
+	Lists.loadThisListToRootScope($stateParams.listId);
+	$scope.saveEntry = function (entryID) {
+		if (window.localStorage['fbuid']) {
+			$http.jsonp(
+			  'http://www.whatsnom.com/api/edit_bookmark.php?uid=' + window.localStorage['fbuid']
+			  +'&entry_id=' + entryID + '&force_state=added&format=json&callback=JSON_CALLBACK'
+			).success(function (data) {
+				if (data == 'added') {
+					$ionicListDelegate.closeOptionButtons();
+					console.log('saved entry id', entryID);			
+				} else {
+					console.log('unrecognized response from api adder from uid ' + window.localStorage['fbuid']
+					+ ' to entry_id '+ entryID + ': '+data);
+				}
+			}).error(function (data, status, headers, config) {
+	            console.log(status);
+	        });
+		} else {
+		    var confirmPopup = $ionicPopup.confirm({
+		      title: 'Whoops!',
+		      template: 'To save a place, log in first.'
+		    });
+		    confirmPopup.then(function(res) {
+		      if(res) {
+		        $state.go('tab.saved');
+		      } else {
+		        // Close dialog
+		      }
+		    });
+		}
+	}	
+
 })
 
 .controller('EntryDetailCtrl', function($scope, $stateParams, $http, $q, $ionicHistory) {
@@ -132,10 +162,12 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 
 })
 
-.controller('SavedCtrl', function($scope,  $rootScope, ngFB, Lists) {
+.controller('SavedCtrl', function($scope,  $rootScope, ngFB, Lists, $http, $ionicListDelegate) {
     $scope.$on('$ionicView.enter', function() {
 		Lists.loadBookmarksToRootScope();
     });
+    $scope.shouldShowDelete = false;
+
 	
 	$scope.pullToRefreshBookmarks = function () {
 		Lists.loadBookmarksToRootScope();
@@ -143,6 +175,30 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 	    $scope.$broadcast('scroll.refreshComplete');
 	    $scope.$apply();
 	}	
+	
+	$scope.removeEntry = function (entryID) {
+		if (window.localStorage['fbuid']) {
+			$http.jsonp(
+			  'http://www.whatsnom.com/api/edit_bookmark.php?uid=' + window.localStorage['fbuid']
+			  +'&entry_id=' + entryID + '&force_state=removed&format=json&callback=JSON_CALLBACK'
+			).success(function (data) {
+				if (data == 'removed') {
+					$ionicListDelegate.closeOptionButtons();
+					console.log('removed entry id', entryID);
+					// TODO don't reload the whole page
+					window.location.reload(true);
+				} else {
+					console.log('Error: Unrecognized response from api adder from uid ' + window.localStorage['fbuid']
+					+ ' to entry_id '+ entryID + ': '+data);
+				}
+			}).error(function (data, status, headers, config) {
+	            console.log(status);
+	        });
+		} else {
+            console.log('Error: tried to remove entry without being logged in');
+		}
+	}	
+	
 	
 	// User has logged in before, and not logged out
 	$scope.fbuid = window.localStorage['fbuid'];

@@ -37,7 +37,7 @@ angular.module('starter.services', [])
       lists.splice(lists.indexOf(list), 1);
     },
 	
-    getList: function(listId) {
+    loadThisListToRootScope: function(listId) {
 	  var list = null;
 	  angular.forEach($rootScope.lists, function(value, key) {
 		  if (listId in value['items']) {

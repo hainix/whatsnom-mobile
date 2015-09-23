@@ -52,6 +52,7 @@
 		  </div>
 		  <div ng-if="!(listEntryForPlace && listEntryForPlace.tip) && place.snippet">
 			  <a
+				target="_blank"
 			    ng-click="openExternalURL('http://m.yelp.com/biz/{{place.yelp_id}}')">
   		  	    <div class="item item-text-wrap">
   				  {{place.snippet}}
