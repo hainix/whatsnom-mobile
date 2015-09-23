@@ -45,12 +45,20 @@
   	  </div>
 	  
 	  <!-- Snippet -->
-		  <div ng-if="listEntryForPlace && listEntryForPlace.snippet">
+		  <div ng-if="(listEntryForPlace && listEntryForPlace.tip)">
   		  	<div class="item item-text-wrap">
-  				{{listEntryForPlace.snippet}}
+  				{{listEntryForPlace.tip}}
   			</div>
 		  </div>
-	  
+		  <div ng-if="!(listEntryForPlace && listEntryForPlace.tip) && place.snippet">
+			  <a
+			    ng-click="openExternalURL('http://m.yelp.com/biz/{{place.yelp_id}}')">
+  		  	    <div class="item item-text-wrap">
+  				  {{place.snippet}}
+  			    </div>
+			  </a>
+		  </div>
+		  
 	  <!-- Lists and Reviews -->
   	  <div class="list">
 		<a

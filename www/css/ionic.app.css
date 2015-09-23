@@ -7707,7 +7707,7 @@ a.button {
   overflow: visible !important; }
 
 .bar.bar-dark {
-  background-color: rgba(0, 0, 0, 0.62) !important;
+  _background-color: rgba(0, 0, 0, 0.62) !important;
   /* or transparent, or background:none */ }
 
 /* Map */
