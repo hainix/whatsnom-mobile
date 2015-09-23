@@ -1,11 +1,10 @@
-<ion-view view-title="Saved">
+<ion-view view-title="Saved" cache-view="true">
   <ion-content>
+    <ion-refresher pulling-text="Pull to refresh" on-refresh="pullToRefreshBookmarks()">
+	</ion-refresher>
     <ion-list>
-
-		
       <ion-item class="item-divider">Your Bookmarks</ion-item>	
-	<ion-item ng-if="!bookmarks">You haven't saved any places yet</ion-item>
-	  
+	  <ion-item ng-if="!bookmarks">You haven't saved any places yet</ion-item>
       <ion-item 
 	    class="item-remove-animate item-avatar item-icon-right" 
 		ng-if="bookmarks"

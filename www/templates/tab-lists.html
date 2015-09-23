@@ -1,5 +1,7 @@
 <ion-view view-title="Top Lists">
   <ion-content>
+    <ion-refresher pulling-text="Pull to refresh" on-refresh="pullToRefreshLists()">
+    </ion-refresher>
     <ion-list ng-repeat="genreList in lists">
       <ion-item class="item-divider">{{genreList.name}}</ion-item>	
       <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="list in genreList.items" type="item-text-wrap" href="#/tab/lists/{{list.id}}">

@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter.services', 'ngOpenFB'])
+angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter.services', 'ngOpenFB', 'ngIOS9UIWebViewPatch'])
 
 .run(function($ionicPlatform, ngFB) {
 	ngFB.init({appId: '299948876841231'});
@@ -71,15 +71,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         }
       }
     })
-    .state('tab.external-page', {
-      url: '/lists/:listId/:placeId/:pageType',
-      views: {
-        'tab-lists': {
-          templateUrl: 'templates/external-page.html',
-          controller: 'ExternalPageCtrl'
-        }
-      }
-    })
+
     .state('tab.place-map', {
       url: '/lists/:listId/:placeId/0/map',
       views: {
@@ -106,6 +98,15 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         'tab-saved': {
           templateUrl: 'templates/entry-detail.html',
           controller: 'EntryDetailCtrl'
+        }
+      }
+    })
+    .state('tab.saved-list-detail', {
+      url: '/saved/:listId',
+      views: {
+        'tab-saved': {
+          templateUrl: 'templates/list-detail.html',
+          controller: 'ListDetailCtrl'
         }
       }
     })

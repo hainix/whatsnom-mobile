@@ -19,18 +19,26 @@
 				</div>
 			</a>
 		    <a 
-			ng-click="saveEntry({{listEntryForPlace.id}})"
-			class="button button-icon button-positive icon ion-bookmark">
-				<div class="button-bar-action-text">
-					{{saveEntryActionText}}
-				</div>
-			</a>
-		    <a 
-			  ng-if="place.yelp_seat_me || place.opentable_id"
-			  href="#/tab/lists/{{listPlaceWasViewedFrom.id}}/{{place.id}}/reserve"
+			  ng-if="place.opentable_id"
+			  ng-click="openExternalURL('http://mobile.opentable.com/opentable/?restId={{place.opentable_id}}')"
 			  class="button button-icon button-positive icon ion-ios-bookmarks">
 				<div class="button-bar-action-text">
 					Book
+				</div>
+			</a>
+		    <a 
+			  ng-if="!place.opentable_id && place.yelp_seat_me"
+			  ng-click="openExternalURL('https://www.seatme.yelp.com/r/{{place.yelp_seat_me}}')"
+			  class="button button-icon button-positive icon ion-ios-bookmarks">
+				<div class="button-bar-action-text">
+					Book
+				</div>
+			</a>
+		    <a 
+			ng-click="saveEntry({{listEntryForPlace.id}})"
+			class="button button-icon button-positive icon {{saveEntryActionIcon}}">
+				<div class="button-bar-action-text">
+					{{saveEntryActionText}}
 				</div>
 			</a>
 		</div>
@@ -44,13 +52,13 @@
 		  </div>
 	  
 	  <!-- Lists and Reviews -->
-  	  <div class="list">	  
+  	  <div class="list">
 		<a
 		  class="item item-divider item-icon-right"
 		  ng-if="listPlaceWasViewedFrom"
-		  href="#/tab/lists/{{listPlaceWasViewedFrom.id}}">
+		  ng-attr-href="{{currentStateName === 'tab.saved-place-detail' ?  '#/tab/saved/' + listPlaceWasViewedFrom.id : '#/tab/lists/' + listPlaceWasViewedFrom.id }}">
 		    #{{listEntryForPlace.position}} {{listPlaceWasViewedFrom.entry_name}}
-			<span ng-if="place.city_name"> in {{place.city_name}}</span>
+			<span ng-if="listPlaceWasViewedFrom.city_name"> in {{listPlaceWasViewedFrom.city_name}}</span>
 	 	  <i class="button-small icon ion-ios-list-outline" style="right: -2px;"></i>
 		</a>
 		<div class="place-detail-link"

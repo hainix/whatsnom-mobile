@@ -1,6 +1,6 @@
 angular.module('starter.services', [])
 
-.factory('Lists', function($http, $rootScope, $q) {
+.factory('Lists', function($http, $rootScope) {
 	
 	// TODO (remove override when actually shipping)
 	window.localStorage['fbuid'] = 10104624213101750;
@@ -27,7 +27,7 @@ angular.module('starter.services', [])
 		$http.jsonp(
 		  'http://www.whatsnom.com/api/combined.php?uid=' + window.localStorage['fbuid'] +'&format=json&callback=JSON_CALLBACK'
 		).success(function (data) {
-		  console.log('init list data fetch:');
+		  console.log('list data fetch:');
 	      console.log(data);
 	  	  $rootScope.lists = data.lists;
 		}).error(function (data, status, headers, config) {

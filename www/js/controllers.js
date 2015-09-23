@@ -1,23 +1,31 @@
 angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 
 .run(function($rootScope, Lists) {
-	// Startup funcs go here 
+	console.log('running startup funcs');
+	Lists.loadListsToRootScope();
+	//Lists.loadBookmarksToRootScope();
 })
 
 .controller('ListsCtrl', function($scope, Lists) {
     $scope.$on('$ionicView.enter', function() {
 		Lists.loadListsToRootScope();
     })	
+	$scope.pullToRefreshLists = function () {
+		Lists.loadListsToRootScope();
+		window.location.reload(true);
+	    $scope.$broadcast('scroll.refreshComplete');
+	    $scope.$apply();
+	}	
 })
 
-.controller('ListDetailCtrl', function($scope, $stateParams, Lists) {
+.controller('ListDetailCtrl', function($scope, $stateParams, Lists, $ionicHistory) {
+	$scope.currentStateName = $ionicHistory.currentStateName();
 	Lists.getList($stateParams.listId);
 })
 
-.controller('EntryDetailCtrl', function($scope, $stateParams, $http, $q) {
-	console.log('running place detail controller');	
+.controller('EntryDetailCtrl', function($scope, $stateParams, $http, $q, $ionicHistory) {
     var deferred_outer = $q.defer();
-
+	$scope.currentStateName = $ionicHistory.currentStateName();
 	$http.jsonp(
 	  'http://www.whatsnom.com/api/view_entry.php?entry_id=' + $stateParams.entryId
 	  +'&uid='+window.localStorage['fbuid'] 
@@ -31,9 +39,13 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 		
 		// TODO: get initial value from 'bookmarks for user' query and set the text correctly here
 		if ($scope.bookmark == null) {
-			$scope.saveEntryActionText = 'Save'; // TODO use constants for these states
+			$scope.saveEntryActionText = 'Save'; // TODO use constants for these states and those below
+			$scope.saveEntryActionIcon = 'ion-bookmark'; 
+			
+			 
 		} else {
-			$scope.saveEntryActionText = 'Remove'; // TODO use constants for these states 
+			$scope.saveEntryActionText = 'Remove';
+			$scope.saveEntryActionIcon = 'ion-ios-close-outline'; 
 		}
 		$scope.saveEntry = function (target_id) {
 			if (!window.localStorage['fbuid']) {
@@ -47,9 +59,12 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 			).success(function (data) {
 				console.log(data);
 				if (data == 'removed') {
-					$scope.saveEntryActionText = 'Save'; // TODO use constants for these states
+					$scope.saveEntryActionText = 'Save';
+					$scope.saveEntryActionIcon = 'ion-bookmark'; 
 				} else if (data == 'added') {
-					$scope.saveEntryActionText = 'Remove'; // TODO use constants for these states
+					$scope.saveEntryActionText = 'Remove'; 
+					$scope.saveEntryActionIcon = 'ion-ios-close-outline'; 
+					
 				} else {
 					console.log('unrecognized response from api adder from uid ' + window.localStorage['fbuid']
 					+ ' to target_id '+ $scope.place.id + ': '+data);
@@ -112,30 +127,22 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
       console.log(status);
       deferred_outer.reject(status);
     });
-	console.log('returning from places detail controller');
     return deferred_outer.promise;
 
 })
 
-.controller('ExternalPageCtrl', function($scope, $sce, $stateParams, $http) {
-	$scope.pageType = $stateParams.pageType;
-	$scope.externalTargetURLSafe = null;
-	if ($stateParams.pageType == 'reserve') {
-      $scope.externalPageTitle = 'Make a Reservation';		
-      if ($scope.place.opentable_id && angular.isNumber($scope.place.opentable_id)) {
-        $scope.externalTargetURLSafe = $sce.trustAsResourceUrl('http://mobile.opentable.com/opentable/?restId=' + $scope.place.opentable_id);
-      } else if ($scope.place.yelp_seat_me){
-        $scope.externalTargetURLSafe = $sce.trustAsResourceUrl('https://www.seatme.yelp.com/r/' + $scope.place.yelp_seat_me);	
-      }
-    }	
-})
-
-
 .controller('SavedCtrl', function($scope,  $rootScope, ngFB, Lists) {
     $scope.$on('$ionicView.enter', function() {
 		Lists.loadBookmarksToRootScope();
-    })
-
+    });
+	
+	$scope.pullToRefreshBookmarks = function () {
+		Lists.loadBookmarksToRootScope();
+		window.location.reload(true);
+	    $scope.$broadcast('scroll.refreshComplete');
+	    $scope.$apply();
+	}	
+	
 	// User has logged in before, and not logged out
 	$scope.fbuid = window.localStorage['fbuid'];
 	$scope.fbname = window.localStorage['fbname'];
