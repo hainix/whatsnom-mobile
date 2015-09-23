@@ -53,16 +53,6 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
       }
     })
 	
-    .state('tab.saved', {
-      url: '/saved',
-      views: {
-        'tab-saved': {
-          templateUrl: 'templates/tab-saved.html',
-          controller: 'SavedCtrl'
-        }
-      }
-    })
-	
     .state('tab.list-detail', {
       url: '/lists/:listId',
       views: {
@@ -96,6 +86,16 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         'tab-lists': {
           templateUrl: 'templates/place-map.html',
           controller: 'MapCtrl'
+        }
+      }
+    })
+	
+    .state('tab.saved', {
+      url: '/saved',
+      views: {
+        'tab-saved': {
+          templateUrl: 'templates/tab-saved.html',
+          controller: 'SavedCtrl'
         }
       }
     })

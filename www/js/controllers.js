@@ -1,11 +1,13 @@
 angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 
 .run(function($rootScope, Lists) {
-	Lists.loadListsToRootScope();
+	// Startup funcs go here 
 })
 
 .controller('ListsCtrl', function($scope, Lists) {
-	Lists.loadListsToRootScope();
+    $scope.$on('$ionicView.enter', function() {
+		Lists.loadListsToRootScope();
+    })	
 })
 
 .controller('ListDetailCtrl', function($scope, $stateParams, Lists) {
@@ -17,21 +19,28 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
     var deferred_outer = $q.defer();
 
 	$http.jsonp(
-	  'http://www.whatsnom.com/api/view_entry.php?entry_id=' + $stateParams.entryId +'&format=json&callback=JSON_CALLBACK'
+	  'http://www.whatsnom.com/api/view_entry.php?entry_id=' + $stateParams.entryId
+	  +'&uid='+window.localStorage['fbuid'] 
+	  +'&format=json&callback=JSON_CALLBACK'
 	).success(function (data) {
+		console.log(data);
+		$scope.bookmark = data.bookmark;
 		$scope.place = data.place;
 		$scope.listPlaceWasViewedFrom = data.list;
 		$scope.listEntryForPlace = data.entry;
 		
 		// TODO: get initial value from 'bookmarks for user' query and set the text correctly here
-		$scope.saveEntryActionText = 'Save'; // TODO use constants for these states
+		if ($scope.bookmark == null) {
+			$scope.saveEntryActionText = 'Save'; // TODO use constants for these states
+		} else {
+			$scope.saveEntryActionText = 'Remove'; // TODO use constants for these states 
+		}
 		$scope.saveEntry = function (target_id) {
 			if (!window.localStorage['fbuid']) {
 				console.log('trying to save place without user');
 				return false;
 			}
 	        var deferred_inner = $q.defer();
-			console.log($scope);
 			$http.jsonp(
 			  'http://www.whatsnom.com/api/edit_bookmark.php?uid=' + window.localStorage['fbuid']
 			  +'&entry_id=' + $scope.listEntryForPlace.id + '&format=json&callback=JSON_CALLBACK'
@@ -45,7 +54,6 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 					console.log('unrecognized response from api adder from uid ' + window.localStorage['fbuid']
 					+ ' to target_id '+ $scope.place.id + ': '+data);
 				}
-				// TODO - refresh local scoped bookmarks list
 	            deferred_inner.resolve(data);
 			}).error(function (data, status, headers, config) {
 	            console.log(status);
@@ -124,8 +132,9 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 
 
 .controller('SavedCtrl', function($scope,  $rootScope, ngFB, Lists) {
-
-	Lists.loadBookmarksToRootScope();
+    $scope.$on('$ionicView.enter', function() {
+		Lists.loadBookmarksToRootScope();
+    })
 
 	// User has logged in before, and not logged out
 	$scope.fbuid = window.localStorage['fbuid'];

@@ -11,7 +11,7 @@
 		ng-if="bookmarks"
 		ng-repeat="entry in bookmarks" 
 		type="item-text-wrap" 
-		href="#/tab/lists/{{entry.list_id}}/{{entry.id}}">
+		href="#/tab/saved/{{entry.list_id}}/{{entry.id}}">
         <img ng-src="{{entry.list_item_thumbnail}}"> 
         <h2>{{entry.place.name}}</h2>
         <p>{{entry.place.snippet}}</p>
