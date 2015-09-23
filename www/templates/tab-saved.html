@@ -3,26 +3,36 @@
     <ion-refresher pulling-text="Pull to refresh" on-refresh="pullToRefreshBookmarks()">
 	</ion-refresher>
     <ion-list>
-      <ion-item class="item-divider">Your Bookmarks</ion-item>	
-	  <ion-item ng-if="!bookmarks">You haven't saved any places yet</ion-item>
-      <ion-item 
-	    class="item-remove-animate item-avatar item-icon-right" 
-		ng-if="bookmarks"
-		ng-repeat="entry in bookmarks" 
-		type="item-text-wrap" 
-		href="#/tab/saved/{{entry.list_id}}/{{entry.id}}">
-        <img ng-src="{{entry.list_item_thumbnail}}"> 
-        <h2>{{entry.place.name}}</h2>
-        <p>{{entry.place.snippet}}</p>
-        <i class="icon ion-chevron-right icon-accessory"></i>
-        <ion-option-button 
-		  class="button-royal" 
-		  ng-click="remove(list)">
-          Remove
-        </ion-option-button>
-      </ion-item>
+	  <ion-item ng-if="!bookmarks || bookmarks.length == 0" style="text-align: center;">
+	  	<span ng-if="hideFBLoginButton">You haven't saved any places yet</span>
+	  	<span ng-if="!hideFBLoginButton">Log in to save places</span>
+	  </ion-item>
+    
+	  <ion-list ng-repeat="list in bookmarks" ng-if="bookmarks">
+	      <a 
+		    href="#/tab/saved/{{list.id}}"
+  		    class="item item-divider item-icon-right">
+		    {{list.city_name}} {{list.plural_entry_name}}
+   	 	    <i class="button-small icon ion-ios-list-outline" style="right: -2px;"></i>
+		  </a>	
 
-      <ion-item class="item-divider">Account Settings</ion-item>	
+	      <ion-item 
+		    class="item-remove-animate item-avatar item-icon-right" 
+			ng-repeat="entry in list.items" 
+			type="item-text-wrap" 
+			href="#/tab/saved/{{entry.list_id}}/{{entry.id}}">
+	        <img ng-src="{{entry.list_item_thumbnail}}"> 
+	        <h2>{{entry.position}}. {{entry.place.name}}</h2>
+	        <p>{{entry.place.snippet}}</p>
+	        <i class="icon ion-chevron-right icon-accessory"></i>
+	        <ion-option-button 
+			  class="button-royal" 
+			  ng-click="remove(list)">
+	          Remove
+	        </ion-option-button>
+	      </ion-item>
+      </ion-list>
+
 		<label class="item" ng-hide="hideFBLoginButton">
 		    <button class="button button-block button-positive" ng-click="fbLogin()">
 		    Login with Facebook
@@ -33,8 +43,8 @@
 		    Logout {{logout_posttext}}
 		    </button>
 		</label>
-		<ion-item ng-if="fbuid">storing data for user {{fbuid}}</ion-item>
-		<ion-item ng-if="!fbuid">no active user session</ion-item>
+		<!--<ion-item ng-if="fbuid">storing data for user {{fbuid}}</ion-item>
+		<ion-item ng-if="!fbuid">no active user session</ion-item>-->
 
     </ion-list>
   </ion-content>

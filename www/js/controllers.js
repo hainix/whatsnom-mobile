@@ -12,7 +12,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
     })	
 	$scope.pullToRefreshLists = function () {
 		Lists.loadListsToRootScope();
-		window.location.reload(true);
+		//window.location.reload(true);
 	    $scope.$broadcast('scroll.refreshComplete');
 	    $scope.$apply();
 	}	
@@ -20,6 +20,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 
 .controller('ListDetailCtrl', function($scope, $stateParams, Lists, $ionicHistory) {
 	$scope.currentStateName = $ionicHistory.currentStateName();
+	console.log('current state in list detail controller', $scope.currentStateName);
 	Lists.getList($stateParams.listId);
 })
 
@@ -138,7 +139,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 	
 	$scope.pullToRefreshBookmarks = function () {
 		Lists.loadBookmarksToRootScope();
-		window.location.reload(true);
+		//window.location.reload(true);
 	    $scope.$broadcast('scroll.refreshComplete');
 	    $scope.$apply();
 	}	
@@ -159,8 +160,6 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 	console.log('set up saved controller');
 	if ($rootScope.bookmarks) {
 		$scope.bookmarks = $rootScope.bookmarks;
-		console.log('scope data');
-		console.log($rootScope.bookmarks);
 	}
 
 	$scope.fbLogin = function () {

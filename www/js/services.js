@@ -27,8 +27,7 @@ angular.module('starter.services', [])
 		$http.jsonp(
 		  'http://www.whatsnom.com/api/combined.php?uid=' + window.localStorage['fbuid'] +'&format=json&callback=JSON_CALLBACK'
 		).success(function (data) {
-		  console.log('list data fetch:');
-	      console.log(data);
+		  console.log('list data fetch:', data);
 	  	  $rootScope.lists = data.lists;
 		}).error(function (data, status, headers, config) {
 	      console.log(status);
