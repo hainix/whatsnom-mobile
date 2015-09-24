@@ -18,7 +18,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 	}	
 })
 
-.controller('ListDetailCtrl', function($scope, $stateParams, Lists, $ionicHistory, $ionicPopup, $state, $http, $ionicListDelegate) {
+.controller('ListDetailCtrl', function($scope, $stateParams, Lists, $ionicHistory, $ionicPopup, $state, $http, $ionicListDelegate, $ionicLoading) {
 	$scope.currentStateName = $ionicHistory.currentStateName();
 	Lists.loadThisListToRootScope($stateParams.listId);
 	$scope.saveEntry = function (entryID) {
@@ -28,6 +28,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 			  +'&entry_id=' + entryID + '&force_state=added&format=json&callback=JSON_CALLBACK'
 			).success(function (data) {
 				if (data == 'added') {
+					$ionicLoading.show({ template: 'Saved', noBackdrop: true, duration: 500 });
 					$ionicListDelegate.closeOptionButtons();
 					console.log('saved entry id', entryID);			
 				} else {
@@ -172,7 +173,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 
 })
 
-.controller('SavedCtrl', function($scope,  $rootScope, ngFB, Lists, $http, $ionicListDelegate) {
+.controller('SavedCtrl', function($scope,  $rootScope, ngFB, Lists, $http, $ionicListDelegate, $ionicLoading) {
     $scope.$on('$ionicView.enter', function() {
 		Lists.loadBookmarksToRootScope();
     });
@@ -192,9 +193,9 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 			).success(function (data) {
 				if (data == 'removed') {
 					$ionicListDelegate.closeOptionButtons();
+					$ionicLoading.show({ template: 'Removed', noBackdrop: true, duration: 500 });
+					Lists.loadBookmarksToRootScope();
 					console.log('removed entry id', entryID);
-					// TODO don't reload the whole page
-					window.location.reload(true);
 				} else {
 					console.log('Error: Unrecognized response from api adder from uid ' + window.localStorage.getItem('fbuid')
 					+ ' to entry_id '+ entryID + ': '+data);
@@ -242,6 +243,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 								 window.localStorage.setItem('fbuid', user.id);
 								 window.localStorage.setItem('fbname', user.first_name);
 								 $scope.logout_posttext = ' ('+ window.localStorage.getItem('fbname') +')';
+ 			 					 Lists.loadBookmarksToRootScope();
 								 return false;							 
 							 }
 				         },
@@ -262,7 +264,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 				$scope.hideFBLoginButton = false;
 				window.localStorage.removeItem('fbuid');
 				window.localStorage.removeItem('fbname');
-				window.location.reload(true);
+				Lists.loadBookmarksToRootScope();
 				return false;
 	        });
 	};
