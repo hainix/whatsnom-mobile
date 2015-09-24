@@ -22,7 +22,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 	$scope.currentStateName = $ionicHistory.currentStateName();
 	Lists.loadThisListToRootScope($stateParams.listId);
 	$scope.saveEntry = function (entryID) {
-		if (window.localStorage.getItem('fbuid')) {
+		if (window.localStorage.getItem('fbuid') != null && !isNaN(window.localStorage.getItem('fbuid'))) {
 			$http.jsonp(
 			  'http://www.whatsnom.com/api/edit_bookmark.php?uid=' + window.localStorage.getItem('fbuid')
 			  +'&entry_id=' + entryID + '&force_state=added&format=json&callback=JSON_CALLBACK'
@@ -54,7 +54,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 
 })
 
-.controller('EntryDetailCtrl', function($scope, $stateParams, $http, $q, $ionicHistory) {
+.controller('EntryDetailCtrl', function($scope, $stateParams, $http, $q, $ionicHistory, $ionicPopup, $state) {
     var deferred_outer = $q.defer();
 	$scope.currentStateName = $ionicHistory.currentStateName();
 	$http.jsonp(
@@ -69,18 +69,28 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 		$scope.listEntryForPlace = data.entry;
 		
 		// TODO: get initial value from 'bookmarks for user' query and set the text correctly here
-		if ($scope.bookmark == null) {
-			$scope.saveEntryActionText = 'Save'; // TODO use constants for these states and those below
-			$scope.saveEntryActionIcon = 'ion-bookmark'; 
-			
-			 
-		} else {
+		console.log('got scope bookmark', $scope.bookmark, 'and uid', window.localStorage.getItem('fbuid'));
+		if (window.localStorage.getItem('fbuid') !== null 
+		    || isNaN(window.localStorage.getItem('fbuid')) && $scope.bookmark !== null) {
 			$scope.saveEntryActionText = 'Remove';
 			$scope.saveEntryActionIcon = 'ion-ios-close-outline'; 
+		} else {
+			$scope.saveEntryActionText = 'Save'; // TODO use constants for these states and those below
+			$scope.saveEntryActionIcon = 'ion-bookmark'; 
 		}
 		$scope.saveEntry = function (target_id) {
-			if (!window.localStorage.getItem('fbuid')) {
-				console.log('trying to save place without user');
+			if (window.localStorage.getItem('fbuid') === null || isNaN(window.localStorage.getItem('fbuid'))) {
+			    var confirmPopup = $ionicPopup.confirm({
+			      title: 'Whoops!',
+			      template: 'To save a place, log in first.'
+			    });
+			    confirmPopup.then(function(res) {
+			      if(res) {
+			        $state.go('tab.saved');
+			      } else {
+			        // Close dialog
+			      }
+			    });
 				return false;
 			}
 	        var deferred_inner = $q.defer();
@@ -252,7 +262,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 				$scope.hideFBLoginButton = false;
 				window.localStorage.removeItem('fbuid');
 				window.localStorage.removeItem('fbname');
-				window.location.reload();
+				window.location.reload(true);
 				return false;
 	        });
 	};

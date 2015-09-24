@@ -1,9 +1,8 @@
 <ion-view view-title="Saved" cache-view="true">
   <ion-content>
     <ion-list>
-	  <ion-item ng-if="!bookmarks || bookmarks.length == 0" style="text-align: center;">
-	  	<span ng-if="hideFBLoginButton">You haven't saved any places yet</span>
-	  	<span ng-if="!hideFBLoginButton">Log in to save places</span>
+	  <ion-item ng-if="hideFBLoginButton && (!bookmarks || bookmarks.length == 0)" style="text-align: center;">
+	  	You haven't saved any places yet
 	  </ion-item>
     
 	  <ion-list ng-repeat="list in bookmarks" ng-if="bookmarks" show-delete="shouldShowDelete">
@@ -33,7 +32,7 @@
 
 		<label class="item" ng-hide="hideFBLoginButton">
 		    <button class="button button-block button-positive" ng-click="fbLogin()">
-		    Login with Facebook
+		    Login with Facebook to Save Places
 		    </button>
 		</label>
 		<label class="item" ng-hide="!hideFBLoginButton">
