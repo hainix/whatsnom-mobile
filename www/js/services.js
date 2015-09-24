@@ -3,7 +3,7 @@ angular.module('starter.services', [])
 .factory('Lists', function($http, $rootScope) {
 	
 	// TODO (remove override when actually shipping)
-	window.localStorage['fbuid'] = 10104624213101750;
+	//window.localStorage.setItem('fbuid', 10104624213101750);
 
   return {
 	  
@@ -11,7 +11,7 @@ angular.module('starter.services', [])
 		// TODO: break this out into a function and call
 		// TODO: defer
 		$http.jsonp(
-		  'http://www.whatsnom.com/api/get_bookmarks.php?uid=' + window.localStorage['fbuid'] +'&format=json&callback=JSON_CALLBACK'
+		  'http://www.whatsnom.com/api/get_bookmarks.php?uid=' + window.localStorage.getItem('fbuid') +'&format=json&callback=JSON_CALLBACK'
 		).success(function (data) {
 	  	  $rootScope.bookmarks = data;
 		  console.log('bookmark fetch:');
@@ -25,7 +25,7 @@ angular.module('starter.services', [])
 		// We store lists in local memory (rootScope) for performance
 		// TODO: defer
 		$http.jsonp(
-		  'http://www.whatsnom.com/api/combined.php?uid=' + window.localStorage['fbuid'] +'&format=json&callback=JSON_CALLBACK'
+		  'http://www.whatsnom.com/api/combined.php?uid=' + window.localStorage.getItem('fbuid') +'&format=json&callback=JSON_CALLBACK'
 		).success(function (data) {
 		  console.log('list data fetch:', data);
 	  	  $rootScope.lists = data.lists;
