@@ -91,30 +91,29 @@
 	  </div>
 	  	  
 	  <!-- Map and Address -->	  
-	  <div class="list">
+	  <div class="list" ng-if="place.latitude">
+	    <a href="#" ng-click="openExternalURL('http://maps.apple.com/?q=+{{place.latitude}},{{place.longitude}}')">
 		  <div class="map">
-			  <div class="row">
-			    <div class="col col-100">
-			<a ng-click="openExternalURL('http://maps.apple.com/?q=+{{place.latitude}},{{place.longitude}}')">
-				  <img src="http://maps.googleapis.com/maps/api/staticmap?center={{place.latitude}},{{place.longitude}}&zoom=15&scale=2&size=400x150&maptype=roadmap&key=AIzaSyBtS-_FLNzSZDSUf9FRBvB1_2Z4OqTMPPc&format=png&visual_refresh=true&markers=size:medium%7Ccolor:0xff2600%7Clabel:0%7C{{place.latitude}},{{place.longitude}}" style="width:100%" />
-			  </a>
-			    </div>
+	        <div class="row">
+			  <div class="col col-100">
+		        <img src="http://maps.googleapis.com/maps/api/staticmap?center={{place.latitude}},{{place.longitude}}&zoom=15&scale=2&size=400x150&maptype=roadmap&key=AIzaSyBtS-_FLNzSZDSUf9FRBvB1_2Z4OqTMPPc&format=png&visual_refresh=true&markers=size:medium%7Ccolor:0xff2600%7Clabel:0%7C{{place.latitude}},{{place.longitude}}" style="width:100%" />
 			  </div>
-		  </div>		  
-		  
-		  <div class="place-detail-link address-link" ng-if="place.latitude">
-			<a 
-			  class="button button-full button-light item-icon-right" 
-			  ng-click="openExternalURL('http://maps.apple.com/?q=+{{place.latitude}},{{place.longitude}}')">
-				<div ng-if="displayParams.displayableAddress">
-		          {{displayParams.displayableAddress}}
-	   		    </div>
-				<div ng-if="displayParams.displayableNeighborhood" class="subtle-text">
-				  {{displayParams.displayableNeighborhood}}
-	   		    </div>
-				<i class="icon ion-ios-navigate-outline"></i>
-		    </a>
-	        </div>
-  		</div>
+			</div>
+		  </div>
+		  <div class="place-detail-link address-link">
+	        <div 
+			  class="button button-full button-light item-icon-right">
+			  <div ng-if="displayParams.displayableAddress">
+		        {{displayParams.displayableAddress}}
+	   		  </div>
+			  <div ng-if="displayParams.displayableNeighborhood" class="subtle-text">
+			    {{displayParams.displayableNeighborhood}}
+	   		  </div>
+		      <i class="icon ion-ios-navigate-outline"></i>
+			</div>
+	      </div>
+		</a>
+      </div>
+	  
   </ion-content>
 </ion-view>

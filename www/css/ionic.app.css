@@ -7710,6 +7710,12 @@ a.button {
   _background-color: rgba(0, 0, 0, 0.62) !important;
   /* or transparent, or background:none */ }
 
+/* List Detail */
+.list-header-subtext {
+  font-weight: 300;
+  font-size: 14px;
+  color: #6B6B6B; }
+
 /* Map */
 .map .row, .map .col {
   padding: 0; }

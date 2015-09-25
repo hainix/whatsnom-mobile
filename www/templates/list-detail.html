@@ -5,6 +5,8 @@
 
   <ion-content>
     <ion-list>
+      <div ng-if="list.review_count" class="item item-divider list-header-subtext" style="text-align: center">Based on  <b>{{list.critic_count}} Critics</b> and <b>{{list.review_count}} Reviews</b></div>
+
       <ion-item 
 	    class="item-remove-animate item-avatar item-icon-right" 
 		ng-repeat="entry in list.entries | orderBy:listOrderField" 

@@ -15,19 +15,27 @@ angular.module('starter.services', [])
 			  $rootScope.addLocationToList(data[key]);
 		  });
 	  	  $rootScope.bookmarks = data;
-		  console.log('bookmark fetch:', data);
+		  console.log('DEBUG: Set bookmark to $rootScope:', data);
 		}).error(function (data, status, headers, config) {
 	      console.log(status);
 	    });
 	},
 	  
-    loadListsToRootScope: function() {
+    loadListsToRootScope: function(force) {
 		// We store lists in local memory (rootScope) for performance
 		// TODO: defer
+		var unix_now = Math.round(+new Date()/1000);
+		if (!force && $rootScope.lists && window.localStorage.getItem('most_recent_fetch') 
+			&& ((window.localStorage.getItem('most_recent_fetch') + 86400) > unix_now)) {
+			console.log('DEBUG: skipping refetch of loadBookmarksToRootScope with unix ', unix_now);
+			return false;
+		}
+
 		$http.jsonp(
 		  'http://www.whatsnom.com/api/combined.php?uid=' + window.localStorage.getItem('fbuid') +'&format=json&callback=JSON_CALLBACK'
 		).success(function (data) {
-		  console.log('list data fetch:', data);
+		  console.log('DEBUG: Set lists to $rootScope on timestamp ', unix_now, ' : ', data);
+		  window.localStorage.setItem('most_recent_fetch', unix_now);
 	  	  $rootScope.lists = data.lists;
 		}).error(function (data, status, headers, config) {
 	      console.log(status);

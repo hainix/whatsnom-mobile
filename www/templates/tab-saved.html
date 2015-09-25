@@ -3,6 +3,8 @@
       <button class="button icon {{filterTypeIcon}}" ng-click="toggleFilter()"></button>
     </ion-nav-buttons>
   <ion-content>
+    <ion-refresher  ng-if="bookmarks" pulling-text="Pull to refresh" on-refresh="pullToRefreshBookmarks()">
+    </ion-refresher>
     <ion-list>
 	  <ion-item ng-if="hideFBLoginButton && (!bookmarks || bookmarks.length == 0)" style="text-align: center;">
 	  	You haven't saved any places yet
