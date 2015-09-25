@@ -1,18 +1,22 @@
 <ion-view view-title="Top {{list.plural_entry_name}} in {{list.city_name}}">
+    <ion-nav-buttons side="secondary">
+      <button class="button icon {{filterTypeIcon}}" ng-click="toggleFilter()"></button>
+    </ion-nav-buttons>
+
   <ion-content>
     <ion-list>
       <ion-item 
 	    class="item-remove-animate item-avatar item-icon-right" 
-		ng-repeat="entry in list.entries" 
+		ng-repeat="entry in list.entries | orderBy:listOrderField" 
 		type="item-text-wrap" 
 		ng-attr-href="{{currentStateName == 'tab.saved-list-detail' ?  '#/tab/saved/' + list.id + '/' + entry.id  : '#/tab/lists/' + list.id + '/' + entry.id }}">
         <img ng-src="{{entry.list_item_thumbnail}}"> 
-        <h2><span ng-if="entry.position">{{entry.position}}. </span>{{entry.name}}</h2>
+        <h2><span ng-if="entry.position" style="color: #787878;">{{entry.position}}. </span>{{entry.name}}</h2>
         <p>
 			<span ng-if="entry.displayed_distance_from_me" style="color: #BDBDBD">{{entry.displayed_distance_from_me}} mi  </span>
 			{{entry.snippet}}
 		</p>
-        <i class="icon ion-chevron-right icon-accessory"></i>
+        <!--<i class="icon ion-chevron-right icon-accessory"></i>-->
         <ion-option-button 
 		  class="button-positive" 
 		  ng-click="saveEntry(entry.id)">

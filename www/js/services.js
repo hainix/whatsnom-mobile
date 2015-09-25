@@ -8,14 +8,14 @@ angular.module('starter.services', [])
   return {
 	  
 	loadBookmarksToRootScope: function() {
-		// TODO: break this out into a function and call
-		// TODO: defer
 		$http.jsonp(
 		  'http://www.whatsnom.com/api/get_bookmarks.php?uid=' + window.localStorage.getItem('fbuid') +'&format=json&callback=JSON_CALLBACK'
 		).success(function (data) {
+  		  angular.forEach(data, function(value, key) {
+			  data[key] = $rootScope.addLocationToList(value);
+		  });
 	  	  $rootScope.bookmarks = data;
-		  console.log('bookmark fetch:');
-	      console.log(data);
+		  console.log('bookmark fetch:', data);
 		}).error(function (data, status, headers, config) {
 	      console.log(status);
 	    });

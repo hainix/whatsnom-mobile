@@ -1,8 +1,56 @@
 angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 
-.run(function($rootScope, Lists) {
+.run(function($rootScope, Lists, $cordovaGeolocation) {
 	console.log('INIT: .run startup funcs');
 	Lists.loadListsToRootScope();
+	
+	
+	/*
+	// TODO : if accuracy is bad, put location code in this block
+    ionic.Platform.ready(function() {
+    });
+	*/
+	
+	$rootScope.refreshCurrentLocation = function() {
+	    var posOptions = {timeout: 100000, enableHighAccuracy: false};
+	    $cordovaGeolocation
+	      .getCurrentPosition(posOptions)
+	      .then(function (position) {
+			  window.localStorage.setItem('lat', position.coords.latitude);
+			  window.localStorage.setItem('long', position.coords.longitude);
+			  console.log('DEBUG: got position', position.coords);
+	      }, function(err) {
+			  console.log('ERROR with current location fetch: ', err);
+	      });
+  	}
+	$rootScope.refreshCurrentLocation();
+
+	$rootScope.addLocationToList = function (list) {
+		console.log('running func addLocationToList');
+	    if (window.localStorage.getItem('lat') != null && !isNaN(window.localStorage.getItem('lat'))) {
+		  angular.forEach(list.entries, function(value, key) {
+			  if (value.place.latitude && !isNaN(value.place.latitude)) {
+			  	list.entries[key]['distance_from_me'] = 
+				  getDistanceFromLatLonInMiles(
+					  window.localStorage.getItem('lat'), 
+					  window.localStorage.getItem('long'), 
+					  value.place.latitude, 
+					  value.place.longitude
+				  );
+				  list.entries[key]['displayed_distance_from_me'] = 
+				  	parseFloat(Math.round(list.entries[key]['distance_from_me'] * 100) / 100).toFixed(2);
+		  	  } else {
+			  	list.entries[key]['distance_from_me'] = null;
+		  	  }
+		  });
+		  console.log('amended list to', list);
+		  return list;
+	  	} else {
+			$rootScope.refreshCurrentLocation();	  		
+	  	}
+    }
+
+	
 	//Lists.loadBookmarksToRootScope();
 })
 
@@ -20,42 +68,24 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 .controller('ListDetailCtrl', function($scope, $stateParams, Lists, $rootScope, $cordovaGeolocation, $ionicHistory, $ionicPopup, $state, $http, $ionicListDelegate, $ionicLoading) {
 	$scope.currentStateName = $ionicHistory.currentStateName();
 	Lists.loadThisListToRootScope($stateParams.listId);
-	
-	/*
-	// TODO : if accuracy is bad, put location code in this block
-    ionic.Platform.ready(function() {
-    });
-	*/
-		
-    var posOptions = {timeout: 100000, enableHighAccuracy: false};
-    $cordovaGeolocation
-      .getCurrentPosition(posOptions)
-      .then(function (position) {
-		  window.localStorage.setItem('lat', position.coords.latitude);
-		  window.localStorage.setItem('long', position.coords.longitude);
-		  console.log('DEBUG: got position', position.coords);
-		  
-		  if (window.localStorage.getItem('lat') != null && !isNaN(window.localStorage.getItem('lat'))) {
-			  angular.forEach($rootScope.list.entries, function(value, key) {
-				  if (value.place.latitude && !isNaN(value.place.latitude)) {
-				  	$rootScope.list.entries[key]['distance_from_me'] = 
-					  getDistanceFromLatLonInMiles(
-						  window.localStorage.getItem('lat'), 
-						  window.localStorage.getItem('long'), 
-						  value.place.latitude, 
-						  value.place.longitude
-					  );
-    				  $rootScope.list.entries[key]['displayed_distance_from_me'] = 
-					  	parseFloat(Math.round($rootScope.list.entries[key]['distance_from_me'] * 100) / 100).toFixed(2);
-			  	  } else {
-  				  	$rootScope.list.entries[key]['distance_from_me'] = null;
-			  	  }
-			  });
-			  console.log('amended list to', $rootScope.list);
-	  	  }
-      }, function(err) {
-		  console.log('ERROR with current location fetch: ', err);
-      });
+	$rootScope.refreshCurrentLocation();
+    $rootScope.list = $rootScope.addLocationToList($rootScope.list);
+			
+	$scope.filterTypeIcon = 'ion-navigate';	
+	$scope.listOrderField = 'position';
+	$scope.toggleFilter = function () {
+		if ($scope.filterTypeIcon == 'ion-navigate') {
+			$ionicLoading.show({ template: 'Sorted by Distance', noBackdrop: true, duration: 600 });
+			$scope.filterTypeIcon = 'ion-connection-bars';	
+			$scope.listOrderField = 'distance_from_me';
+		} else if ($scope.filterTypeIcon == 'ion-connection-bars') {
+			$ionicLoading.show({ template: 'Sorted by Rank', noBackdrop: true, duration: 600 });			
+			$scope.filterTypeIcon = 'ion-navigate';	
+			$scope.listOrderField = 'position';
+		} else {
+			console.log("ERROR: unrecognized filter type: ", $scope.filterTypeIcon);
+		}	
+	}	
 	
 	$scope.saveEntry = function (entryID) {
 		if (window.localStorage.getItem('fbuid') != null && !isNaN(window.localStorage.getItem('fbuid'))) {
@@ -189,17 +219,15 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 
 	    // Phone number
 	    if ($scope.place.phone) {
-	    	$scope.displayParams.phoneString = $scope.place.phone.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
+	    	//$scope.displayParams.phoneString = $scope.place.phone.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
+	    	$scope.displayParams.phoneString = $scope.place.phone;
 	    }
 
 	    // Place Render
 	    $scope.displayParams.displayableNeighborhood = $scope.place.neighborhoods;
 	    $scope.displayParams.displayableAddress = $scope.place.address;
-        
 		
 		deferred_outer.resolve(data);
-		
-		
 	}).error(function (data, status, headers, config) {
       console.log(status);
       deferred_outer.reject(status);
@@ -218,6 +246,22 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 	    $scope.$broadcast('scroll.refreshComplete');
 	    $scope.$apply();
 	}
+
+	$scope.filterTypeIcon = 'ion-navigate';	
+	$scope.listOrderField = '';
+	$scope.toggleFilter = function () {
+		if ($scope.filterTypeIcon == 'ion-navigate') {
+			$ionicLoading.show({ template: 'Sorted by Distance', noBackdrop: true, duration: 600 });
+			$scope.filterTypeIcon = 'ion-connection-bars';	
+			$scope.listOrderField = 'distance_from_me';
+		} else if ($scope.filterTypeIcon == 'ion-connection-bars') {
+			$ionicLoading.show({ template: 'Sorted by Rank', noBackdrop: true, duration: 600 });			
+			$scope.filterTypeIcon = 'ion-navigate';	
+			$scope.listOrderField = 'position';
+		} else {
+			console.log("ERROR: unrecognized filter type: ", $scope.filterTypeIcon);
+		}	
+	}	
 	
 	$scope.removeEntry = function (entryID) {
 		if (window.localStorage.getItem('fbuid') != null && !isNaN(window.localStorage.getItem('fbuid'))) {
@@ -254,9 +298,11 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 		}
 	}
 	
+	/*
 	if ($rootScope.bookmarks) {
 		$scope.bookmarks = $rootScope.bookmarks;
 	}
+	*/
 
 	$scope.fbLogin = function () {
 	    ngFB.login({scope: ''}).then(
