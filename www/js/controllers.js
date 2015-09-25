@@ -3,8 +3,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 .run(function($rootScope, Lists, $cordovaGeolocation) {
 	console.log('INIT: .run startup funcs');
 	Lists.loadListsToRootScope();
-	
-	
+		
 	/*
 	// TODO : if accuracy is bad, put location code in this block
     ionic.Platform.ready(function() {
@@ -29,7 +28,11 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 		console.log('running func addLocationToList');
 	    if (window.localStorage.getItem('lat') != null && !isNaN(window.localStorage.getItem('lat'))) {
 		  angular.forEach(list.entries, function(value, key) {
-			  if (value.place.latitude && !isNaN(value.place.latitude)) {
+			  // Short circuit if the list already has location
+			  if (list.entries[key]['displayed_distance_from_me']) {
+				  return list;
+			  }
+			  if (value.place.latitude && !isNaN(value.place.latitude)) {				
 			  	list.entries[key]['distance_from_me'] = 
 				  getDistanceFromLatLonInMiles(
 					  window.localStorage.getItem('lat'), 
@@ -43,15 +46,12 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 			  	list.entries[key]['distance_from_me'] = null;
 		  	  }
 		  });
-		  console.log('amended list to', list);
+		  console.log('amended list with location');
 		  return list;
 	  	} else {
 			$rootScope.refreshCurrentLocation();	  		
 	  	}
     }
-
-	
-	//Lists.loadBookmarksToRootScope();
 })
 
 .controller('ListsCtrl', function($scope, Lists) {
@@ -69,7 +69,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 	$scope.currentStateName = $ionicHistory.currentStateName();
 	Lists.loadThisListToRootScope($stateParams.listId);
 	$rootScope.refreshCurrentLocation();
-    $rootScope.list = $rootScope.addLocationToList($rootScope.list);
+    $rootScope.addLocationToList($rootScope.list);
 			
 	$scope.filterTypeIcon = 'ion-navigate';	
 	$scope.listOrderField = 'position';
@@ -101,6 +101,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 					console.log('unrecognized response from api adder from uid ' + window.localStorage.getItem('fbuid')
 					+ ' to entry_id '+ entryID + ': '+data);
 				}
+				Lists.loadBookmarksToRootScope();
 			}).error(function (data, status, headers, config) {
 	            console.log(status);
 	        });
@@ -121,7 +122,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 
 })
 
-.controller('EntryDetailCtrl', function($scope, $stateParams, $http, $q, $ionicHistory, $ionicPopup, $state) {
+.controller('EntryDetailCtrl', function($scope, $stateParams, $http, $q, $ionicHistory, $ionicPopup, $state, Lists) {
     var deferred_outer = $q.defer();
 	$scope.currentStateName = $ionicHistory.currentStateName();
 	$http.jsonp(
@@ -176,6 +177,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 					console.log('unrecognized response from api adder from uid ' + window.localStorage.getItem('fbuid')
 					+ ' to target_id '+ $scope.place.id + ': '+data);
 				}
+				Lists.loadBookmarksToRootScope();
 	            deferred_inner.resolve(data);
 			}).error(function (data, status, headers, config) {
 	            console.log(status);
@@ -185,24 +187,11 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 		};
 
 	    $scope.displayParams = {};
-	    // Mini map
-	    if ($scope.place.latitude) {
+
+	    if ($scope.place.latitude && false) {
 	  	  var placeLatLng = new google.maps.LatLng($scope.place.latitude, $scope.place.longitude);	
 
-	  	  var mapOptions = {
-	  	    center: placeLatLng,
-	  	    zoom: 15,
-	  	    mapTypeId: google.maps.MapTypeId.ROADMAP
-	  	  };
 
-	  	  $scope.minimap = new google.maps.Map(document.getElementById("minimap"), mapOptions);
-	    	  google.maps.event.addListenerOnce($scope.minimap, 'idle', function(){
-	  	  	  var placeMarker = new google.maps.Marker({
-	  	  	      map: $scope.minimap,
-	  	  	      animation: google.maps.Animation.DROP,
-	  	  	      position: placeLatLng
-	  	  	  });  
-	  	  });	
 	    }
 	
 		// To open external URL using inappbrowser
@@ -238,8 +227,9 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 
 .controller('SavedCtrl', function($scope,  $rootScope, ngFB, Lists, $http, $ionicListDelegate, $ionicLoading) {
     $scope.$on('$ionicView.enter', function() {
-		Lists.loadBookmarksToRootScope();
+		//Lists.loadBookmarksToRootScope();
     });
+	Lists.loadBookmarksToRootScope();
 	
 	$scope.pullToRefreshBookmarks = function () {
 		Lists.loadBookmarksToRootScope();

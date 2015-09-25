@@ -7711,13 +7711,8 @@ a.button {
   /* or transparent, or background:none */ }
 
 /* Map */
-#map {
-  width: 100%;
-  height: 100%; }
-
-#minimap {
-  width: 100%;
-  height: 100px; }
+.map .row, .map .col {
+  padding: 0; }
 
 /* Place detail */
 .place-detail-container div.main-place-image {

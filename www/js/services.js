@@ -12,7 +12,7 @@ angular.module('starter.services', [])
 		  'http://www.whatsnom.com/api/get_bookmarks.php?uid=' + window.localStorage.getItem('fbuid') +'&format=json&callback=JSON_CALLBACK'
 		).success(function (data) {
   		  angular.forEach(data, function(value, key) {
-			  data[key] = $rootScope.addLocationToList(value);
+			  $rootScope.addLocationToList(data[key]);
 		  });
 	  	  $rootScope.bookmarks = data;
 		  console.log('bookmark fetch:', data);
