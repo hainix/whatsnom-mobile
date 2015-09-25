@@ -1,7 +1,7 @@
 angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 
 .run(function($rootScope, Lists) {
-	console.log('running startup funcs');
+	console.log('INIT: .run startup funcs');
 	Lists.loadListsToRootScope();
 	//Lists.loadBookmarksToRootScope();
 })
@@ -12,15 +12,51 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
     })	
 	$scope.pullToRefreshLists = function () {
 		Lists.loadListsToRootScope();
-		//window.location.reload(true);
 	    $scope.$broadcast('scroll.refreshComplete');
 	    $scope.$apply();
 	}	
 })
 
-.controller('ListDetailCtrl', function($scope, $stateParams, Lists, $ionicHistory, $ionicPopup, $state, $http, $ionicListDelegate, $ionicLoading) {
+.controller('ListDetailCtrl', function($scope, $stateParams, Lists, $rootScope, $cordovaGeolocation, $ionicHistory, $ionicPopup, $state, $http, $ionicListDelegate, $ionicLoading) {
 	$scope.currentStateName = $ionicHistory.currentStateName();
 	Lists.loadThisListToRootScope($stateParams.listId);
+	
+	/*
+	// TODO : if accuracy is bad, put location code in this block
+    ionic.Platform.ready(function() {
+    });
+	*/
+		
+    var posOptions = {timeout: 100000, enableHighAccuracy: false};
+    $cordovaGeolocation
+      .getCurrentPosition(posOptions)
+      .then(function (position) {
+		  window.localStorage.setItem('lat', position.coords.latitude);
+		  window.localStorage.setItem('long', position.coords.longitude);
+		  console.log('DEBUG: got position', position.coords);
+		  
+		  if (window.localStorage.getItem('lat') != null && !isNaN(window.localStorage.getItem('lat'))) {
+			  angular.forEach($rootScope.list.entries, function(value, key) {
+				  if (value.place.latitude && !isNaN(value.place.latitude)) {
+				  	$rootScope.list.entries[key]['distance_from_me'] = 
+					  getDistanceFromLatLonInMiles(
+						  window.localStorage.getItem('lat'), 
+						  window.localStorage.getItem('long'), 
+						  value.place.latitude, 
+						  value.place.longitude
+					  );
+    				  $rootScope.list.entries[key]['displayed_distance_from_me'] = 
+					  	parseFloat(Math.round($rootScope.list.entries[key]['distance_from_me'] * 100) / 100).toFixed(2);
+			  	  } else {
+  				  	$rootScope.list.entries[key]['distance_from_me'] = null;
+			  	  }
+			  });
+			  console.log('amended list to', $rootScope.list);
+	  	  }
+      }, function(err) {
+		  console.log('ERROR with current location fetch: ', err);
+      });
+	
 	$scope.saveEntry = function (entryID) {
 		if (window.localStorage.getItem('fbuid') != null && !isNaN(window.localStorage.getItem('fbuid'))) {
 			$http.jsonp(
@@ -30,7 +66,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 				if (data == 'added') {
 					$ionicLoading.show({ template: 'Saved', noBackdrop: true, duration: 500 });
 					$ionicListDelegate.closeOptionButtons();
-					console.log('saved entry id', entryID);			
+					console.log('DEBUG: saved entry id', entryID);			
 				} else {
 					console.log('unrecognized response from api adder from uid ' + window.localStorage.getItem('fbuid')
 					+ ' to entry_id '+ entryID + ': '+data);
@@ -63,14 +99,13 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 	  +'&uid='+window.localStorage.getItem('fbuid') 
 	  +'&format=json&callback=JSON_CALLBACK'
 	).success(function (data) {
-		console.log(data);
+		console.log('DEBUG: bookmark status: ',data);
 		$scope.bookmark = data.bookmark;
 		$scope.place = data.place;
 		$scope.listPlaceWasViewedFrom = data.list;
 		$scope.listEntryForPlace = data.entry;
 		
 		// TODO: get initial value from 'bookmarks for user' query and set the text correctly here
-		console.log('got scope bookmark', $scope.bookmark, 'and uid', window.localStorage.getItem('fbuid'));
 		if (window.localStorage.getItem('fbuid') !== null 
 		    || isNaN(window.localStorage.getItem('fbuid')) && $scope.bookmark !== null) {
 			$scope.saveEntryActionText = 'Remove';
@@ -180,7 +215,6 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 	
 	$scope.pullToRefreshBookmarks = function () {
 		Lists.loadBookmarksToRootScope();
-		//window.location.reload(true);
 	    $scope.$broadcast('scroll.refreshComplete');
 	    $scope.$apply();
 	}
@@ -208,16 +242,12 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 		}
 	}	
 	
-	console.log('set up saved controller');
+	console.log('INIT: Saved Controller');
 	
 	// User has logged in before, and not logged out
-	console.log('got fbuid ', window.localStorage.getItem('fbuid'));
-	console.log('got fbname ', window.localStorage.getItem('fbname'));
-
 	$scope.logout_posttext = '';
 	$scope.hideFBLoginButton = false;
 	if (window.localStorage.getItem('fbuid') != null && !isNaN(window.localStorage.getItem('fbuid'))) {
-		console.log('setting login button in fbuid block with uid ', window.localStorage.getItem('fbuid'));
 		$scope.hideFBLoginButton = true;
 		if (window.localStorage.getItem('fbname') !== null) {
 			$scope.logout_posttext = ' (' + window.localStorage.getItem('fbname') + ')';
@@ -258,7 +288,6 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 	        });
 	};
 	$scope.fbLogout = function () {
-		//$scope.hideFBLoginButton = true;
 	    ngFB.logout().then(
 	        function (response) {
 				$scope.hideFBLoginButton = false;
@@ -268,7 +297,5 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 				return false;
 	        });
 	};
-	console.log('hide login button = ', $scope.hideFBLoginButton);
-
 		
 });

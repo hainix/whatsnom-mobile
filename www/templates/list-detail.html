@@ -8,7 +8,10 @@
 		ng-attr-href="{{currentStateName == 'tab.saved-list-detail' ?  '#/tab/saved/' + list.id + '/' + entry.id  : '#/tab/lists/' + list.id + '/' + entry.id }}">
         <img ng-src="{{entry.list_item_thumbnail}}"> 
         <h2><span ng-if="entry.position">{{entry.position}}. </span>{{entry.name}}</h2>
-        <p>{{entry.snippet}}</p>
+        <p>
+			<span ng-if="entry.displayed_distance_from_me" style="color: #BDBDBD">{{entry.displayed_distance_from_me}} mi  </span>
+			{{entry.snippet}}
+		</p>
         <i class="icon ion-chevron-right icon-accessory"></i>
         <ion-option-button 
 		  class="button-positive" 

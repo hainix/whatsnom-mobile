@@ -41,11 +41,11 @@ angular.module('starter.services', [])
 	  var list = null;
 	  angular.forEach($rootScope.lists, function(value, key) {
 		  if (listId in value['items']) {
-		  	list = value['items'][listId]
+			  $rootScope.list = value['items'][listId];
+			  return;
 		  }
 	  });
-	  $rootScope.list = list;
-	  return $rootScope.list;
+	  return false;
     }
   };
 });
