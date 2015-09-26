@@ -9,7 +9,6 @@
 	  <ion-item ng-if="hideFBLoginButton && (!bookmarks || bookmarks.length == 0)" style="text-align: center;">
 	  	You haven't saved any places yet
 	  </ion-item>
-    
 	  <ion-list ng-repeat="list in bookmarks" ng-if="bookmarks">
 	      <a 
 		    href="#/tab/saved/{{list.id}}"
@@ -17,6 +16,42 @@
 		    {{list.city_name}} {{list.plural_entry_name}}
    	 	    <i class="button-small icon ion-ios-list-outline" style="right: -2px;"></i>
 		  </a>	
+		  
+		  
+		  
+	  	  <div class="lists-detail-container list-with-entries">
+	        <ion-item 
+			  ng-repeat="entry in list.entries | orderBy:listOrderField" 
+			  type="item-text-wrap" 
+			  href="#/tab/saved/{{entry.list_id}}/{{entry.id}}">
+	          <div class="list-detail-row" 
+			    style="background: url({{entry.list_item_thumbnail}}); background-position: center; background-size: cover;">
+			    <div class="list-entry-position" ng-if="entry.position" >
+					<h2 ng-class="(entry.position > 9) ? 'smaller-text' : ''">
+						{{entry.position}}
+					</h2>
+				</div>
+			    <div class="list-detail-row-overlay">
+				  <h2>{{entry.name}}</h2>
+				  <p>
+					  <span 
+					    ng-if="entry.displayed_distance_from_me" 
+					    class="distance-from-me">
+					    {{entry.displayed_distance_from_me}} mi · 
+				      </span>
+				      {{entry.snippet}}
+				  </p>
+			    </div>
+			  </div>
+	          <ion-option-button 
+	  		    class="button-assertive" 
+			    ng-click="removeEntry(entry.id)">
+	            Remove
+	          </ion-option-button>
+		    </ion-item>
+	      </div>
+
+<!--
 	      <ion-item 
 		    class="item-remove-animate item-avatar item-icon-right" 
 			ng-repeat="entry in list.entries | orderBy:listOrderField" 
@@ -32,13 +67,14 @@
 				</span>
 				{{entry.place.snippet}}
 			</p>
-	        <!--<i class="icon ion-chevron-right icon-accessory"></i>-->
-	        <ion-option-button 
+		  <ion-option-button 
 			  class="button-assertive" 
 			  ng-click="removeEntry(entry.id)">
 	          Remove
 	        </ion-option-button>
 	      </ion-item>
+		  
+	  -->
       </ion-list>
 
 		<label class="item" ng-hide="hideFBLoginButton">

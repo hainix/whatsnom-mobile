@@ -86,7 +86,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 	$scope.saveEntry = function (entryID) {
 		if (window.localStorage.getItem('fbuid') != null && !isNaN(window.localStorage.getItem('fbuid'))) {
 			$http.jsonp(
-			  'http://www.whatsnom.com/api/edit_bookmark.php?uid=' + window.localStorage.getItem('fbuid')
+			  'http://www.whatsnom.com/api/1.0/edit_bookmark.php?uid=' + window.localStorage.getItem('fbuid')
 			  +'&entry_id=' + entryID + '&force_state=added&format=json&callback=JSON_CALLBACK'
 			).success(function (data) {
 				if (data == 'added') {
@@ -121,7 +121,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
     var deferred_outer = $q.defer();
 	$scope.currentStateName = $ionicHistory.currentStateName();
 	$http.jsonp(
-	  'http://www.whatsnom.com/api/view_entry.php?entry_id=' + $stateParams.entryId
+	  'http://www.whatsnom.com/api/1.0/view_entry.php?entry_id=' + $stateParams.entryId
 	  +'&uid='+window.localStorage.getItem('fbuid') 
 	  +'&format=json&callback=JSON_CALLBACK'
 	).success(function (data) {
@@ -157,7 +157,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 			}
 	        var deferred_inner = $q.defer();
 			$http.jsonp(
-			  'http://www.whatsnom.com/api/edit_bookmark.php?uid=' + window.localStorage.getItem('fbuid')
+			  'http://www.whatsnom.com/api/1.0/edit_bookmark.php?uid=' + window.localStorage.getItem('fbuid')
 			  +'&entry_id=' + $scope.listEntryForPlace.id + '&format=json&callback=JSON_CALLBACK'
 			).success(function (data) {
 				console.log('DEBUG: bookmark response: ', data);
@@ -243,7 +243,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 	$scope.removeEntry = function (entryID) {
 		if (window.localStorage.getItem('fbuid') != null && !isNaN(window.localStorage.getItem('fbuid'))) {
 			$http.jsonp(
-			  'http://www.whatsnom.com/api/edit_bookmark.php?uid=' + window.localStorage.getItem('fbuid')
+			  'http://www.whatsnom.com/api/1.0/edit_bookmark.php?uid=' + window.localStorage.getItem('fbuid')
 			  +'&entry_id=' + entryID + '&force_state=removed&format=json&callback=JSON_CALLBACK'
 			).success(function (data) {
 				if (data == 'removed') {

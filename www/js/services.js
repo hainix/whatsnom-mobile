@@ -9,7 +9,7 @@ angular.module('starter.services', [])
 	  
 	loadBookmarksToRootScope: function() {
 		$http.jsonp(
-		  'http://www.whatsnom.com/api/get_bookmarks.php?uid=' + window.localStorage.getItem('fbuid') +'&format=json&callback=JSON_CALLBACK'
+		  'http://www.whatsnom.com/api/1.0/get_bookmarks.php?uid=' + window.localStorage.getItem('fbuid') +'&format=json&callback=JSON_CALLBACK'
 		).success(function (data) {
   		  angular.forEach(data, function(value, key) {
 			  $rootScope.addLocationToList(data[key]);
@@ -32,7 +32,7 @@ angular.module('starter.services', [])
 		}
 
 		$http.jsonp(
-		  'http://www.whatsnom.com/api/combined.php?uid=' + window.localStorage.getItem('fbuid') +'&format=json&callback=JSON_CALLBACK'
+		  'http://www.whatsnom.com/api/1.0/combined.php?uid=' + window.localStorage.getItem('fbuid') +'&format=json&callback=JSON_CALLBACK'
 		).success(function (data) {
 		  console.log('DEBUG: Set lists to $rootScope on timestamp ', unix_now, ' : ', data);
 		  window.localStorage.setItem('most_recent_fetch', unix_now);
@@ -65,7 +65,7 @@ angular.module('starter.services', [])
 	  }
 	 // Usually when debugging
 	 $http.jsonp(
-	   'http://www.whatsnom.com/api/view_list.php?list_id=' + listId +'&format=json&callback=JSON_CALLBACK'
+	   'http://www.whatsnom.com/api/1.0/view_list.php?list_id=' + listId +'&format=json&callback=JSON_CALLBACK'
 	 ).success(function (data) {
 	   console.log('DEBUG: Refetched from API + set list to $rootScope for id: ', listId, 'and data: ',data);
 	   $rootScope.list = data;

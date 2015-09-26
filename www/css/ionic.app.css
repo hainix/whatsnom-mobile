@@ -7731,10 +7731,10 @@ a.button {
   text-align: left;
   padding-top: 44px;
   font-size: 24px;
-  _letter-spacing: 0.7px;
   color: white;
   text-shadow: 2px 1px rgba(0, 0, 0, 0.8);
-  line-height: 22px; }
+  line-height: 22px;
+  overflow: visible; }
 
 .lists-detail-container p {
   font-weight: 200;
@@ -7750,15 +7750,22 @@ a.button {
 .lists-detail-container .list-detail-row .list-entry-position {
   width: 40px;
   height: 100%;
-  background: white;
+  background: rgba(255, 255, 255, 0.85);
   position: absolute;
   box-shadow: inset -50px -50px 50px -50px rgba(0, 0, 0, 0.1); }
 
+.lists-detail-container .activated .list-detail-row .list-entry-position {
+  background: #FFF; }
+
 .lists-detail-container .list-detail-row .list-entry-position h2 {
-  color: #949494;
+  color: #444;
   text-shadow: none;
   margin-left: 12px;
   margin-top: 6px; }
+
+.lists-detail-container .list-detail-row .list-entry-position h2.smaller-text {
+  font-size: 20px;
+  margin-left: 8px; }
 
 .lists-detail-container .list-detail-row .list-detail-row-overlay {
   background: rgba(0, 0, 0, 0.55);
@@ -7766,6 +7773,9 @@ a.button {
   height: 100%;
   border-bottom: 1px solid #fff;
   padding-left: 30px; }
+
+.lists-detail-container .list-detail-row .list-detail-row-overlay .distance-from-me {
+  color: rgba(255, 255, 255, 0.9); }
 
 .list-with-entries .list-detail-row .list-detail-row-overlay {
   padding-left: 60px; }
