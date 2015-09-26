@@ -7700,18 +7700,19 @@ a.button {
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
 
-/*
-.scroll {
-    height: 100%;
-}
+/* Theme Colors */
+.bar-light .button.button-clear, .tabs-icon-top .themed-tab, .bar.bar-light .title, .bar-light .button, .bar-light .button:hover, .loading-container .loading {
+  color: #460AA1; }
 
-.scroll-content {
-  overflow: visible !important;
-}
-*/
-.bar.bar-dark {
-  _background-color: rgba(0, 0, 0, 0.62) !important;
-  /* or transparent, or background:none */ }
+ion-content.has-header {
+  background-color: #f5f5f5; }
+
+.secondary-buttons .activated {
+  background-color: #f5f5f5; }
+
+.loading-container .loading {
+  background-color: rgba(255, 255, 255, 0.9);
+  font-weight: 500; }
 
 /* List Detail */
 .list-header-subtext {
@@ -7732,6 +7733,7 @@ a.button {
   padding-top: 44px;
   font-size: 24px;
   color: white;
+  _text-shadow: 2px 1px rgba(70, 10, 161, 0.8);
   text-shadow: 2px 1px rgba(0, 0, 0, 0.8);
   line-height: 22px;
   overflow: visible; }

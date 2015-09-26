@@ -1,13 +1,8 @@
 angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 
-.run(function($rootScope, Lists, $cordovaGeolocation) {
+.run(function($rootScope, Lists, $cordovaGeolocation, $cordovaStatusbar) {
 	console.log('INIT: .run startup funcs');
-	/*
-	// TODO : if accuracy is bad, put location code in this block
-    ionic.Platform.ready(function() {
-    });
-	*/
-	
+
 	$rootScope.refreshCurrentLocation = function() {
 	    var posOptions = {timeout: 100000, enableHighAccuracy: false};
 	    $cordovaGeolocation

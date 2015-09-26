@@ -19,7 +19,7 @@ $base-background-color: #f8f8f8 !default;
 //$base-background-color: #CC3300 !default;
 $bar-height: 50px !default;
 
-
+$accent-color: #460AA1;
 
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
@@ -27,22 +27,31 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
-
-// Needed for maps
-/*
-.scroll {
-    height: 100%;
+/* Theme Colors */
+.bar-light .button.button-clear, 
+.tabs-icon-top .themed-tab, 
+.bar.bar-light .title,
+.bar-light .button,
+.bar-light .button:hover,
+.loading-container .loading
+{
+	color: $accent-color;
 }
 
-.scroll-content {
-  overflow: visible !important;
+ion-content.has-header {
+	background-color: #f5f5f5;
 }
-*/
 
-.bar.bar-dark {
-  _background-color: rgba(0,0,0,.62) !important; /* or transparent, or background:none */
+.secondary-buttons .activated {
+	background-color: #f5f5f5;	
 }
- 
+
+.loading-container .loading {
+    background-color: rgba(255, 255, 255, 0.9);
+	font-weight: 500;
+}
+
+
 /* List Detail */
 .list-header-subtext {
 	font-weight: 300;
@@ -64,7 +73,8 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 	padding-top: 44px;
 	font-size:24px;
 	color:rgba(255,255,255,1); 
-    text-shadow: 2px 1px rgba(0,0,0,0.8);
+    _text-shadow: 2px 1px rgba(70,10,161,0.8);
+	text-shadow: 2px 1px rgba(0,0,0,0.8);
 	line-height: 22px;	
 	overflow: visible;
 }

@@ -1,5 +1,5 @@
 <ion-view view-title="Saved" cache-view="true">
-    <ion-nav-buttons side="secondary">
+    <ion-nav-buttons side="secondary" ng-hide="!hideFBLoginButton">
       <button class="button icon {{filterTypeIcon}}" ng-click="toggleFilter()"></button>
     </ion-nav-buttons>
   <ion-content>
@@ -50,31 +50,6 @@
 	          </ion-option-button>
 		    </ion-item>
 	      </div>
-
-<!--
-	      <ion-item 
-		    class="item-remove-animate item-avatar item-icon-right" 
-			ng-repeat="entry in list.entries | orderBy:listOrderField" 
-			type="item-text-wrap" 
-			href="#/tab/saved/{{entry.list_id}}/{{entry.id}}">
-	        <img ng-src="{{entry.list_item_thumbnail}}"> 
-	        <h2>
-				<span ng-if="entry.position" style="color: #787878;">{{entry.position}}. </span>
-				{{entry.place.name}}</h2>
-	        <p>
-				<span ng-if="entry.displayed_distance_from_me" style="color: #BDBDBD">
-					{{entry.displayed_distance_from_me}} mi 
-				</span>
-				{{entry.place.snippet}}
-			</p>
-		  <ion-option-button 
-			  class="button-assertive" 
-			  ng-click="removeEntry(entry.id)">
-	          Remove
-	        </ion-option-button>
-	      </ion-item>
-		  
-	  -->
       </ion-list>
 
 		<label class="item" ng-hide="hideFBLoginButton">
