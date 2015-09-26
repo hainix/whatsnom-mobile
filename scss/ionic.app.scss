@@ -81,13 +81,16 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 }
 
 .list-detail-container .list-detail-row .list-detail-row-overlay {
-	background:rgba(0,0,0,.50);
+	background:rgba(0,0,0,.55);
 	opacity:1; 
 	height: 100%; 
 	border-bottom: 1px solid #fff; 
 	padding-left: 30px;
 }
 
+.list-detail-container .activated .list-detail-row .list-detail-row-overlay {
+	background:rgba(64,64,64,.80);
+}
 
 /*
 .list-detail-container .row {

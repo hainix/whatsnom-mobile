@@ -46,14 +46,42 @@ angular.module('starter.services', [])
     },
 	
     loadThisListToRootScope: function(listId) {
-	  var list = null;
-	  angular.forEach($rootScope.lists, function(value, key) {
-		  if (listId in value['items']) {
-			  $rootScope.list = value['items'][listId];
-			  return;
+	  console.log('DEBUG: Running loadThisListToRootScope for listId: ', listId);
+
+	  if ($rootScope.lists) {
+		  angular.forEach($rootScope.lists, function(value, key) {
+			  if (listId in value['items']) {
+				  console.log('DEBUG: Set list to $rootScope from $rootScope.lists for id: ', listId);
+				  $rootScope.list = value['items'][listId];
+			      $rootScope.addLocationToList($rootScope.list);
+				  return;
+			  }
+		  });
+		  if ($rootScope.list) {
+			  return true;
+		  } else {
+	  		console.log('ERROR: $rootScope.lists was set, but unable to find list with id: ', listId);
 		  }
-	  });
-	  return false;
-    }
+	  }
+	 // Usually when debugging
+	 $http.jsonp(
+	   'http://www.whatsnom.com/api/view_list.php?list_id=' + listId +'&format=json&callback=JSON_CALLBACK'
+	 ).success(function (data) {
+	   console.log('DEBUG: Refetched from API + set list to $rootScope for id: ', listId, 'and data: ',data);
+	   $rootScope.list = data;
+	   $rootScope.addLocationToList($rootScope.list);
+	   return true;
+	 }).error(function (data, status, headers, config) {
+	   console.log(status);
+	   return false;
+	 });	  
+     if ($rootScope.list) {
+	  return true;
+     } else {
+ 		console.log('ERROR: Refetched from API but still unable to find list with id: ', listId);
+     }
+   }
+   
+   
   };
 });

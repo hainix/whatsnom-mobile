@@ -64,9 +64,8 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 
 .controller('ListDetailCtrl', function($scope, $stateParams, Lists, $rootScope, $cordovaGeolocation, $ionicHistory, $ionicPopup, $state, $http, $ionicListDelegate, $ionicLoading) {
 	$scope.currentStateName = $ionicHistory.currentStateName();
-	Lists.loadThisListToRootScope($stateParams.listId);
 	$rootScope.refreshCurrentLocation();
-    $rootScope.addLocationToList($rootScope.list);
+	Lists.loadThisListToRootScope($stateParams.listId);
 			
 	$scope.filterTypeIcon = 'ion-navigate';	
 	$scope.listOrderField = 'position';

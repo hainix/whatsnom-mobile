@@ -7747,11 +7747,14 @@ a.button {
   box-shadow: inset 1px 1px 40px 0 rgba(0, 0, 0, 0.3); }
 
 .list-detail-container .list-detail-row .list-detail-row-overlay {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.55);
   opacity: 1;
   height: 100%;
   border-bottom: 1px solid #fff;
   padding-left: 30px; }
+
+.list-detail-container .activated .list-detail-row .list-detail-row-overlay {
+  background: rgba(64, 64, 64, 0.8); }
 
 /*
 .list-detail-container .row {
