@@ -2,29 +2,34 @@
     <ion-nav-buttons side="secondary">
       <button class="button icon {{filterTypeIcon}}" ng-click="toggleFilter()"></button>
     </ion-nav-buttons>
-
   <ion-content>
     <ion-list>
-      <div ng-if="list.review_count" class="item item-divider list-header-subtext" style="text-align: center">Based on  <b>{{list.critic_count}} Critics</b> and <b>{{list.review_count}} Reviews</b></div>
-
+      <div ng-if="list.review_count" class="item item-divider list-header-subtext" style="text-align: center">
+		  Based on  <b>{{list.critic_count}} Critics</b> and <b>{{list.review_count}} Reviews</b>
+	  </div>
+  	  <div class="lists-detail-container list-with-entries">
       <ion-item 
-	    class="item-remove-animate item-avatar item-icon-right" 
 		ng-repeat="entry in list.entries | orderBy:listOrderField" 
 		type="item-text-wrap" 
 		ng-attr-href="{{currentStateName == 'tab.saved-list-detail' ?  '#/tab/saved/' + list.id + '/' + entry.id  : '#/tab/lists/' + list.id + '/' + entry.id }}">
-        <img ng-src="{{entry.list_item_thumbnail}}"> 
-        <h2><span ng-if="entry.position" style="color: #787878;">{{entry.position}}. </span>{{entry.name}}</h2>
-        <p>
-			<span ng-if="entry.displayed_distance_from_me" style="color: #BDBDBD">{{entry.displayed_distance_from_me}} mi  </span>
-			{{entry.snippet}}
-		</p>
-        <!--<i class="icon ion-chevron-right icon-accessory"></i>-->
-        <ion-option-button 
-		  class="button-positive" 
-		  ng-click="saveEntry(entry.id)">
-          Save
-        </ion-option-button>
-      </ion-item>
+          <div class="list-detail-row" 
+		    style="background: url({{entry.list_item_thumbnail}}); background-position: center; background-size: cover;">
+		    <div class="list-entry-position" ng-if="entry.position" ><h2>{{entry.position}}</h2></div>
+		    <div class="list-detail-row-overlay">
+			  <h2>{{entry.name}}</h2>
+			  <p>
+				  <span 
+				    ng-if="entry.displayed_distance_from_me" 
+				    style="color:#BDBDBD">
+				    {{entry.displayed_distance_from_me}} mi  
+			      </span>
+			      {{entry.snippet}}
+			  </p>
+		    </div>
+		  </div>
+	    </ion-item>
+      </div>
     </ion-list>
+
   </ion-content>
 </ion-view>

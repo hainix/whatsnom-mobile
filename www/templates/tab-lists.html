@@ -5,28 +5,16 @@
 
     <ion-list ng-repeat="genreList in lists">
       <ion-item class="item-divider">{{genreList.name}}</ion-item>	
-  <div class="list-detail-container">
-    <ion-item ng-repeat="list in genreList.items" href="#/tab/lists/{{list.id}}">
-        <div class="list-detail-row" style="background: url({{list.cover}}); background-position: center; background-size: cover;">
-			<div class="list-detail-row-overlay">
-			   <h2>
-			     {{list.name}}
-			   </h2>
+  	  <div class="lists-detail-container">
+        <ion-item ng-repeat="list in genreList.items" href="#/tab/lists/{{list.id}}">
+          <div class="list-detail-row" style="background: url({{list.cover}}); background-position: center; background-size: cover;">
+		    <div class="list-detail-row-overlay">
+			  <h2>{{list.name}}</h2>
 			   <p>{{list.snippet}}</p>
-		   </div>
-		</div>
-	</ion-item>
-  </div>
-
-<!--
-      <ion-item class="item-remove-animate item-avatar item-icon-right" 
-	  ng-repeat="list in genreList.items" type="item-text-wrap" href="#/tab/lists/{{list.id}}">
-        <img ng-src="{{list.icon}}">
-        <h2>{{list.name}}</h2>
-        <p>{{list.snippet}}</p>
-        <i class="icon ion-chevron-right icon-accessory"></i>
-      </ion-item>
--->
+		    </div>
+		  </div>
+	    </ion-item>
+      </div>
     </ion-list>
   </ion-content>
 </ion-view>
