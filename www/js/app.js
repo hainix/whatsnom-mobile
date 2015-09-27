@@ -16,9 +16,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       cordova.plugins.Keyboard.disableScroll(true);
-  	  $cordovaStatusbar.overlaysWebView(true);
+  	  //$cordovaStatusbar.overlaysWebView(true);
       $cordovaStatusbar.styleHex('#460AA1');
-
     }
   });
 })

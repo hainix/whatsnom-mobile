@@ -2,30 +2,26 @@
 	<ion-nav-title></ion-nav-title>
     <ion-nav-buttons side="secondary">
 	    <a  
-		  href="#"
 		  ng-if="displayParams.phoneString && place.phone" 
 		  href="tel: {{place.phone}}"
 		  class="button button-icon button-positive icon ion-ios-telephone">
 		</a>
 		<a 
-		  href="#"
 		  ng-if="place.opentable_id"
 		ng-click="openExternalURL('http://mobile.opentable.com/opentable/?restId={{place.opentable_id}}')"
 	      class="button button-icon button-positive icon ion-ios-bookmarks">
 		</a>
 		<a 
-		  href="#"
 		  ng-if="!place.opentable_id && place.yelp_seat_me"
 		  ng-click="openExternalURL('https://www.seatme.yelp.com/r/{{place.yelp_seat_me}}')"
 		  class="button button-icon button-positive icon ion-ios-bookmarks">
 	    </a>
 	    <a  
-		  href="#"
+		ng-if="place.latitude"
 		ng-click="openExternalURL('http://maps.apple.com/?q=+{{place.latitude}},{{place.longitude}}')"
 		class="button button-icon button-positive icon ion-ios-bookmarks ion-ios-navigate-outline">
 	    </a>
 	    <a  
-		  href="#"
 		  ng-click="saveEntry({{listEntryForPlace.id}})"
 		  class="button button-icon button-positive icon {{saveEntryActionIcon}}">
 		</a>
@@ -53,8 +49,8 @@
   			</div>
 		  </div>
 		  <div ng-if="!(listEntryForPlace && listEntryForPlace.tip) && place.snippet">
+			<div class="item item-divider"  style="margin-top: 8px;">Critic's Summary</div>
 			  <a
-				target="_blank"
 			    ng-click="openExternalURL('http://m.yelp.com/biz/{{place.yelp_id}}')">
   		  	    <div class="item item-text-wrap">
   				  {{place.snippet}}
@@ -95,7 +91,7 @@
 	  <!-- Map and Address -->	  
 	  <div class="list" ng-if="place.latitude">
 	    <div class="item item-divider">Directions</div>
-	    <a href="#" ng-click="openExternalURL('http://maps.apple.com/?q=+{{place.latitude}},{{place.longitude}}')">
+	    <a  ng-click="openExternalURL('http://maps.apple.com/?q=+{{place.latitude}},{{place.longitude}}')">
 		  <div class="map">
 	        <div class="row">
 			  <div class="col col-100">

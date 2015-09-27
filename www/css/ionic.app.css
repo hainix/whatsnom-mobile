@@ -7798,7 +7798,8 @@ ion-content.has-header {
 .place-detail-container .lists-detail-container p {
   text-align: center;
   padding: 0;
-  width: 100%; }
+  width: 100%;
+  color: rgba(255, 255, 255, 0.7); }
 
 .place-detail-container .lists-detail-container .list-detail-row .list-detail-row-overlay {
   padding: 0; }
