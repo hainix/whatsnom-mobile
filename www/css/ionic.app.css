@@ -7710,6 +7710,9 @@ ion-content.has-header {
 .secondary-buttons .activated {
   background-color: #f5f5f5; }
 
+.secondary-buttons .button {
+  width: 50px; }
+
 .loading-container .loading {
   background-color: rgba(255, 255, 255, 0.9);
   font-weight: 500; }
@@ -7785,6 +7788,21 @@ ion-content.has-header {
 .lists-detail-container .activated .list-detail-row .list-detail-row-overlay {
   background: rgba(64, 64, 64, 0.8); }
 
+/* share as much as we can with list detail for places */
+.place-detail-container .lists-detail-container h2 {
+  padding: 48px 0 0 0;
+  text-align: center;
+  font-size: 28px;
+  line-height: 12px; }
+
+.place-detail-container .lists-detail-container p {
+  text-align: center;
+  padding: 0;
+  width: 100%; }
+
+.place-detail-container .lists-detail-container .list-detail-row .list-detail-row-overlay {
+  padding: 0; }
+
 /* Map */
 .map .row, .map .col {
   padding: 0; }
@@ -7805,13 +7823,18 @@ ion-content.has-header {
   background-color: rgba(0, 0, 0, 0.7) !important;
   /* or transparent, or background:none */ }
 
+/*
 .place-detail-container div.button-bar div.button-bar-action-text {
-  margin-top: -15px;
-  font-size: 12px; }
-
+	margin-top: -15px;
+	font-size: 12px;
+}
+*/
 /* snippet */
 .place-detail-container .list {
   margin: 12px 0; }
+
+.place-detail-container .row, .place-detail-container .col {
+  padding: 0; }
 
 .place-detail-container .list a {
   text-decoration: none; }

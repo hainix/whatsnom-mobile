@@ -1,51 +1,53 @@
 <ion-view>
-  <ion-nav-title>
-	{{place.name}}
-  </ion-nav-title>
+	<ion-nav-title></ion-nav-title>
+    <ion-nav-buttons side="secondary">
+	    <a  
+		  href="#"
+		  ng-if="displayParams.phoneString && place.phone" 
+		  href="tel: {{place.phone}}"
+		  class="button button-icon button-positive icon ion-ios-telephone">
+		</a>
+		<a 
+		  href="#"
+		  ng-if="place.opentable_id"
+		ng-click="openExternalURL('http://mobile.opentable.com/opentable/?restId={{place.opentable_id}}')"
+	      class="button button-icon button-positive icon ion-ios-bookmarks">
+		</a>
+		<a 
+		  href="#"
+		  ng-if="!place.opentable_id && place.yelp_seat_me"
+		  ng-click="openExternalURL('https://www.seatme.yelp.com/r/{{place.yelp_seat_me}}')"
+		  class="button button-icon button-positive icon ion-ios-bookmarks">
+	    </a>
+	    <a  
+		  href="#"
+		ng-click="openExternalURL('http://maps.apple.com/?q=+{{place.latitude}},{{place.longitude}}')"
+		class="button button-icon button-positive icon ion-ios-bookmarks ion-ios-navigate-outline">
+	    </a>
+	    <a  
+		  href="#"
+		  ng-click="saveEntry({{listEntryForPlace.id}})"
+		  class="button button-icon button-positive icon {{saveEntryActionIcon}}">
+		</a>
+		
+    </ion-nav-buttons>
   <ion-content class="place-detail-container">
-    <div ng-if="place.profile_pic"
-	  class="main-place-image"
-      style="background-image: url('{{place.profile_pic}}')">
-	  &nbsp;
-    </div>
-    <div class="place-action-container">
-		<div class="button-bar">
-		    <a  
-			  ng-if="displayParams.phoneString && place.phone" 
-			  href="tel: {{place.phone}}"
-			  class="button button-icon button-positive icon ion-ios-telephone">
-				<div class="button-bar-action-text">
-					Call
-				</div>
-			</a>
-		    <a 
-			  ng-if="place.opentable_id"
-			  ng-click="openExternalURL('http://mobile.opentable.com/opentable/?restId={{place.opentable_id}}')"
-			  class="button button-icon button-positive icon ion-ios-bookmarks">
-				<div class="button-bar-action-text">
-					Book
-				</div>
-			</a>
-		    <a 
-			  ng-if="!place.opentable_id && place.yelp_seat_me"
-			  ng-click="openExternalURL('https://www.seatme.yelp.com/r/{{place.yelp_seat_me}}')"
-			  class="button button-icon button-positive icon ion-ios-bookmarks">
-				<div class="button-bar-action-text">
-					Book
-				</div>
-			</a>
-		    <a 
-			ng-click="saveEntry({{listEntryForPlace.id}})"
-			class="button button-icon button-positive icon {{saveEntryActionIcon}}">
-				<div class="button-bar-action-text">
-					{{saveEntryActionText}}
-				</div>
-			</a>
-		</div>
+<div class="lists-detail-container">
+  <div class="list-detail-row"       
+  style="background-image: url('{{place.profile_pic}}'); background-position: center; background-size: cover;">
+	  <div class="list-detail-row-overlay">
+	    <h2>{{place.name}}</h2>
+	  	<p ng-if="displayParams.displayableNeighborhood" class="subtle-text">
+	      {{displayParams.displayableNeighborhood}}
+ 		</p>
   	  </div>
+  </div>
+</div>
 	  
 	  <!-- Snippet -->
+
 		  <div ng-if="(listEntryForPlace && listEntryForPlace.tip)">
+			<div class="item item-divider"  style="margin-top: 8px;">Critic's Summary</div>
   		  	<div class="item item-text-wrap">
   				{{listEntryForPlace.tip}}
   			</div>
@@ -92,6 +94,7 @@
 	  	  
 	  <!-- Map and Address -->	  
 	  <div class="list" ng-if="place.latitude">
+	    <div class="item item-divider">Directions</div>
 	    <a href="#" ng-click="openExternalURL('http://maps.apple.com/?q=+{{place.latitude}},{{place.longitude}}')">
 		  <div class="map">
 	        <div class="row">
