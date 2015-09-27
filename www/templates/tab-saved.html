@@ -12,7 +12,8 @@
 	  <ion-list ng-repeat="list in bookmarks" ng-if="bookmarks">
 	      <a 
 		    href="#/tab/saved/{{list.id}}"
-  		    class="item item-divider item-icon-right">
+  		    class="item item-divider item-icon-right"
+			style="margin-top: 6px;">
 		    {{list.city_name}} {{list.plural_entry_name}}
    	 	    <i class="button-small icon ion-ios-list-outline" style="right: -2px;"></i>
 		  </a>	
@@ -52,19 +53,14 @@
 	      </div>
       </ion-list>
 
-		<label class="item" ng-hide="hideFBLoginButton">
-		    <button class="button button-block button-positive" ng-click="fbLogin()">
-		    Login with Facebook to Save Places
-		    </button>
-		</label>
-		<label class="item" ng-hide="!hideFBLoginButton">
-		    <button class="button button-block" ng-click="fbLogout()">
-		    Logout {{logout_posttext}}
-		    </button>
-		</label>
-		<!--<ion-item ng-if="fbuid">storing data for user {{fbuid}}</ion-item>
+  	  <button ng-hide="hideFBLoginButton" class="button button-block button-positive" ng-click="fbLogin()">
+	    Login with Facebook to Save Places
+ 	  </button>
+	  <button ng-hide="!hideFBLoginButton" class="item button button-block" ng-click="fbLogout()">
+	    Logout {{logout_posttext}}
+	  </button>
+			<!--<ion-item ng-if="fbuid">storing data for user {{fbuid}}</ion-item>
 		<ion-item ng-if="!fbuid">no active user session</ion-item>-->
-
     </ion-list>
   </ion-content>
 </ion-view>

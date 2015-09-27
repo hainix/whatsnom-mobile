@@ -42,32 +42,21 @@
 	  
 	  <!-- Snippet -->
 
-		  <div ng-if="(listEntryForPlace && listEntryForPlace.tip)">
-			<div class="item item-divider"  style="margin-top: 8px;">Critic's Summary</div>
-  		  	<div class="item item-text-wrap">
-  				{{listEntryForPlace.tip}}
-  			</div>
-		  </div>
-		  <div ng-if="!(listEntryForPlace && listEntryForPlace.tip) && place.snippet">
-			<div class="item item-divider"  style="margin-top: 8px;">Critic's Summary</div>
-			  <a
-			    ng-click="openExternalURL('http://m.yelp.com/biz/{{place.yelp_id}}')">
-  		  	    <div class="item item-text-wrap">
-  				  {{place.snippet}}
-  			    </div>
-			  </a>
-		  </div>
-		  
-	  <!-- Lists and Reviews -->
-  	  <div class="list">
+	  <div style="margin-top: 12px;" ng-if="listPlaceWasViewedFrom">
 		<a
 		  class="item item-divider item-icon-right"
-		  ng-if="listPlaceWasViewedFrom"
 		  ng-attr-href="{{currentStateName === 'tab.saved-place-detail' ?  '#/tab/saved/' + listPlaceWasViewedFrom.id : '#/tab/lists/' + listPlaceWasViewedFrom.id }}">
 		    #{{listEntryForPlace.position}} {{listPlaceWasViewedFrom.entry_name}}
 			<span ng-if="listPlaceWasViewedFrom.city_name"> in {{listPlaceWasViewedFrom.city_name}}</span>
 	 	  <i class="button-small icon ion-ios-list-outline" style="right: -2px;"></i>
 		</a>
+	  	<div class="item item-text-wrap" ng-if="(listEntryForPlace && listEntryForPlace.tip)">
+			{{listEntryForPlace.tip}}
+		</div>
+	  </div>
+		  
+	  <!-- Lists and Reviews -->
+  	  <div class="list">
 		<div class="place-detail-link"
 		    ng-if="place.yelp_id">
 			<a 
@@ -90,7 +79,6 @@
 	  	  
 	  <!-- Map and Address -->	  
 	  <div class="list" ng-if="place.latitude">
-	    <div class="item item-divider">Directions</div>
 	    <a  ng-click="openExternalURL('http://maps.apple.com/?q=+{{place.latitude}},{{place.longitude}}')">
 		  <div class="map">
 	        <div class="row">
