@@ -19,7 +19,9 @@ $base-background-color: #dcdee2 !default;
 //$base-background-color: #CC3300 !default;
 $bar-height: 50px !default;
 
-$accent-color: #460AA1;
+$accent-color: #4017B0;
+$activated-button-color: #f5f5f5;
+$royal: $accent-color !default;
 
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
@@ -42,9 +44,17 @@ ion-content.has-header {
 	background-color: #f5f5f5;
 }
 */
+.popup-body {
+	text-align: center;
+}
+
+.popup-buttons .button-positive {
+	background-color: $accent-color;
+	border-color: $accent-color;
+}
 
 .secondary-buttons .activated {
-	background-color: #f5f5f5;	
+	background-color: $activated-button-color;	
 }
 
 .secondary-buttons .button {
@@ -58,6 +68,10 @@ ion-content.has-header {
 
 .bar .title {
 	font-size: 15px;
+}
+
+.subtle-text  {
+ 	color: #999999; 	
 }
 
 
@@ -167,43 +181,13 @@ ion-content.has-header {
 }
 
 /* Map */
+
 .map .row, .map .col{
 	padding: 0;
 }
 
  
 /* Place detail */
-$place-image-height: 320px;
-$action-container-height: 70px;
-
-
-.place-detail-container div.main-place-image {
-	margin-top: -$bar-height * 2;
-    width:100%; 
-    height: $place-image-height; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    background-size: cover;	
-}
-
-.place-detail-container div.place-action-container {
-	margin-top: -$action-container-height;
-	height: $action-container-height;
-	border-top: 0.5px solid rgba(255, 255, 255, .3);
-    background-color: rgba(0,0,0,.70) !important; /* or transparent, or background:none */
-}
-/*
-.place-detail-container div.button-bar div.button-bar-action-text {
-	margin-top: -15px;
-	font-size: 12px;
-}
-*/
-
-/* snippet */
-.place-detail-container .list {
-	margin: 12px 0;
-}
-
 .place-detail-container .row, .place-detail-container .col {
 	padding: 0;
 }
@@ -225,20 +209,20 @@ $action-container-height: 70px;
 .place-detail-container .address-link {
 	margin-top: -5px;
 }
+
 .place-detail-container .address-link .button {
-	line-height: 13px;
-	font-size: 13px;
+	line-height: 16px;
+	font-size: 14px;
 	padding: 12px;
-	padding-right: 50px;
+	padding-right: 60px;
 }
 
 .place-detail-container .yelp-link .button {
 	line-height: 20px;
 	padding: 8px;
 }
-
 .place-detail-container .address-link .button .subtle-text {
-	color: #999999;
+	margin-top: 2px;
 }
 
 /* yelp button */

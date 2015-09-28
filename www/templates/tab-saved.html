@@ -1,6 +1,6 @@
 <ion-view view-title="Saved" cache-view="true">
     <ion-nav-buttons side="secondary" ng-hide="!hideFBLoginButton">
-      <button class="button icon {{filterTypeIcon}}" ng-click="toggleFilter()"></button>
+      <button class="button icon {{filterTypeIcon}} "  style="padding-top: 3px;" ng-click="toggleFilter()"></button>
     </ion-nav-buttons>
   <ion-content>
     <ion-refresher  ng-if="bookmarks" pulling-text="Pull to refresh" on-refresh="pullToRefreshBookmarks()">
@@ -53,9 +53,17 @@
 	      </div>
       </ion-list>
 
-  	  <button ng-hide="hideFBLoginButton" class="button button-block button-positive" ng-click="fbLogin()">
-	    Login with Facebook to Save Places
- 	  </button>
+	  <div style="margin-top: 100px" ng-hide="hideFBLoginButton">
+        <ion-list>
+	  	  <ion-item>
+		    <button class="button button-block button-royal" ng-click="fbLogin()">
+		      Login with Facebook to Save Places
+	 	    </button>
+		  <div class="ion-locked subtle-text" style="text-align: center; font-size: 14px">&nbsp;&nbsp;We do not post or share your information.</div>
+  		  </ion-item>
+	    </ion-list>
+ 	 </div>
+	  
 	  <button ng-hide="!hideFBLoginButton" class="item button button-block" ng-click="fbLogout()">
 	    Logout {{logout_posttext}}
 	  </button>

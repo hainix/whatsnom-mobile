@@ -85,7 +85,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 			  +'&entry_id=' + entryID + '&force_state=added&format=json&callback=JSON_CALLBACK'
 			).success(function (data) {
 				if (data == 'added') {
-					$ionicLoading.show({ template: 'Saved', noBackdrop: true, duration: 500 });
+					$ionicLoading.show({ template: 'Saved Bookmark', noBackdrop: true, duration: 500 });
 					$ionicListDelegate.closeOptionButtons();
 				} else {
 					console.log('unrecognized response from api adder from uid ' + window.localStorage.getItem('fbuid')
@@ -112,7 +112,11 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 
 })
 
-.controller('EntryDetailCtrl', function($scope, $stateParams, $http, $q, $ionicHistory, $ionicPopup, $state, Lists) {
+.controller('EntryDetailCtrl', function($scope, $stateParams, $http, $q, $ionicHistory, $ionicPopup, $state, Lists, $ionicLoading) {
+	$scope.currentLat = window.localStorage.getItem('lat');
+	$scope.currentLong = window.localStorage.getItem('long');
+	console.log($stateParams.currentLong, 'long');
+
     var deferred_outer = $q.defer();
 	$scope.currentStateName = $ionicHistory.currentStateName();
 	$http.jsonp(
@@ -157,10 +161,12 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 			).success(function (data) {
 				console.log('DEBUG: bookmark response: ', data);
 				if (data == 'removed') {
-					$scope.saveEntryActionText = 'Save';
+					$ionicLoading.show({ template: 'Removed Bookmark', noBackdrop: true, duration: 600 });
+					//$scope.saveEntryActionText = 'Save';
 					$scope.saveEntryActionIcon = 'ion-bookmark'; 
 				} else if (data == 'added') {
-					$scope.saveEntryActionText = 'Remove'; 
+					$ionicLoading.show({ template: 'Saved Bookmark', noBackdrop: true, duration: 600 });
+					//$scope.saveEntryActionText = 'Remove'; 
 					$scope.saveEntryActionIcon = 'ion-ios-close-outline'; 
 					
 				} else {
