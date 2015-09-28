@@ -1,74 +1,86 @@
 <ion-view view-title="Saved" cache-view="true">
-    <ion-nav-buttons side="secondary" ng-hide="!hideFBLoginButton">
-      <button class="button icon {{filterTypeIcon}} "  style="padding-top: 3px;" ng-click="toggleFilter()"></button>
-    </ion-nav-buttons>
+  <ion-nav-buttons side="secondary" ng-hide="!hideFBLoginButton">
+    <button 
+      class="button icon {{filterTypeIcon}}"  
+      style="padding-top: 3px;" 
+      ng-hide="!hideFBLoginButton"
+      ng-click="toggleFilter()">
+    </button>
+  </ion-nav-buttons>
   <ion-content>
-    <ion-refresher  ng-if="bookmarks" pulling-text="Pull to refresh" on-refresh="pullToRefreshBookmarks()">
+    <ion-refresher
+      ng-if="bookmarks" 
+      pulling-text="Pull to refresh" 
+      on-refresh="pullToRefreshBookmarks()">
     </ion-refresher>
     <ion-list>
-	  <ion-item ng-if="hideFBLoginButton && (!bookmarks || bookmarks.length == 0)" style="text-align: center;">
-	  	You haven't saved any places yet
-	  </ion-item>
-	  <ion-list ng-repeat="list in bookmarks" ng-if="bookmarks">
+	    <ion-item 
+        ng-if="hideFBLoginButton && (!bookmarks || bookmarks.length == 0)" 
+        style="text-align: center;">
+	  	  You haven't saved any places yet
+	    </ion-item>
+	    <ion-list ng-repeat="list in bookmarks" ng-if="bookmarks">
 	      <a 
-		    href="#/tab/saved/{{list.id}}"
+		      href="#/tab/saved/{{list.id}}"
   		    class="item item-divider item-icon-right"
-			style="margin-top: 6px;">
-		    {{list.city_name}} {{list.plural_entry_name}}
+			    style="margin-top: 6px;">
+		      {{list.city_name}} {{list.plural_entry_name}}
    	 	    <i class="button-small icon ion-ios-list-outline" style="right: -2px;"></i>
-		  </a>	
-		  
-		  
-		  
+		    </a>	
 	  	  <div class="lists-detail-container list-with-entries">
 	        <ion-item 
-			  ng-repeat="entry in list.entries | orderBy:listOrderField" 
-			  type="item-text-wrap" 
-			  href="#/tab/saved/{{entry.list_id}}/{{entry.id}}">
+			      ng-repeat="entry in list.entries | orderBy:listOrderField" 
+			      type="item-text-wrap" 
+			      href="#/tab/saved/{{entry.list_id}}/{{entry.id}}">
 	          <div class="list-detail-row" 
-			    style="background: url({{entry.list_item_thumbnail}}); background-position: center; background-size: cover;">
-			    <div class="list-entry-position" ng-if="entry.position" >
-					<h2 ng-class="(entry.position > 9) ? 'smaller-text' : ''">
-						{{entry.position}}
-					</h2>
-				</div>
-			    <div class="list-detail-row-overlay">
-				  <h2>{{entry.name}}</h2>
-				  <p>
-					  <span 
-					    ng-if="entry.displayed_distance_from_me" 
-					    class="distance-from-me">
-					    {{entry.displayed_distance_from_me}} mi · 
-				      </span>
-				      {{entry.snippet}}
-				  </p>
-			    </div>
-			  </div>
+			        style="background: url({{entry.list_item_thumbnail}}); background-position: center; background-size: cover;">
+			        <div class="list-entry-position" ng-if="entry.position" >
+				        <h2 ng-class="(entry.position > 9) ? 'smaller-text' : ''">
+					        {{entry.position}}
+				        </h2>
+				      </div>
+			        <div class="list-detail-row-overlay">
+			          <h2>{{entry.name}}</h2>
+				        <p>
+				          <span 
+					          ng-if="entry.displayed_distance_from_me" 
+				            class="distance-from-me">
+				            {{entry.displayed_distance_from_me}} mi · 
+				          </span>
+				          {{entry.snippet}}
+				        </p>
+			        </div>
+			      </div>
 	          <ion-option-button 
-	  		    class="button-assertive" 
-			    ng-click="removeEntry(entry.id)">
+	  		      class="button-assertive" 
+			        ng-click="removeEntry(entry.id)">
 	            Remove
 	          </ion-option-button>
-		    </ion-item>
+		      </ion-item>
 	      </div>
       </ion-list>
-
-	  <div style="margin-top: 100px" ng-hide="hideFBLoginButton">
-        <ion-list>
-	  	  <ion-item>
-		    <button class="button button-block button-royal" ng-click="fbLogin()">
-		      Login with Facebook to Save Places
-	 	    </button>
-		  <div class="ion-locked subtle-text" style="text-align: center; font-size: 14px">&nbsp;&nbsp;We do not post or share your information.</div>
-  		  </ion-item>
-	    </ion-list>
- 	 </div>
-	  
-	  <button ng-hide="!hideFBLoginButton" class="item button button-block" ng-click="fbLogout()">
-	    Logout {{logout_posttext}}
-	  </button>
-			<!--<ion-item ng-if="fbuid">storing data for user {{fbuid}}</ion-item>
-		<ion-item ng-if="!fbuid">no active user session</ion-item>-->
+	    <button 
+        ng-hide="!hideFBLoginButton" 
+        class="item button button-block" 
+        ng-click="fbLogout()">
+	      Logout {{logout_posttext}}
+	    </button>
     </ion-list>
+    <div class="center scroll" ng-hide="hideFBLoginButton">
+      <div class="row">
+        <div class="col center">
+  	  	    <ion-item>
+      		    <button class="button button-block button-royal" ng-click="fbLogin()">
+      		      Login with Facebook to Save Places
+      	 	    </button>
+  		        <div 
+                class="ion-locked subtle-text" 
+                style="text-align: center; font-size: 14px">
+                &nbsp;&nbsp;We do not post or share your information.
+              </div>
+    		    </ion-item>
+        </div>
+      </div>
+    </div>
   </ion-content>
 </ion-view>
