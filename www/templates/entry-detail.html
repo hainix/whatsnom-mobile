@@ -1,111 +1,116 @@
 <ion-view>
 	<ion-nav-title></ion-nav-title>
     <ion-nav-buttons side="secondary">
-	    <a  
-		  ng-if="displayParams.phoneString && place.phone" 
-		  href="tel: {{place.phone}}"
-		  class="button button-icon button-positive icon ion-ios-telephone">
-		</a>
-		<a 
-		  ng-if="place.opentable_id"
+	  <a  
+        ng-if="displayParams.phoneString && place.phone" 
+		href="tel: {{place.phone}}"
+		class="button button-icon button-positive icon ion-ios-telephone">
+      </a>
+      <a 
+	    ng-if="place.opentable_id"
 		ng-click="openExternalURL('http://mobile.opentable.com/opentable/?restId={{place.opentable_id}}')"
-	      class="button button-icon button-positive icon ion-ios-bookmarks">
-		</a>
-		<a 
-		  ng-if="!place.opentable_id && place.yelp_seat_me"
-		  ng-click="openExternalURL('https://www.seatme.yelp.com/r/{{place.yelp_seat_me}}')"
-		  class="button button-icon button-positive icon ion-ios-bookmarks">
-	    </a>
-	    <a  
-		ng-if="place.latitude"
+	    class="button button-icon button-positive icon ion-ios-bookmarks">
+	  </a>
+      <a 
+	    ng-if="!place.opentable_id && place.yelp_seat_me"
+		ng-click="openExternalURL('https://www.seatme.yelp.com/r/{{place.yelp_seat_me}}')"
+		class="button button-icon button-positive icon ion-ios-bookmarks">
+	  </a>
+	  <a  
+        ng-if="place.latitude"
 		ng-click="openExternalURL('http://maps.apple.com/?q=+{{place.latitude}},{{place.longitude}}')"
 		class="button button-icon button-positive icon ion-ios-bookmarks ion-ios-navigate-outline">
-	    </a>
-	    <a  
-		  ng-click="saveEntry({{listEntryForPlace.id}})"
-		  class="button button-icon button-positive icon {{saveEntryActionIcon}}">
-		</a>
-		
+	  </a>
+	  <a  
+	    ng-click="saveEntry({{listEntryForPlace.id}})"
+		class="button button-icon button-positive icon {{saveEntryActionIcon}}">
+	  </a>
     </ion-nav-buttons>
   <ion-content class="place-detail-container">
-<div class="lists-detail-container">
-  <div class="list-detail-row"       
-  style="background-image: url('{{place.profile_pic}}'); background-position: center; background-size: cover;">
-	  <div class="list-detail-row-overlay">
-	    <h2>{{place.name}}</h2>
-	  	<p ng-if="displayParams.displayableNeighborhood" class="subtle-text">
-	      {{displayParams.displayableNeighborhood}}
- 		</p>
-  	  </div>
-  </div>
-</div>
-	  
-	  <!-- Snippet -->
-
-	  <div style="margin-top: 20px;" ng-if="listPlaceWasViewedFrom">
-		<a
-		  class="item item-divider item-icon-right"
-		  ng-attr-href="{{currentStateName === 'tab.saved-place-detail' ?  '#/tab/saved/' + listPlaceWasViewedFrom.id : '#/tab/lists/' + listPlaceWasViewedFrom.id }}">
-		    #{{listEntryForPlace.position}} {{listPlaceWasViewedFrom.entry_name}}
-			<span ng-if="listPlaceWasViewedFrom.city_name"> in {{listPlaceWasViewedFrom.city_name}}</span>
-	 	  <i class="button-small icon ion-ios-list-outline" style="right: -2px;"></i>
-		</a>
-	  	<div class="item item-text-wrap" ng-if="(listEntryForPlace && listEntryForPlace.tip)">
-			{{listEntryForPlace.tip}}
-		</div>
-	  </div>
-		  
-	  <!-- Lists and Reviews -->
-  	  <div class="list">
-
-		<div ng-if="!(listEntryForPlace && listEntryForPlace.tip)"></div>
-
-
-		<div class="place-detail-link"
-		    ng-if="place.yelp_id">
-			<a 
-			  ng-if="place.yelp_id"
-			  class="button button-full button-light item-icon-right" 
-			  style="padding-left: 14px; background-color: #F5F5F5;"
-			  ng-click="openExternalURL('http://m.yelp.com/biz/{{place.yelp_id}}')">
-			  <div>
-		        {{place.review_count}} Yelp Reviews
-	   		  </div>			
-		 	  <i class="icon">
-			    <div 
-		          class="stars" 
-				  style="background-position: 0px {{displayParams.starRatingOffset}}px;">
-			    </div>
-	          </i>
-		    </a>
-	      </div>
-	  </div>
-	  	  
-	  <!-- Map and Address -->	  
-	  <div class="list" ng-if="place.latitude">
-	    <a  ng-click="openExternalURL('http://maps.apple.com/?q=+{{place.latitude}},{{place.longitude}}')">
-		  <div class="map">
-	        <div class="row">
-			  <div class="col col-100">
-		        <img ng-if="currentLong" src="				  
-				http://maps.googleapis.com/maps/api/staticmap?autoscale=false&size=400x150&maptype=roadmap&format=png&visual_refresh=true&markers=icon:0000%7Cshadow:true%7C{{place.latitude}},{{place.longitude}}&markers=icon:http://www.whatsnom.com/icondir/currentloc.png?1%7Cshadow:true%7C{{currentLat}},{{currentLong}}" style="width:100%" />
-		        <img ng-if="!currentLong" src="http://maps.googleapis.com/maps/api/staticmap?center={{place.latitude}},{{place.longitude}}&zoom=15&scale=2&size=400x150&maptype=roadmap&key=AIzaSyBtS-_FLNzSZDSUf9FRBvB1_2Z4OqTMPPc&format=png&visual_refresh=true&markers=size:medium%7Ccolor:0xff2600%7Clabel:0%7C{{place.latitude}},{{place.longitude}}" style="width:100%" />
-			  </div>
-			</div>
-		  </div>
-		  <div class="place-detail-link address-link">
-	        <div 
-			  class="button button-full button-light">
-			  <div ng-if="displayParams.displayableAddress">
-		        {{displayParams.displayableAddress}}
-	   		  </div>
-			  <div ng-if="displayParams.displayableNeighborhood" class="subtle-text">
-			    {{displayParams.displayableNeighborhood}}
-	   		  </div>
-			</div>
-	      </div>
-		</a>
+  
+    <!-- Place header -->
+    <div class="lists-detail-container">
+      <div 
+	    class="list-detail-row"       
+        style="background-image: url('{{place.profile_pic}}'); background-position: center; background-size: cover;">
+	    <div class="list-detail-row-overlay">
+	      <h2>{{place.name}}</h2>
+	  	  <p ng-if="displayParams.displayableNeighborhood" class="subtle-text">
+	        {{displayParams.displayableNeighborhood}}
+ 		  </p>
+  	    </div>
       </div>
+    </div>
+	
+	<!-- Snippet -->
+	<div style="margin-top: 20px;" ng-if="listPlaceWasViewedFrom">
+      <a
+	    class="item item-divider item-icon-right"
+		ng-attr-href="{{currentStateName === 'tab.saved-place-detail' ?  '#/tab/saved/' + listPlaceWasViewedFrom.id : '#/tab/lists/' + listPlaceWasViewedFrom.id }}">
+		#{{listEntryForPlace.position}} {{listPlaceWasViewedFrom.entry_name}}
+	    <span ng-if="listPlaceWasViewedFrom.city_name"> in {{listPlaceWasViewedFrom.city_name}}</span>
+	 	<i class="button-small icon ion-ios-list-outline" style="right: -2px;"></i>
+      </a>
+	  <div class="item item-text-wrap" ng-if="(listEntryForPlace && listEntryForPlace.tip)">
+        {{listEntryForPlace.tip}}
+	  </div>
+	</div>
+		  
+	<!-- Lists and Reviews -->
+  	<div class="list">
+      <div ng-if="!(listEntryForPlace && listEntryForPlace.tip)"></div>
+	  <div 
+	    class="place-detail-link"
+		ng-if="place.yelp_id">
+	    <a 
+	      ng-if="place.yelp_id"
+	      class="button button-full button-light item-icon-right" 
+	      style="padding-left: 14px; background-color: #F5F5F5;"
+		  ng-click="openExternalURL('http://m.yelp.com/biz/{{place.yelp_id}}')">
+		  <div>
+		    {{place.review_count}} Yelp Reviews
+	      </div>			
+		  <i class="icon">
+		    <div 
+		      class="stars" 
+		      style="background-position: 0px {{displayParams.starRatingOffset}}px;">
+	        </div>
+	      </i>
+		</a>
+	  </div>
+	</div>
+	  	  
+	<!-- Map and Address -->	  
+	<div class="list" ng-if="place.latitude">
+	  <a  
+	    ng-click="openExternalURL('http://maps.apple.com/?q=+{{place.latitude}},{{place.longitude}}')">
+		<div class="map">
+	      <div class="row">
+		    <div class="col col-100">
+		      <img 
+			    ng-if="currentLong" 
+				src="http://maps.googleapis.com/maps/api/staticmap?autoscale=false&size=400x150&maptype=roadmap&format=png&visual_refresh=true&markers=icon:0000%7Cshadow:true%7C{{place.latitude}},{{place.longitude}}&markers=icon:http://www.whatsnom.com/icondir/currentloc.png?1%7Cshadow:true%7C{{currentLat}},{{currentLong}}" 
+				style="width:100%" />
+		      <img 
+			    ng-if="!currentLong"
+				src="http://maps.googleapis.com/maps/api/staticmap?center={{place.latitude}},{{place.longitude}}&zoom=15&scale=2&size=400x150&maptype=roadmap&key=AIzaSyBtS-_FLNzSZDSUf9FRBvB1_2Z4OqTMPPc&format=png&visual_refresh=true&markers=size:medium%7Ccolor:0xff2600%7Clabel:0%7C{{place.latitude}},{{place.longitude}}" 
+				style="width:100%" />
+			</div>
+	      </div>
+		</div>
+		<div class="place-detail-link address-link">
+	      <div 
+		    class="button button-full button-light">
+			<div ng-if="displayParams.displayableAddress">
+		      {{displayParams.displayableAddress}}
+	   		</div>
+			<div ng-if="displayParams.displayableNeighborhood" class="subtle-text">
+			  {{displayParams.displayableNeighborhood}}
+	   		</div>
+	      </div>
+	    </div>
+      </a>
+    </div>
 	  
   </ion-content>
 </ion-view>

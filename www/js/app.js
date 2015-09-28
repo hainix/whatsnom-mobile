@@ -7,7 +7,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter.services', 'ngOpenFB', 'ngIOS9UIWebViewPatch'])
 
-.run(function($ionicPlatform, ngFB, $cordovaStatusbar) {
+.run(function($ionicPlatform, ngFB) {
 	ngFB.init({appId: '299948876841231'});
 	
   $ionicPlatform.ready(function() {
@@ -16,17 +16,9 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       cordova.plugins.Keyboard.disableScroll(true);
-  	  //$cordovaStatusbar.overlaysWebView(true);
-      $cordovaStatusbar.styleHex('#460AA1');
     }
   });
 })
-/*
-.run(function($cordovaStatusbar) {
-	$cordovaStatusbar.overlaysWebView(true);
-    $cordovaStatusbar.styleHex('#460AA1');
-})
-*/
 
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
   

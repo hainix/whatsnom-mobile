@@ -14,20 +14,85 @@ $assertive:                       #ef473a !default;
 $royal:                           #886aea !default;
 $dark:                            #444 !default;
 */
-
 $base-background-color: #dcdee2 !default;
 //$base-background-color: #CC3300 !default;
-$bar-height: 50px !default;
+//$bar-height: 30px !default;
 
 $accent-color: #4017B0;
 $activated-button-color: #f5f5f5;
 $royal: $accent-color !default;
+$positive: $accent-color !default;
 
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
+
+.scroll {
+	height: 100%;
+}
+
+.spinner-container .spinner svg {
+  width: 50px;
+  height: 50px;
+  margin-top: 6px;
+}
+
+/* START status bar hacks */
+.platform-ios.platform-cordova:not(.fullscreen) .bar-header
+{
+  height: 44px !important;
+}
+.platform-ios.platform-cordova:not(.fullscreen) .bar-header:not(.bar-subheader)
+{
+  height: 44px !important;
+}
+
+.platform-ios.platform-cordova:not(.fullscreen) .bar-header:not(.bar-subheader).item-input-inset .item-input-wrapper
+{
+  margin-top: 0px !important;
+}
+
+.platform-ios.platform-cordova:not(.fullscreen) .bar-header:not(.bar-subheader) > *
+{
+  margin-top: 0px !important;
+}
+
+.platform-ios.platform-cordova:not(.fullscreen) .tabs-top > .tabs, .platform-ios.platform-cordova:not(.fullscreen) .tabs.tabs-top
+{
+  top: 44px !important;
+}
+
+.platform-ios.platform-cordova:not(.fullscreen) .has-header, .platform-ios.platform-cordova:not(.fullscreen) .bar-subheader
+{
+  top: 44px !important;
+}
+
+.platform-ios.platform-cordova:not(.fullscreen) .has-subheader {
+  top: 88px !important;
+}
+/* END status bar hacks */
+
+.center {
+  -webkit-align-content: stretch;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -webkit-box-direction: normal;
+  -webkit-box-orient: horizontal;
+  -webkit-box-pack: center;
+  -webkit-flex-direction: row;
+  -webkit-flex-wrap: nowrap;
+  -webkit-justify-content: center;
+  align-content: stretch;
+  align-items: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
 
 /* Theme Colors */
 .bar-light .button.button-clear, 
@@ -39,18 +104,9 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 {
 	color: $accent-color;
 }
-/*
-ion-content.has-header {
-	background-color: #f5f5f5;
-}
-*/
+
 .popup-body {
 	text-align: center;
-}
-
-.popup-buttons .button-positive {
-	background-color: $accent-color;
-	border-color: $accent-color;
 }
 
 .secondary-buttons .activated {

@@ -19,6 +19,8 @@
   <feature name="StatusBar">
     <param name="ios-package" value="CDVStatusBar" onload="true"/>
   </feature>
+  <preference name="StatusBarOverlaysWebView" value="false" />
+  <preference name="StatusBarBackgroundColor" value="#460AA1" />
   <feature name="InAppBrowser">
     <param name="ios-package" value="CDVInAppBrowser"/>
     <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser"/>

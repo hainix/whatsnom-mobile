@@ -1,9 +1,10 @@
 angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 
-.run(function($rootScope, Lists, $cordovaGeolocation, $cordovaStatusbar) {
+.run(function($rootScope, Lists, $cordovaGeolocation, $ionicPlatform) {
 	//console.log('INIT: .run startup funcs');
 
 	$rootScope.refreshCurrentLocation = function() {
+	  $ionicPlatform.ready(function() {
 	    var posOptions = {timeout: 100000, enableHighAccuracy: false};
 	    $cordovaGeolocation
 	      .getCurrentPosition(posOptions)
@@ -14,6 +15,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 	      }, function(err) {
 			  console.log('ERROR with current location fetch: ', err);
 	      });
+	  });
   	}
 	$rootScope.refreshCurrentLocation();
 
@@ -46,7 +48,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
     }
 })
 
-.controller('ListsCtrl', function($scope, Lists) {
+.controller('ListsCtrl', function($scope, Lists) {	
     $scope.$on('$ionicView.enter', function() {
 		Lists.loadListsToRootScope();
     })	
