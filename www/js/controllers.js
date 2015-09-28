@@ -114,7 +114,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 
 })
 
-.controller('EntryDetailCtrl', function($scope, $stateParams, $http, $q, $ionicHistory, $ionicPopup, $state, Lists, $ionicLoading) {
+.controller('EntryDetailCtrl', function($scope, $stateParams, $http, $q, $ionicHistory, $ionicPopup, $state, Lists, $ionicLoading, $cordovaSocialSharing) {
 	$scope.currentLat = window.localStorage.getItem('lat');
 	$scope.currentLong = window.localStorage.getItem('long');
 
@@ -140,6 +140,28 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 			$scope.saveEntryActionText = 'Save'; // TODO use constants for these states and those below
 			$scope.saveEntryActionIcon = 'ion-bookmark'; 
 		}
+		
+		$scope.shareEntry = function (target_id) {
+		  var msg = '';
+		  msg +=  $scope.place.name;
+		  if ($scope.place.address) {
+			  msg += ' - ' + $scope.place.address;
+		  }
+		  if ($scope.place.yelp_id) {
+		  	msg += ' http://m.yelp.com/biz/'+$scope.place.yelp_id;
+		  }
+		  
+		  msg += ' (via InList)';
+
+		  $cordovaSocialSharing
+		    .share(msg) // Share via native share sheet
+		    .then(function(result) {
+				// Success
+		    }, function(err) {
+				// Share error
+		    });			
+		};
+		
 		$scope.saveEntry = function (target_id) {
 			if (window.localStorage.getItem('fbuid') === null || isNaN(window.localStorage.getItem('fbuid'))) {
 			    var confirmPopup = $ionicPopup.confirm({

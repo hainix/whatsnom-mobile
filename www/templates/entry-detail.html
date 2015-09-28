@@ -26,6 +26,11 @@
 	      ng-click="saveEntry({{listEntryForPlace.id}})"
 		    class="button button-icon button-positive icon {{saveEntryActionIcon}}">
 	    </a>
+	    <a  
+	      ng-if="place"
+	      ng-click="shareEntry({{listEntryForPlace.id}})"
+		    class="button button-icon button-positive icon ion-share">
+	    </a>
     </ion-nav-buttons>
     <ion-content class="place-detail-container">
       <div class="center scroll" ng-if="!place">
