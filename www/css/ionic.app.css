@@ -7751,7 +7751,7 @@ a.button {
   justify-content: center; }
 
 /* Theme Colors */
-.bar-light .button.button-clear, .tabs-icon-top .themed-tab, .bar.bar-light .title, .bar-light .button, .bar-light .button:hover, .loading-container .loading {
+.bar-light .button.button-clear, .bar.bar-light .title, .bar-light .button, .bar-light .button:hover, .loading-container .loading {
   color: #4017B0; }
 
 .popup-body {

@@ -2,6 +2,11 @@
 	<ion-nav-title></ion-nav-title>
     <ion-nav-buttons side="secondary" class="place-buttons" >
 	    <a  
+	      ng-if="place"
+	      ng-click="saveEntry({{listEntryForPlace.id}})"
+		    class="button button-icon button-positive icon {{saveEntryActionIcon}}">
+	    </a>
+	    <a  
         ng-if="place && displayParams.phoneString && place.phone" 
 		    href="tel: {{place.phone}}"
 		    class="button button-icon button-positive icon ion-ios-telephone">
@@ -20,11 +25,6 @@
         ng-if="place && place.latitude"
 	      ng-click="openExternalURL('http://maps.apple.com/?q=+{{place.latitude}},{{place.longitude}}')"
 	      class="button button-icon button-positive icon ion-ios-bookmarks ion-ios-navigate-outline">
-	    </a>
-	    <a  
-	      ng-if="place"
-	      ng-click="saveEntry({{listEntryForPlace.id}})"
-		    class="button button-icon button-positive icon {{saveEntryActionIcon}}">
 	    </a>
 	    <a  
 	      ng-if="place"

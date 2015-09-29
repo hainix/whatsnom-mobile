@@ -25,6 +25,8 @@ $positive: $accent-color !default;
 
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
+//$tabs-icon-size:  30px !default;
+//$tabs-height: 52x !default;
 
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
@@ -96,7 +98,6 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 /* Theme Colors */
 .bar-light .button.button-clear, 
-.tabs-icon-top .themed-tab, 
 .bar.bar-light .title,
 .bar-light .button,
 .bar-light .button:hover,
