@@ -7866,6 +7866,13 @@ a.button {
   padding-bottom: 26px;
   margin-top: 0; }
 
+/* Entry header icons */
+.secondary-buttons .not-saved-bookmark-icon {
+  color: rgba(12, 12, 12, 0.4) !important; }
+
+.secondary-buttons .saved-bookmark-icon {
+  color: #4017B0; }
+
 /* Map */
 .map .row, .map .col {
   padding: 0; }

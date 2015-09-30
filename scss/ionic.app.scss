@@ -244,6 +244,13 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 	margin-top: 0;
 }
 
+/* Entry header icons */
+.secondary-buttons .not-saved-bookmark-icon {
+  color: rgba(12, 12, 12, 0.40) !important;
+}
+.secondary-buttons .saved-bookmark-icon {
+  color: $accent-color;
+}
 
 /* Map */
 .map .row, .map .col{

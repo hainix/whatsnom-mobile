@@ -9,18 +9,19 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 	    $cordovaGeolocation
 	      .getCurrentPosition(posOptions)
 	      .then(function (position) {
-			  window.localStorage.setItem('lat', position.coords.latitude);
-			  window.localStorage.setItem('long', position.coords.longitude);
+			    window.localStorage.setItem('lat', position.coords.latitude);
+			    window.localStorage.setItem('long', position.coords.longitude);
 			  //console.log('DEBUG: Updated current location to position: ', position.coords);
 	      }, function(err) {
-			  console.log('ERROR with current location fetch: ', err);
+			    console.log('ERROR with current location fetch: ', err);
 	      });
 	  });
   	}
 	$rootScope.refreshCurrentLocation();
 
 	$rootScope.addLocationToList = function (list) {
-	    if (window.localStorage.getItem('lat') != null && !isNaN(window.localStorage.getItem('lat'))) {
+    console.log('adding location to list');
+	  if (window.localStorage.getItem('lat') != null && !isNaN(window.localStorage.getItem('lat'))) {
 		  angular.forEach(list.entries, function(value, key) {
 			  // Short circuit if the list already has location
 			  if (list.entries[key]['displayed_distance_from_me']) {
@@ -36,19 +37,19 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 				  );
 				  list.entries[key]['displayed_distance_from_me'] = 
 				  	parseFloat(Math.round(list.entries[key]['distance_from_me'] * 100) / 100).toFixed(2);
-		  	  } else {
-			  	list.entries[key]['distance_from_me'] = null;
-		  	  }
+		  	} else {
+			    list.entries[key]['distance_from_me'] = null;
+		  	}
 		  });
 		  //console.log('DEBUG: amended list with location', window.localStorage.getItem('lat'), window.localStorage.getItem('long'));
 		  return list;
-	  	} else {
-			$rootScope.refreshCurrentLocation();	  		
-	  	}
-    }
+	  } else {
+	    $rootScope.refreshCurrentLocation();	  		
+	  }
+  }
 })
 
-.controller('ListsCtrl', function($scope, Lists, $ionicPopover) {	
+.controller('ListsCtrl', function($scope, Lists) {	
   $scope.$on('$ionicView.enter', function() {
 	  Lists.loadListsToRootScope();
   });	
@@ -59,7 +60,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 	};
   
   $scope.supportedCities = [
-     {'id': 4, 'label': 'New York'},
+     {'id': 4, 'label': 'Manhattan'},
      {'id': 1, 'label': 'San Francisco'},
   ];
 
@@ -69,7 +70,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
       $scope.selectedCity = parseInt(window.localStorage.getItem('selectedcity'));
     } else {
       $scope.selectedCity = parseInt($scope.supportedCities[0].id);
-      window.localStorage.setItem('selectedcity', parseInt($scope.selectedCity));
+      window.localStorage.setItem('selectedcity', $scope.selectedCity);
     }
   };
 	$scope.updateSelectedCity = function (currentCity) {
@@ -154,11 +155,11 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 		// TODO: get initial value from 'bookmarks for user' query and set the text correctly here
 		if (window.localStorage.getItem('fbuid') !== null 
 		    && !isNaN(window.localStorage.getItem('fbuid')) && $scope.bookmark != null) {
-			$scope.saveEntryActionText = 'Remove';
-			$scope.saveEntryActionIcon = 'ion-ios-close-outline'; 
+			//$scope.saveEntryActionText = 'Remove';
+			$scope.saveEntryActionIconClass = 'saved-bookmark-icon'; 
 		} else {
-			$scope.saveEntryActionText = 'Save'; // TODO use constants for these states and those below
-			$scope.saveEntryActionIcon = 'ion-bookmark'; 
+			//$scope.saveEntryActionText = 'Save'; 
+			$scope.saveEntryActionIconClass = 'not-saved-bookmark-icon'; 
 		}
 		
 		$scope.shareEntry = function (target_id) {
@@ -205,12 +206,10 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 				//console.log('DEBUG: bookmark response: ', data);
 				if (data == 'removed') {
 					$ionicLoading.show({ template: 'Removed Bookmark', noBackdrop: true, duration: 600 });
-					//$scope.saveEntryActionText = 'Save';
-					$scope.saveEntryActionIcon = 'ion-bookmark'; 
+					$scope.saveEntryActionIconClass = 'not-saved-bookmark-icon'; 
 				} else if (data == 'added') {
 					$ionicLoading.show({ template: 'Saved Bookmark', noBackdrop: true, duration: 600 });
-					//$scope.saveEntryActionText = 'Remove'; 
-					$scope.saveEntryActionIcon = 'ion-ios-close-outline'; 
+					$scope.saveEntryActionIconClass = 'saved-bookmark-icon'; 
 					
 				} else {
 					/*
