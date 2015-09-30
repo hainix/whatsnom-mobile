@@ -7708,7 +7708,8 @@ a.button {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  margin-right: 6px; }
+  margin-right: 6px;
+  margin-top: 1px; }
 
 .spinner-container .spinner svg {
   width: 50px;

@@ -13,14 +13,14 @@
     </button>
   </ion-nav-buttons>
   <ion-content>
-    <div class="center scroll" ng-if="!list">
+    <div class="center scroll" ng-hide="list">
       <div class="row">
         <div class="col center spinner-container">
 		      <ion-spinner class="spinner-royal" icon="ripple"></ion-spinner>
 	      </div>
 	    </div>
     </div>
-    <ion-list ng-if="list">
+    <ion-list ng-hide="!list">
       <div 
 	      ng-if="list.review_count" 
 		    class="item item-divider list-header-subtext" 
@@ -30,6 +30,7 @@
   	  <div 
 	      class="lists-detail-container list-with-entries">
         <ion-item 
+          class="animated fadeIn"
 		      ng-repeat="entry in list.entries | orderBy:listOrderField" 
 		      type="item-text-wrap" 
 		      ng-attr-href="{{currentStateName == 'tab.saved-list-detail' ?  '#/tab/saved/' + list.id + '/' + entry.id  : '#/tab/lists/' + list.id + '/' + entry.id }}">

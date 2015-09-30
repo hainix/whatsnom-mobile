@@ -15,20 +15,15 @@ $royal:                           #886aea !default;
 $dark:                            #444 !default;
 */
 $base-background-color: #dcdee2 !default;
-//$base-background-color: #CC3300 !default;
-//$bar-height: 30px !default;
-$bar-title-font-size:  17px !default;
-
 
 $accent-color: #4017B0;
 $activated-button-color: #f5f5f5;
 $royal: $accent-color !default;
 $positive: $accent-color !default;
+$bar-title-font-size:  17px !default;
 
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
-//$tabs-icon-size:  30px !default;
-//$tabs-height: 52x !default;
 
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
@@ -43,6 +38,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   -moz-appearance: none;
   appearance: none; 
   margin-right: 6px;
+  margin-top: 1px;
 }
 
 .spinner-container .spinner svg {
