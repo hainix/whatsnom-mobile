@@ -30,7 +30,6 @@
   	  <div 
 	      class="lists-detail-container list-with-entries">
         <ion-item 
-          class="animated fadeIn"
 		      ng-repeat="entry in list.entries | orderBy:listOrderField" 
 		      type="item-text-wrap" 
 		      ng-attr-href="{{currentStateName == 'tab.saved-list-detail' ?  '#/tab/saved/' + list.id + '/' + entry.id  : '#/tab/lists/' + list.id + '/' + entry.id }}">
