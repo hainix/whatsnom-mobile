@@ -48,8 +48,11 @@
             style="background-image: url('{{place.profile_pic}}'); background-position: center; background-size: cover;">
     	      <div class="list-detail-row-overlay">
     	        <h2>{{place.name}}</h2>
-    	        <p ng-if="displayParams.displayableNeighborhood" class="subtle-text">
-    	          {{displayParams.displayableNeighborhood}}
+    	        <p class="subtle-text">
+    	          <span  
+                  ng-if="displayParams.displayableNeighborhood">
+                  {{displayParams.displayableNeighborhood}}
+                </span>
      		      </p>
       	    </div>
           </div>

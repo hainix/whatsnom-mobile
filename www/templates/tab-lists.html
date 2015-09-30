@@ -1,4 +1,16 @@
-<ion-view view-title="InList">
+<ion-view>
+  <ion-nav-bar>
+  	<ion-nav-title>InList</ion-nav-title>
+  </ion-nav-bar>
+  <ion-nav-buttons side="secondary">
+    <select 
+      class="button button-clear header-select" 
+      ng-model="selectedCity" 
+      ng-init="setupCitySelector()"
+      ng-options="opt.id as opt.label for opt in supportedCities"     
+      ng-change="updateSelectedCity(selectedCity)">
+    </select>
+  </ion-nav-buttons>
   <ion-content>
     <div class="center scroll" ng-if="!lists">
       <div class="row">

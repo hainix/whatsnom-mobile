@@ -48,15 +48,35 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
     }
 })
 
-.controller('ListsCtrl', function($scope, Lists) {	
-    $scope.$on('$ionicView.enter', function() {
-		Lists.loadListsToRootScope();
-    })	
+.controller('ListsCtrl', function($scope, Lists, $ionicPopover) {	
+  $scope.$on('$ionicView.enter', function() {
+	  Lists.loadListsToRootScope();
+  });	
 	$scope.pullToRefreshLists = function () {
 		Lists.loadListsToRootScope(true);
 	    $scope.$broadcast('scroll.refreshComplete');
 	    $scope.$apply();
-	}	
+	};
+  
+  $scope.supportedCities = [
+     {'id': 4, 'label': 'New York'},
+     {'id': 1, 'label': 'San Francisco'},
+  ];
+
+	$scope.setupCitySelector = function () {
+  	if (window.localStorage.getItem('selectedcity') != null 
+      && !isNaN(window.localStorage.getItem('selectedcity'))) {
+      $scope.selectedCity = parseInt(window.localStorage.getItem('selectedcity'));
+    } else {
+      $scope.selectedCity = parseInt($scope.supportedCities[0].id);
+      window.localStorage.setItem('selectedcity', parseInt($scope.selectedCity));
+    }
+  };
+	$scope.updateSelectedCity = function (currentCity) {
+    window.localStorage.setItem('selectedcity', parseInt(currentCity));
+	  Lists.loadListsToRootScope(true);    
+  };
+  
 })
 
 .controller('ListDetailCtrl', function($scope, $stateParams, Lists, $rootScope, $cordovaGeolocation, $ionicHistory, $ionicPopup, $state, $http, $ionicListDelegate, $ionicLoading) {
