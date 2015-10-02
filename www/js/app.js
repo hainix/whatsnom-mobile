@@ -31,16 +31,16 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
   $stateProvider
 
   // setup an abstract state for the tabs directive
-    .state('tab', {
+  .state('tab', {
     url: '/tab',
     abstract: true,
-    templateUrl: 'templates/tabs.html'
+    templateUrl: 'templates/menu.html',
   })
 
   .state('tab.lists', {
       url: '/lists',
       views: {
-        'tab-lists': {
+        'menuContent': {
           templateUrl: 'templates/tab-lists.html',
           controller: 'ListsCtrl'
         }
@@ -50,7 +50,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     .state('tab.list-detail', {
       url: '/lists/:listId',
       views: {
-        'tab-lists': {
+        'menuContent': {
           templateUrl: 'templates/list-detail.html',
           controller: 'ListDetailCtrl'
         }
@@ -59,7 +59,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     .state('tab.place-detail', {
       url: '/lists/:listId/:entryId',
       views: {
-        'tab-lists': {
+        'menuContent': {
           templateUrl: 'templates/entry-detail.html',
           controller: 'EntryDetailCtrl'
         }
@@ -69,7 +69,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     .state('tab.place-map', {
       url: '/lists/:listId/:placeId/0/map',
       views: {
-        'tab-lists': {
+        'menuContent': {
           templateUrl: 'templates/place-map.html',
           controller: 'MapCtrl'
         }
@@ -79,7 +79,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     .state('tab.saved', {
       url: '/saved',
       views: {
-        'tab-saved': {
+        'menuContent': {
           templateUrl: 'templates/tab-saved.html',
           controller: 'SavedCtrl'
         }
@@ -89,7 +89,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     .state('tab.saved-place-detail', {
       url: '/saved/:listId/:entryId',
       views: {
-        'tab-saved': {
+        'menuContent': {
           templateUrl: 'templates/entry-detail.html',
           controller: 'EntryDetailCtrl'
         }
@@ -98,7 +98,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     .state('tab.saved-list-detail', {
       url: '/saved/:listId',
       views: {
-        'tab-saved': {
+        'menuContent': {
           templateUrl: 'templates/list-detail.html',
           controller: 'ListDetailCtrl'
         }
