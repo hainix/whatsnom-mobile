@@ -7750,6 +7750,9 @@ a.button {
   top: 88px !important; }
 
 /* END status bar hacks */
+.nav-bar-block .title {
+  margin: 0; }
+
 .center {
   -webkit-align-content: stretch;
   -webkit-align-items: center;

@@ -91,6 +91,9 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 }
 /* END status bar hacks */
 
+.nav-bar-block .title {
+   margin: 0;
+}
 .center {
   -webkit-align-content: stretch;
   -webkit-align-items: center;
