@@ -44,7 +44,7 @@
         <!-- Place header -->
         <div class="lists-detail-container">
           <div 
-    	      class="list-detail-row"       
+    	      class="list-detail-row animated-in"       
             style="background-image: url('{{place.profile_pic}}'); background-position: center; background-size: cover;">
     	      <div class="list-detail-row-overlay">
     	        <h2>{{place.name}}</h2>
@@ -53,6 +53,11 @@
                   ng-if="displayParams.displayableNeighborhood">
                   {{displayParams.displayableNeighborhood}}
                 </span>
+                <span ng-if="displayParams.displayableNeighborhood && place.categories">
+                 · 
+                </span>
+                <span ng-if="place.categories">{{place.categories}} </span>
+                
      		      </p>
       	    </div>
           </div>
@@ -67,7 +72,7 @@
     	    <span ng-if="listPlaceWasViewedFrom.city_name"> in {{listPlaceWasViewedFrom.city_name}}</span>
     	    <i class="button-small icon ion-ios-list-outline" style="right: -2px;"></i>
         </a>
-    	  <div class="item item-text-wrap" ng-if="(listEntryForPlace && listEntryForPlace.tip)">
+    	  <div class="item item-text-wrap" ng-if="listEntryForPlace && listEntryForPlace.tip">
           {{listEntryForPlace.tip}}
     	  </div>
     	</div>

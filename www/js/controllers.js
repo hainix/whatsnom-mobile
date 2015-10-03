@@ -53,6 +53,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
   $scope.$on('$ionicView.enter', function() {
 	  Lists.loadListsToRootScope();
   });	
+  
 	$scope.pullToRefreshLists = function () {
 		Lists.loadListsToRootScope(true);
 	    $scope.$broadcast('scroll.refreshComplete');
@@ -78,13 +79,14 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 	  Lists.loadListsToRootScope(true);    
   };
   
+	Lists.loadBookmarksToRootScope();
 })
 
 .controller('ListDetailCtrl', function($scope, $stateParams, Lists, $rootScope, $cordovaGeolocation, $ionicHistory, $ionicPopup, $state, $http, $ionicListDelegate, $ionicLoading) {
 	$scope.currentStateName = $ionicHistory.currentStateName();
 	$rootScope.refreshCurrentLocation();
 	Lists.loadThisListToRootScope($stateParams.listId);
-			
+  console.log($rootScope.list);
 	$scope.filterTypeIcon = 'ion-navigate';	
 	$scope.listOrderField = 'position';
 	$scope.toggleFilter = function () {

@@ -7700,6 +7700,17 @@ a.button {
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
 
+@-webkit-keyframes fadein {
+  from {
+    opacity: 0; }
+
+  to {
+    opacity: 1; } }
+
+.animated-in {
+  -webkit-animation: fadein 1s;
+  /* Safari and Chrome */ }
+
 .scroll {
   height: 100%; }
 
@@ -7809,7 +7820,7 @@ a.button {
 .lists-detail-container .list-detail-row {
   height: 120px;
   width: 100%;
-  box-shadow: inset 1px 1px 40px 0 rgba(0, 0, 0, 0.3); }
+  box-shadow: inset 1px 1px 40px 0 rgba(0, 0, 0, 0.4); }
 
 .lists-detail-container .list-detail-row .list-entry-position {
   width: 40px;
@@ -7852,7 +7863,8 @@ a.button {
   height: auto; }
 
 .place-detail-container .lists-detail-container .list-detail-row .list-detail-row-overlay {
-  padding: 0; }
+  padding: 0;
+  background: rgba(0, 0, 0, 0.7); }
 
 .place-detail-container .lists-detail-container h2 {
   text-align: center;

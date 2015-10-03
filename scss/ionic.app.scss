@@ -28,6 +28,15 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
+@-webkit-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.animated-in {
+  -webkit-animation: fadein 1s; /* Safari and Chrome */
+}
+
 .scroll {
 	height: 100%;
 }
@@ -169,7 +178,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 .lists-detail-container .list-detail-row { 
 	height: 120px; 
 	width: 100%; 
-	box-shadow:inset 1px 1px 40px 0 rgba(0,0,0,.30); 
+	box-shadow:inset 1px 1px 40px 0 rgba(0,0,0,0.4); 
 }
 
 .lists-detail-container .list-detail-row .list-entry-position {
@@ -223,6 +232,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 .place-detail-container .lists-detail-container .list-detail-row .list-detail-row-overlay {
 	padding: 0;
+	background:rgba(0,0,0,0.7);
 }
 
 .place-detail-container .lists-detail-container h2 {

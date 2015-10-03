@@ -7,9 +7,9 @@
   <ion-nav-buttons side="secondary">
     <button 
 	    ng-if="list"
-      style="padding-top: 3px;" 
 	    class="button icon {{filterTypeIcon}}" 
 	    ng-click="toggleFilter()">
+      Sort
     </button>
   </ion-nav-buttons>
   <ion-content>
@@ -34,7 +34,7 @@
 		      type="item-text-wrap" 
 		      ng-attr-href="{{currentStateName == 'tab.saved-list-detail' ?  '#/tab/saved/' + list.id + '/' + entry.id  : '#/tab/lists/' + list.id + '/' + entry.id }}">
           <div 
-            class="list-detail-row" 
+            class="list-detail-row animated-in" 
   		      style="background: url({{entry.list_item_thumbnail}}); background-position: center; background-size: cover;">
   		      <div 
               class="list-entry-position" 
@@ -51,7 +51,18 @@
     				      class="distance-from-me">
     				      {{entry.displayed_distance_from_me}} mi · 
     			      </span>
-    			      {{entry.snippet}}
+    			      <span
+                  ng-if="entry.place && entry.place.neighborhoods">
+                  {{entry.place.neighborhoods}} 
+                </span>
+    			      <span
+                  ng-if="entry.place && entry.place.neighborhoods && entry.place.categories">
+                 · 
+                </span>
+    			      <span
+                  ng-if="entry.place && entry.place.categories">
+                  {{entry.place.categories}}
+                </span>
     			    </p>
   		      </div>
   		    </div>

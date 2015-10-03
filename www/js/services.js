@@ -9,12 +9,13 @@ angular.module('starter.services', [])
 	  
   	loadBookmarksToRootScope: function() {
   		$http.jsonp(
-  		  'http://www.whatsnom.com/api/1.0/get_bookmarks.php?uid=' + window.localStorage.getItem('fbuid') +'&format=json&callback=JSON_CALLBACK'
+  		  'http://www.whatsnom.com/api/1.1/get_bookmarks.php?uid=' + window.localStorage.getItem('fbuid') +'&format=json&callback=JSON_CALLBACK'
   		).success(function (data) {
         angular.forEach(data, function(value, key) {
   			$rootScope.addLocationToList(data[key]);
-  		});
-  	  	$rootScope.bookmarks = data;
+  		  });
+  	    $rootScope.bookmarks = data.bookmarks;
+	  	  $rootScope.bookmarkCount = data.count;
   		  //console.log('DEBUG: Set bookmark to $rootScope:', data);
   		}).error(function (data, status, headers, config) {
   	    console.log(status);

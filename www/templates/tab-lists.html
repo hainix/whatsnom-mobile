@@ -1,4 +1,4 @@
-<ion-view view-title="InList">
+<ion-view view-title="Top Lists">
   <ion-nav-buttons side="secondary">
     <select 
       class="button button-clear header-select" 
@@ -28,7 +28,7 @@
           ng-repeat="list in genreList.items" 
           href="#/tab/lists/{{list.id}}">
           <div 
-            class="list-detail-row" 
+            class="list-detail-row animated-in" 
             style="background: url({{list.cover}}); background-position: center; background-size: cover;">
 	          <div class="list-detail-row-overlay">
 		          <h2>{{list.name}}</h2>
