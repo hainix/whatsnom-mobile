@@ -11,8 +11,8 @@ angular.module('starter.services', [])
   		$http.jsonp(
   		  'http://www.whatsnom.com/api/1.1/get_bookmarks.php?uid=' + window.localStorage.getItem('fbuid') +'&format=json&callback=JSON_CALLBACK'
   		).success(function (data) {
-        angular.forEach(data, function(value, key) {
-  			$rootScope.addLocationToList(data[key]);
+        angular.forEach(data.bookmarks, function(value, key) {
+  			  $rootScope.addLocationToList(data.bookmarks[key]);
   		  });
   	    $rootScope.bookmarks = data.bookmarks;
 	  	  $rootScope.bookmarkCount = data.count;
