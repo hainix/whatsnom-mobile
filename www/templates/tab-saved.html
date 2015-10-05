@@ -2,9 +2,9 @@
   <ion-nav-buttons side="secondary" ng-hide="!hideFBLoginButton">
     <button 
       class="button icon {{filterTypeIcon}}"  
-      style="padding-top: 3px;" 
       ng-hide="!hideFBLoginButton"
       ng-click="toggleFilter()">
+      Sort
     </button>
   </ion-nav-buttons>
   <ion-content>
@@ -32,7 +32,7 @@
 			      ng-repeat="entry in list.entries | orderBy:listOrderField" 
 			      type="item-text-wrap" 
 			      href="#/tab/saved/{{entry.list_id}}/{{entry.id}}">
-	          <div class="list-detail-row animated-in" 
+	          <div class="list-detail-row" 
 			        style="background: url({{entry.list_item_thumbnail}}); background-position: center; background-size: cover;">
 			        <div class="list-entry-position" ng-if="entry.position" >
 				        <h2 ng-class="(entry.position > 9) ? 'smaller-text' : ''">

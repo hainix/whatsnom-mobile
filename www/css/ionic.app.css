@@ -7700,7 +7700,7 @@ a.button {
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
 
-@-webkit-keyframes fadein {
+@-webkit-keyframes fadeIn {
   from {
     opacity: 0; }
 
@@ -7708,8 +7708,9 @@ a.button {
     opacity: 1; } }
 
 .animated-in {
-  -webkit-animation: fadein 1s;
-  /* Safari and Chrome */ }
+  -webkit-animation: fadeIn 1s;
+  -moz-animation: fadeIn 1s;
+  animation: fadeIn 1s; }
 
 .scroll {
   height: 100%; }
