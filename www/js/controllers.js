@@ -357,14 +357,15 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 	        });
 	};
 	$scope.fbLogout = function () {
-	    ngFB.logout().then(
-	        function (response) {
-				$scope.hideFBLoginButton = false;
+	  ngFB.logout().then(
+	    function (response) {
+		    $scope.hideFBLoginButton = false;
 				window.localStorage.removeItem('fbuid');
 				window.localStorage.removeItem('fbname');
-				Lists.loadBookmarksToRootScope();
+  	    $rootScope.bookmarks = null;
+	  	  $rootScope.bookmarkCount = null;
 				return false;
-	        });
+	    });
 	};
 		
 });
