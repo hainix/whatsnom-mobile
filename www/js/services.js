@@ -40,7 +40,9 @@ angular.module('starter.services', [])
   		).success(function (data) {
   		  //console.log('DEBUG: Set lists to $rootScope on timestamp ', unix_now, ' : ', data);
   		  window.localStorage.setItem('most_recent_fetch', unix_now);
+        //console.log(data);
   	  	$rootScope.lists = data.lists;
+        $rootScope.supportedCities = data.cities;
   		}).error(function (data, status, headers, config) {
   	    console.log(status);
   	  });

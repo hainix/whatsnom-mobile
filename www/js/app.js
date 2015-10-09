@@ -14,7 +14,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+      //cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       cordova.plugins.Keyboard.disableScroll(true);
     }
   });
@@ -36,7 +36,6 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     abstract: true,
     templateUrl: 'templates/menu.html',
   })
-
   .state('tab.lists', {
       url: '/lists',
       views: {
@@ -46,13 +45,21 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         }
       }
     })
-	
     .state('tab.list-detail', {
       url: '/lists/:listId',
       views: {
         'menuContent': {
           templateUrl: 'templates/list-detail.html',
           controller: 'ListDetailCtrl'
+        }
+      }
+    })
+    .state('tab.list-map', {
+      url: '/lists/:listId/map',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/list-on-map.html',
+          controller: 'ListMapCtrl'
         }
       }
     })
@@ -65,17 +72,6 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         }
       }
     })
-
-    .state('tab.place-map', {
-      url: '/lists/:listId/:placeId/0/map',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/place-map.html',
-          controller: 'MapCtrl'
-        }
-      }
-    })
-	
     .state('tab.saved', {
       url: '/saved',
       views: {
@@ -85,7 +81,6 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         }
       }
     })
-	
     .state('tab.saved-place-detail', {
       url: '/saved/:listId/:entryId',
       views: {

@@ -20,7 +20,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 	$rootScope.refreshCurrentLocation();
 
 	$rootScope.addLocationToList = function (list) {
-    console.log('adding location to list');
+    //console.log('adding location to list');
 	  if (window.localStorage.getItem('lat') != null && !isNaN(window.localStorage.getItem('lat'))) {
 		  angular.forEach(list.entries, function(value, key) {
 			  // Short circuit if the list already has location
@@ -49,7 +49,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
   }
 })
 
-.controller('ListsCtrl', function($scope, Lists) {	
+.controller('ListsCtrl', function($scope, Lists, $rootScope) {	
   $scope.$on('$ionicView.enter', function() {
 	  Lists.loadListsToRootScope();
   });	
@@ -60,11 +60,6 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 	    $scope.$apply();
 	};
   
-  $scope.supportedCities = [
-     {'id': 4, 'label': 'Manhattan'},
-     {'id': 1, 'label': 'San Francisco'},
-  ];
-
 	$scope.setupCitySelector = function () {
   	if (window.localStorage.getItem('selectedcity') != null 
       && !isNaN(window.localStorage.getItem('selectedcity'))) {
@@ -76,17 +71,54 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
   };
 	$scope.updateSelectedCity = function (currentCity) {
     window.localStorage.setItem('selectedcity', parseInt(currentCity));
+    $rootScope.lists = null;
 	  Lists.loadListsToRootScope(true);    
   };
   
 	Lists.loadBookmarksToRootScope();
 })
 
+.controller('ListMapCtrl', function($scope, $stateParams, Lists, $rootScope, $cordovaGeolocation) {
+  //console.log('map controller with list = ', $rootScope.list);
+	$scope.currentLat = window.localStorage.getItem('lat');
+	$scope.currentLong = window.localStorage.getItem('long');
+  var currentLatLng = new google.maps.LatLng($scope.currentLat, $scope.currentLong);	
+
+  var mapOptions = {
+    center: currentLatLng,
+    zoom: 15,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  };
+
+  $scope.minimap = new google.maps.Map(document.getElementById("listmap"), mapOptions);
+  google.maps.event.addListenerOnce($scope.minimap, 'idle', function(){
+	  angular.forEach($rootScope.list.entries, function(value, key) {
+      if (value.place.latitude) {
+        var tempPlaceLatLong = new google.maps.LatLng(value.place.latitude, value.place.longitude);	
+    	  var placeMarker = new google.maps.Marker({
+    	      map: $scope.minimap,
+    	      animation: google.maps.Animation.DROP,
+    	      position: tempPlaceLatLong
+    	  });
+        var infoWindow = new google.maps.InfoWindow({
+          content: '<div class="map-detail-popup">#'+ value.position 
+            + ': <a href="#/lists/'+ $rootScope.list.id + '/' + value.id + '"> '
+            + value.name + '</a><br/>' + value.place.categories + '</div>'
+        });
+ 
+        google.maps.event.addListener(placeMarker, 'click', function () {
+          infoWindow.open($scope.minimap, placeMarker);
+        });
+      }
+    });
+  });	
+})
+
 .controller('ListDetailCtrl', function($scope, $stateParams, Lists, $rootScope, $cordovaGeolocation, $ionicHistory, $ionicPopup, $state, $http, $ionicListDelegate, $ionicLoading) {
 	$scope.currentStateName = $ionicHistory.currentStateName();
 	$rootScope.refreshCurrentLocation();
 	Lists.loadThisListToRootScope($stateParams.listId);
-  console.log($rootScope.list);
+  //console.log($rootScope.list);
 	$scope.filterTypeIcon = 'ion-navigate';	
 	$scope.listOrderField = 'position';
 	$scope.toggleFilter = function () {

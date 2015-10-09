@@ -7799,6 +7799,11 @@ a.button {
   font-size: 14px;
   color: #6B6B6B; }
 
+/* List Detail - Map View */
+#listmap {
+  width: 100%;
+  height: 100%; }
+
 /* Lists Homepage */
 .lists-detail-container .row {
   padding: 0; }
@@ -7890,7 +7895,7 @@ a.button {
 .secondary-buttons .saved-bookmark-icon {
   color: #4017B0; }
 
-/* Map */
+/* Place Detail Map */
 .map .row, .map .col {
   padding: 0; }
 

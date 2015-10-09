@@ -157,6 +157,17 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 	color: #6B6B6B;
 }
 
+/* List Detail - Map View */
+#listmap {
+    width: 100%;
+    height: 100%;
+}
+
+// TODO
+.map-detail-popup {
+  
+}
+
 /* Lists Homepage */
 .lists-detail-container .row {
 	padding: 0;
@@ -265,11 +276,10 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   color: $accent-color;
 }
 
-/* Map */
+/* Place Detail Map */
 .map .row, .map .col{
 	padding: 0;
 }
-
  
 /* Place detail */
 .place-detail-container .row, .place-detail-container .col {

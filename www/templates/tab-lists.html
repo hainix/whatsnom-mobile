@@ -2,6 +2,7 @@
   <ion-nav-buttons side="secondary">
     <select 
       class="button button-clear header-select" 
+      ng-if="supportedCities"
       ng-model="selectedCity" 
       ng-init="setupCitySelector()"
       ng-options="opt.id as opt.label for opt in supportedCities"     

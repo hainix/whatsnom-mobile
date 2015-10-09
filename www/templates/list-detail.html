@@ -11,6 +11,11 @@
 	    ng-click="toggleFilter()">
       Sort
     </button>
+    <button 
+	    ng-if="list"
+	    class="button icon ion-map" 
+      ui-sref="tab.list-map">
+    </button>
   </ion-nav-buttons>
   <ion-content>
     <div class="center scroll" ng-hide="list">
