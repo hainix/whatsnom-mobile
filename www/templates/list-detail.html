@@ -25,7 +25,21 @@
 	      </div>
 	    </div>
     </div>
-    <div id="list-map"  ng-hide="!showMap" data-tap-disabled="true"></div> 
+    <gm-map 
+      ng-hide="!list || !showMap"
+      gm-map-id="'myMap'" 
+      gm-center="center" 
+      gm-zoom="zoom" 
+      gm-bounds="bounds" 
+      gm-map-options="mapOptions.map"
+      gm-map-type-id="mapTypeId" 
+      style="width:100%;height:100%;">
+      <gm-markers 
+        gm-objects="list.entries"
+        gm-id="object.id"
+        gm-position="{lat: object.place.latitude, lng: object.place.longitude}">
+      </gm-markers> 
+    </gm-map>
     <ion-list ng-hide="!list || showMap">
       <div 
 	      ng-if="list.review_count" 

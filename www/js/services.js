@@ -6,18 +6,6 @@ angular.module('starter.services', [])
 	//window.localStorage.setItem('fbuid', 10104624213101750);
 
   return {
-	  
-    destroyAndRecreateMap: function() {
-      var oldMapElem = angular.element(document.querySelector('#list-map'));
-      var mapParent = oldMapElem.parent();
-
-      oldMapElem.remove();      
-      var newMapElem = angular.element(
-        '<div id="list-map"  ng-hide="!showMap" data-tap-disabled="true"></div>'
-      );
-      mapParent.append(newMapElem);  
-    },
-    
   	loadBookmarksToRootScope: function() {
   		$http.jsonp(
   		  'http://www.whatsnom.com/api/1.1/get_bookmarks.php?uid=' + window.localStorage.getItem('fbuid') +'&format=json&callback=JSON_CALLBACK'
