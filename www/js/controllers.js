@@ -78,42 +78,6 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 	Lists.loadBookmarksToRootScope();
 })
 
-.controller('ListMapCtrl', function($scope, $stateParams, Lists, $rootScope, $cordovaGeolocation) {
-  //console.log('map controller with list = ', $rootScope.list);
-	$scope.currentLat = window.localStorage.getItem('lat');
-	$scope.currentLong = window.localStorage.getItem('long');
-  var currentLatLng = new google.maps.LatLng($scope.currentLat, $scope.currentLong);	
-
-  var mapOptions = {
-    center: currentLatLng,
-    zoom: 15,
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-  };
-
-  $scope.minimap = new google.maps.Map(document.getElementById("listmap"), mapOptions);
-  google.maps.event.addListenerOnce($scope.minimap, 'idle', function(){
-	  angular.forEach($rootScope.list.entries, function(value, key) {
-      if (value.place.latitude) {
-        var tempPlaceLatLong = new google.maps.LatLng(value.place.latitude, value.place.longitude);	
-    	  var placeMarker = new google.maps.Marker({
-    	      map: $scope.minimap,
-    	      animation: google.maps.Animation.DROP,
-    	      position: tempPlaceLatLong
-    	  });
-        var infoWindow = new google.maps.InfoWindow({
-          content: '<div class="map-detail-popup">#'+ value.position 
-            + ': <a href="#/lists/'+ $rootScope.list.id + '/' + value.id + '"> '
-            + value.name + '</a><br/>' + value.place.categories + '</div>'
-        });
- 
-        google.maps.event.addListener(placeMarker, 'click', function () {
-          infoWindow.open($scope.minimap, placeMarker);
-        });
-      }
-    });
-  });	
-})
-
 .controller('ListDetailCtrl', function($scope, $stateParams, Lists, $rootScope, $cordovaGeolocation, $ionicHistory, $ionicPopup, $state, $http, $ionicListDelegate, $ionicLoading) {
 	$scope.currentStateName = $ionicHistory.currentStateName();
 	$rootScope.refreshCurrentLocation();
@@ -133,6 +97,56 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 		} else {
 			//console.log("ERROR: unrecognized filter type: ", $scope.filterTypeIcon);
 		}	
+	}	
+  
+
+  
+  $scope.$on('$ionicView.beforeLeave', function($scope){
+    Lists.destroyAndRecreateMap();
+  });
+
+	$scope.showMap = false;
+	$scope.toggleMap = function () {
+    $scope.showMap = !$scope.showMap;
+    if ($scope.showMap) {
+      console.log('create map');
+    	$scope.currentLat = window.localStorage.getItem('lat');
+    	$scope.currentLong = window.localStorage.getItem('long');
+      var currentLatLng = new google.maps.LatLng($scope.currentLat, $scope.currentLong);	
+
+      var mapOptions = {
+        center: currentLatLng,
+        zoom: 15,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+      $scope.minimap = new google.maps.Map(document.getElementById("list-map"), mapOptions);      
+      google.maps.event.addListenerOnce($scope.minimap, 'idle', function(){
+    	  angular.forEach($rootScope.list.entries, function(value, key) {
+          if (value.place.latitude) {
+            var tempPlaceLatLong = new google.maps.LatLng(value.place.latitude, value.place.longitude);	
+        	  var placeMarker = new google.maps.Marker({
+        	      map: $scope.minimap,
+        	      animation: google.maps.Animation.DROP,
+        	      position: tempPlaceLatLong
+        	  });
+            var infoWindow = new google.maps.InfoWindow({
+              content: '<div class="map-detail-popup">#'+ value.position 
+                + ': <a href="#/lists/'+ $rootScope.list.id + '/' + value.id + '"> '
+                + value.name + '</a><br/>' + value.place.categories + '</div>'
+            });
+ 
+            google.maps.event.addListener(placeMarker, 'click', function () {
+              infoWindow.open($scope.minimap, placeMarker);
+            });
+          }
+        });
+      });	
+
+    } else {
+      // Destroy map
+      console.log('destroy map');
+      Lists.destroyAndRecreateMap();
+    }
 	}	
 	
 	$scope.saveEntry = function (entryID) {

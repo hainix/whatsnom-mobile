@@ -14,7 +14,7 @@
     <button 
 	    ng-if="list"
 	    class="button icon ion-map" 
-      ui-sref="tab.list-map">
+	    ng-click="toggleMap()">
     </button>
   </ion-nav-buttons>
   <ion-content>
@@ -25,7 +25,8 @@
 	      </div>
 	    </div>
     </div>
-    <ion-list ng-hide="!list">
+    <div id="list-map"  ng-hide="!showMap" data-tap-disabled="true"></div> 
+    <ion-list ng-hide="!list || showMap">
       <div 
 	      ng-if="list.review_count" 
 		    class="item item-divider list-header-subtext" 

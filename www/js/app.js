@@ -54,15 +54,6 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         }
       }
     })
-    .state('tab.list-map', {
-      url: '/lists/:listId/map',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/list-on-map.html',
-          controller: 'ListMapCtrl'
-        }
-      }
-    })
     .state('tab.place-detail', {
       url: '/lists/:listId/:entryId',
       views: {
