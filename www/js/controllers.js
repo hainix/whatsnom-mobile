@@ -78,7 +78,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 	Lists.loadBookmarksToRootScope();
 })
 
-.controller('ListDetailCtrl', function($scope, $stateParams, Lists, $rootScope, $cordovaGeolocation, $ionicHistory, $ionicPopup, $state, $http, $ionicListDelegate, $ionicLoading) {
+.controller('ListDetailCtrl', function($scope, $stateParams, Lists, $rootScope, $cordovaGeolocation, $ionicHistory, $ionicPopup, $state, $http, $ionicListDelegate, $ionicLoading, $ionicScrollDelegate) {
 	$scope.currentStateName = $ionicHistory.currentStateName();
 	$rootScope.refreshCurrentLocation();
 	Lists.loadThisListToRootScope($stateParams.listId);
@@ -99,7 +99,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 		}	
 	}	
   
-  // Map config
+  // START Map config
 	$scope.currentLat = window.localStorage.getItem('lat');
 	$scope.currentLong = window.localStorage.getItem('long');
   
@@ -116,12 +116,65 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
       icon: 'https://maps.gstatic.com/mapfiles/ms2/micons/yellow-dot.png',
     }
   };
+  $scope.getEntryOpts = function(entry) {
+   return angular.extend(
+     {title: entry.name},
+     entry.selected 
+       ? $scope.mapOptions.selected
+       : $scope.mapOptions.notselected
+    );
+  };
+  
+  $scope.entry = null;
+  $scope.selectEntry = function(entry) {
+    if ($scope.entry) {
+      $scope.entry.selected = false;
+    }
+    $scope.entry = entry;
+    $scope.entry.selected = true;
+    $scope.$broadcast('gmMarkersUpdate', 'list.entries');
+  };
   
 	$scope.showMap = false;
 	$scope.toggleMap = function () {
     $scope.showMap = !$scope.showMap;
+    if ($scope.showMap) {
+      
+		  var closestEntry = null;
+      angular.forEach($rootScope.list.entries, function(value, key) {
+        if (closestEntry == null) {
+          closestEntry = value;
+        } else if (value.distance_from_me 
+            && value.distance_from_me < closestEntry.distance_from_me) {
+          closestEntry = value;
+        }
+      });
+      $scope.entry = closestEntry;
+      $scope.entry.selected = true;
+      //$scope.$broadcast('gmMapResize', 'listMapView')
+      console.log('entries', $rootScope.list.entries);
+      
+      //$ionicScrollDelegate.getScrollView().options.scrollingY = false;
+    } else {
+      //$ionicScrollDelegate.getScrollView().options.scrollingY = true;
+    }
+    
 	}	
-	
+  
+  $scope.filterFunction = function(element) {
+    // If no map, no filter
+    if (!$scope.showMap) {
+      return true;
+    }
+    // Otherwise, only show selected entry
+    if ($scope.entry) {
+      return $scope.entry.id == element.id;
+    }
+    return false;
+  };
+  
+	// END Map Config
+  
 	$scope.saveEntry = function (entryID) {
 		if (window.localStorage.getItem('fbuid') != null && !isNaN(window.localStorage.getItem('fbuid'))) {
 			$http.jsonp(
