@@ -7748,7 +7748,7 @@ a.button {
   top: 44px !important; }
 
 .platform-ios.platform-cordova:not(.fullscreen) .has-subheader {
-  top: 88px !important; }
+  top: 244px !important; }
 
 /* END status bar hacks */
 .nav-bar-block .title {
@@ -7802,7 +7802,7 @@ a.button {
 /* List Detail - Map View */
 .gm-map {
   width: 100%;
-  height: 100%; }
+  height: 200px; }
 
 .gm-map img {
   max-width: none; }

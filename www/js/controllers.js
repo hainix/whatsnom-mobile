@@ -78,7 +78,21 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 	Lists.loadBookmarksToRootScope();
 })
 
-.controller('ListDetailCtrl', function($scope, $stateParams, Lists, $rootScope, $cordovaGeolocation, $ionicHistory, $ionicPopup, $state, $http, $ionicListDelegate, $ionicLoading, $ionicSideMenuDelegate, $compile) {
+.controller('ListDetailCtrl', 
+    function(
+      $scope,
+      $stateParams, 
+      Lists, 
+      $rootScope, 
+      $cordovaGeolocation, 
+      $ionicHistory, 
+      $ionicPopup, 
+      $state, 
+      $http, 
+      $ionicListDelegate, 
+      $ionicLoading, 
+      $ionicSideMenuDelegate
+    ) {
 	$scope.currentStateName = $ionicHistory.currentStateName();
 	$rootScope.refreshCurrentLocation();
 	Lists.loadThisListToRootScope($stateParams.listId);
@@ -110,46 +124,17 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
     map: {
       center: new google.maps.LatLng($scope.currentLat, $scope.currentLong),
       zoom: 15,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      mapTypeControl: false
     },
-    notselected: {
-      icon: 'https://maps.gstatic.com/mapfiles/ms2/micons/red-dot.png',
-    },
-    selected: {
-      icon: 'https://maps.gstatic.com/mapfiles/ms2/micons/yellow-dot.png',
-    }
   };
-  $scope.getEntryOpts = function(entry) {
-   return angular.extend(
-     {title: entry.name},
-     entry.selected 
-       ? $scope.mapOptions.selected
-       : $scope.mapOptions.notselected
-    );
-  };
-  
+    
   $scope.entry = null;
   $scope.selectMapEntry = function(entry) {
-    if ($scope.entry) {
-      $scope.entry.selected = false;
-    }
     $scope.entry = entry;
-    $scope.entry.selected = true;
-    $scope.$broadcast('gmMarkersUpdate', 'list.entries');
     console.log('selected entry', $scope.entry);
   };
   
-  $scope.filterFunction = function(element) {
-    if (!$scope.entry) {
-      return true;
-    }
-    return true;
-    // Otherwise, only show selected entry
-    if ($scope.entry) {
-      return $scope.entry.id == element.id;
-    }
-    return false;
-  };
 	// END Map Config
   
 	$scope.saveEntry = function (entryID) {

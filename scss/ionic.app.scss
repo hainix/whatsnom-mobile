@@ -66,11 +66,11 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 /* START status bar hacks */
 .platform-ios.platform-cordova:not(.fullscreen) .bar-header
 {
-  height: 44px !important;
+  height: $bar-height !important;
 }
 .platform-ios.platform-cordova:not(.fullscreen) .bar-header:not(.bar-subheader)
 {
-  height: 44px !important;
+  height: $bar-height !important;
 }
 
 .platform-ios.platform-cordova:not(.fullscreen) .bar-header:not(.bar-subheader).item-input-inset .item-input-wrapper
@@ -85,16 +85,16 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 .platform-ios.platform-cordova:not(.fullscreen) .tabs-top > .tabs, .platform-ios.platform-cordova:not(.fullscreen) .tabs.tabs-top
 {
-  top: 44px !important;
+  top: $bar-height !important;
 }
 
 .platform-ios.platform-cordova:not(.fullscreen) .has-header, .platform-ios.platform-cordova:not(.fullscreen) .bar-subheader
 {
-  top: 44px !important;
+  top: $bar-height !important;
 }
 
 .platform-ios.platform-cordova:not(.fullscreen) .has-subheader {
-  top: 88px !important;
+  top: $bar-height + $bar-subheader-height !important;
 }
 /* END status bar hacks */
 
@@ -161,15 +161,14 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 }
 
 /* List Detail - Map View */
-
 .gm-map {
-  width: 100%; height: 100%;
+  width: 100%; 
+  height: 200px;
 }
 
 .gm-map img { 
   max-width: none;
 }
-
 
 /* Lists Homepage */
 .lists-detail-container .row {

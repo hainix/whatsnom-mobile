@@ -12,30 +12,28 @@
       Sort
     </button>
   </ion-nav-buttons>
-
-<ion-header-bar class="bar-subheader" style="padding: 0; height: 204px;">
-    <gm-map 
-      ng-hide="!list"
-      gm-map-id="'listMapView'" 
-      gm-center="center" 
-      gm-zoom="zoom" 
-      gm-bounds="bounds" 
-      gm-map-options="mapOptions.map"
-      gm-map-type-id="mapTypeId"
-      class="gm-map">
-      <gm-markers 
-        gm-objects="list.entries"
-        gm-id="object.id"
-        gm-position="{lat: object.place.latitude, lng: object.place.longitude}"
-        gm-marker-options="getEntryOpts(object)"
-        gm-on-click="selectMapEntry(object, marker)">
-      </gm-markers> 
-    </gm-map>
+  <ion-header-bar 
+    class="bar-subheader" 
+    style="padding: 0; height: 204px;">
+    <div data-tap-disabled="true">
+      <gm-map 
+        gm-map-id="'listMapView'" 
+        gm-center="center" 
+        gm-zoom="zoom" 
+        gm-bounds="bounds" 
+        gm-map-options="mapOptions.map"
+        gm-map-type-id="mapTypeId"
+        class="gm-map">
+        <gm-markers 
+          gm-objects="list.entries"
+          gm-id="object.id"
+          gm-position="{lat: object.place.latitude, lng: object.place.longitude}"
+          gm-on-click="selectMapEntry(object, marker)">
+        </gm-markers> 
+      </gm-map>
+    </div>
   </ion-header-bar>
-  <ion-content class="has-header has-subheader">
-  
-  <div id="map" data-tap-disabled="true"></div>
-  
+  <ion-content>  
     <div class="center scroll" ng-hide="list">
       <div class="row">
         <div class="col center spinner-container">
@@ -43,7 +41,7 @@
 	      </div>
 	    </div>
     </div>
-      <ion-list ng-hide="!list">
+    <ion-list ng-hide="!list">
       <div 
 	      ng-if="list.review_count" 
 		    class="item item-divider list-header-subtext" 
@@ -53,7 +51,7 @@
   	  <div 
 	      class="lists-detail-container list-with-entries">
         <ion-item
-		      ng-repeat="entry in list.entries | filter: filterFunction | orderBy:listOrderField" 
+		      ng-repeat="entry in list.entries | orderBy:listOrderField" 
 		      type="item-text-wrap" 
 		      ng-attr-href="{{currentStateName == 'tab.saved-list-detail' ?  '#/tab/saved/' + list.id + '/' + entry.id  : '#/tab/lists/' + list.id + '/' + entry.id }}">
           <div 
@@ -97,5 +95,6 @@
   	    </ion-item>
       </div>
     </ion-list>
+    
   </ion-content>
 </ion-view>
