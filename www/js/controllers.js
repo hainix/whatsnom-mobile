@@ -91,48 +91,54 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
       $http, 
       $ionicListDelegate, 
       $ionicLoading, 
-      $ionicSideMenuDelegate
+      $ionicSideMenuDelegate,
+      $ionicScrollDelegate
     ) {
 	$scope.currentStateName = $ionicHistory.currentStateName();
 	$rootScope.refreshCurrentLocation();
 	Lists.loadThisListToRootScope($stateParams.listId);
   //console.log($rootScope.list);
-	$scope.filterTypeIcon = 'ion-navigate';	
-	$scope.listOrderField = 'position';
-	$scope.toggleFilter = function () {
-		if ($scope.filterTypeIcon == 'ion-navigate') {
-			$ionicLoading.show({ template: 'Sorted by Distance', noBackdrop: true, duration: 600 });
-			$scope.filterTypeIcon = 'ion-connection-bars';	
-			$scope.listOrderField = 'distance_from_me';
-		} else if ($scope.filterTypeIcon == 'ion-connection-bars') {
-			$ionicLoading.show({ template: 'Sorted by Rank', noBackdrop: true, duration: 600 });			
-			$scope.filterTypeIcon = 'ion-navigate';	
-			$scope.listOrderField = 'position';
-		} else {
-			//console.log("ERROR: unrecognized filter type: ", $scope.filterTypeIcon);
-		}	
-	}	
-
 
   // START Map config
-
 	$scope.currentLat = window.localStorage.getItem('lat');
 	$scope.currentLong = window.localStorage.getItem('long');
   $ionicSideMenuDelegate.canDragContent(false);      
-  
   $scope.mapOptions = {
     map: {
       center: new google.maps.LatLng($scope.currentLat, $scope.currentLong),
-      zoom: 15,
+      zoom: 13,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       mapTypeControl: false
     },
   };
     
-  $scope.entry = null;
-  $scope.selectMapEntry = function(entry) {
-    $scope.entry = entry;
-    console.log('selected entry', $scope.entry);
+  
+  $scope.getPinImage = function(color) {
+      // Helper which returns a valid google maps marker image in
+      // the given color
+      color = color || '4EB1E8';
+      var icon_api = "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|";
+      return new google.maps.MarkerImage(
+          icon_api + color,
+          new google.maps.Size(21, 34),
+          new google.maps.Point(0, 0),
+          new google.maps.Point(10, 34));
+  };  
+  
+  $rootScope.selectedEntry = null;
+  $scope.selectMapEntry = function(entry, marker, map) {
+    var list_item_height = 121; // this could change from scss file
+    $rootScope.selectedEntry = entry;
+    $ionicScrollDelegate.scrollTo(0, list_item_height * ($rootScope.selectedEntry.position - 1), true);
+
+    if ($scope.prev_selected_marker) {
+        $scope.prev_selected_marker.setOptions({icon: $scope.getPinImage()});
+    }
+    $scope.prev_selected_marker = marker;
+    marker.setOptions({icon: $scope.getPinImage('4017B0')});
+    $scope.$broadcast('gmMarkersUpdate', 'list.entries');
+
+    console.log('selected entry', $rootScope.selectedEntry);
   };
   
 	// END Map Config
@@ -306,7 +312,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 	}
 
 	$scope.filterTypeIcon = 'ion-navigate';	
-	$scope.listOrderField = '';
+	$scope.listOrderField = 'position';
 	$scope.toggleFilter = function () {
 		if ($scope.filterTypeIcon == 'ion-navigate') {
 			$ionicLoading.show({ template: 'Sorted by Distance', noBackdrop: true, duration: 600 });

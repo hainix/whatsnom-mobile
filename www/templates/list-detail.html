@@ -4,14 +4,6 @@
 	    {{list.name}}
     </span>	  
   </ion-nav-title>
-  <ion-nav-buttons side="secondary">
-    <button 
-	    ng-if="list"
-	    class="button icon {{filterTypeIcon}}" 
-	    ng-click="toggleFilter()">
-      Sort
-    </button>
-  </ion-nav-buttons>
   <ion-header-bar 
     class="bar-subheader" 
     style="padding: 0; height: 204px;">
@@ -28,9 +20,17 @@
           gm-objects="list.entries"
           gm-id="object.id"
           gm-position="{lat: object.place.latitude, lng: object.place.longitude}"
+          gm-marker-options="{ icon: object.icon }"
           gm-on-click="selectMapEntry(object, marker)">
         </gm-markers> 
       </gm-map>
+      <div 
+	      ng-if="list.review_count" 
+		    class="item item-divider list-header-subtext" 
+		    style="text-align: center">
+		    Based on  <b>{{list.critic_count}} Critics</b> and <b>{{list.review_count}} Reviews</b>
+        Selected: {{selectedEntry.name}}
+	    </div>
     </div>
   </ion-header-bar>
   <ion-content>  
@@ -42,23 +42,20 @@
 	    </div>
     </div>
     <ion-list ng-hide="!list">
-      <div 
-	      ng-if="list.review_count" 
-		    class="item item-divider list-header-subtext" 
-		    style="text-align: center">
-		    Based on  <b>{{list.critic_count}} Critics</b> and <b>{{list.review_count}} Reviews</b>
-	    </div>
   	  <div 
 	      class="lists-detail-container list-with-entries">
         <ion-item
-		      ng-repeat="entry in list.entries | orderBy:listOrderField" 
+		      ng-repeat="entry in list.entries | orderBy:position" 
 		      type="item-text-wrap" 
 		      ng-attr-href="{{currentStateName == 'tab.saved-list-detail' ?  '#/tab/saved/' + list.id + '/' + entry.id  : '#/tab/lists/' + list.id + '/' + entry.id }}">
           <div 
             class="list-detail-row animated-in" 
   		      style="background: url({{entry.list_item_thumbnail}}); background-position: center; background-size: cover;">
   		      <div 
-              class="list-entry-position" 
+              ng-class="
+                (selectedEntry && (selectedEntry.position == entry.position)) 
+                ? 'list-entry-position list-entry-position-selected' 
+                : 'list-entry-position'" 
               ng-if="entry.position">
   				    <h2 ng-class="(entry.position > 9) ? 'smaller-text' : ''">
   				      {{entry.position}}
