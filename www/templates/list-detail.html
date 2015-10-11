@@ -11,13 +11,31 @@
 	    ng-click="toggleFilter()">
       Sort
     </button>
-    <button 
-	    ng-if="list"
-	    class="button icon ion-map" 
-	    ng-click="toggleMap()">
-    </button>
   </ion-nav-buttons>
-  <ion-content>
+
+<ion-header-bar class="bar-subheader" style="padding: 0; height: 204px;">
+    <gm-map 
+      ng-hide="!list"
+      gm-map-id="'listMapView'" 
+      gm-center="center" 
+      gm-zoom="zoom" 
+      gm-bounds="bounds" 
+      gm-map-options="mapOptions.map"
+      gm-map-type-id="mapTypeId"
+      class="gm-map">
+      <gm-markers 
+        gm-objects="list.entries"
+        gm-id="object.id"
+        gm-position="{lat: object.place.latitude, lng: object.place.longitude}"
+        gm-marker-options="getEntryOpts(object)"
+        gm-on-click="selectMapEntry(object, marker)">
+      </gm-markers> 
+    </gm-map>
+  </ion-header-bar>
+  <ion-content class="has-header has-subheader">
+  
+  <div id="map" data-tap-disabled="true"></div>
+  
     <div class="center scroll" ng-hide="list">
       <div class="row">
         <div class="col center spinner-container">
@@ -25,10 +43,9 @@
 	      </div>
 	    </div>
     </div>
-    <ion-list ng-hide="!list">
+      <ion-list ng-hide="!list">
       <div 
 	      ng-if="list.review_count" 
-        ng-hide="showMap"
 		    class="item item-divider list-header-subtext" 
 		    style="text-align: center">
 		    Based on  <b>{{list.critic_count}} Critics</b> and <b>{{list.review_count}} Reviews</b>
@@ -80,22 +97,5 @@
   	    </ion-item>
       </div>
     </ion-list>
-    <gm-map 
-      ng-hide="!list || !showMap"
-      gm-map-id="'listMapView'" 
-      gm-center="center" 
-      gm-zoom="zoom" 
-      gm-bounds="bounds" 
-      gm-map-options="mapOptions.map"
-      gm-map-type-id="mapTypeId" 
-      class="list-detail-map">
-      <gm-markers 
-        gm-objects="list.entries"
-        gm-id="object.id"
-        gm-position="{lat: object.place.latitude, lng: object.place.longitude}"
-        gm-marker-options="getEntryOpts(object)"
-        gm-on-click="selectEntry(object, marker)">
-      </gm-markers> 
-    </gm-map>
   </ion-content>
 </ion-view>

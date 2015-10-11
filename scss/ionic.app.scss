@@ -21,7 +21,7 @@ $activated-button-color: #f5f5f5;
 $royal: $accent-color !default;
 $positive: $accent-color !default;
 $bar-title-font-size:  17px !default;
-
+$bar-subheader-height: 200px !default;
 $list-row-height:  120px;
 
 
@@ -162,18 +162,14 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 /* List Detail - Map View */
 
-.list-detail-map {
-  margin-top: $list-row-height;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+.gm-map {
+  width: 100%; height: 100%;
 }
 
-.list-detail-map img { 
+.gm-map img { 
   max-width: none;
 }
+
 
 /* Lists Homepage */
 .lists-detail-container .row {

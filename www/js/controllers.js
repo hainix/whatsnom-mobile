@@ -78,7 +78,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 	Lists.loadBookmarksToRootScope();
 })
 
-.controller('ListDetailCtrl', function($scope, $stateParams, Lists, $rootScope, $cordovaGeolocation, $ionicHistory, $ionicPopup, $state, $http, $ionicListDelegate, $ionicLoading, $ionicScrollDelegate) {
+.controller('ListDetailCtrl', function($scope, $stateParams, Lists, $rootScope, $cordovaGeolocation, $ionicHistory, $ionicPopup, $state, $http, $ionicListDelegate, $ionicLoading, $ionicSideMenuDelegate, $compile) {
 	$scope.currentStateName = $ionicHistory.currentStateName();
 	$rootScope.refreshCurrentLocation();
 	Lists.loadThisListToRootScope($stateParams.listId);
@@ -98,10 +98,13 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 			//console.log("ERROR: unrecognized filter type: ", $scope.filterTypeIcon);
 		}	
 	}	
-  
+
+
   // START Map config
+
 	$scope.currentLat = window.localStorage.getItem('lat');
 	$scope.currentLong = window.localStorage.getItem('long');
+  $ionicSideMenuDelegate.canDragContent(false);      
   
   $scope.mapOptions = {
     map: {
@@ -126,53 +129,27 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
   };
   
   $scope.entry = null;
-  $scope.selectEntry = function(entry) {
+  $scope.selectMapEntry = function(entry) {
     if ($scope.entry) {
       $scope.entry.selected = false;
     }
     $scope.entry = entry;
     $scope.entry.selected = true;
     $scope.$broadcast('gmMarkersUpdate', 'list.entries');
+    console.log('selected entry', $scope.entry);
   };
   
-	$scope.showMap = false;
-	$scope.toggleMap = function () {
-    $scope.showMap = !$scope.showMap;
-    if ($scope.showMap) {
-      
-		  var closestEntry = null;
-      angular.forEach($rootScope.list.entries, function(value, key) {
-        if (closestEntry == null) {
-          closestEntry = value;
-        } else if (value.distance_from_me 
-            && value.distance_from_me < closestEntry.distance_from_me) {
-          closestEntry = value;
-        }
-      });
-      $scope.entry = closestEntry;
-      $scope.entry.selected = true;
-      //$scope.$broadcast('gmMapResize', 'listMapView')
-      console.log('entries', $rootScope.list.entries);
-      
-      //$ionicScrollDelegate.getScrollView().options.scrollingY = false;
-    } else {
-      //$ionicScrollDelegate.getScrollView().options.scrollingY = true;
-    }
-    
-	}	
-  
   $scope.filterFunction = function(element) {
-    // If no map, no filter
-    if (!$scope.showMap) {
+    if (!$scope.entry) {
       return true;
     }
+    return true;
     // Otherwise, only show selected entry
     if ($scope.entry) {
       return $scope.entry.id == element.id;
     }
     return false;
   };
-  
 	// END Map Config
   
 	$scope.saveEntry = function (entryID) {
@@ -185,8 +162,8 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 					$ionicLoading.show({ template: 'Saved Bookmark', noBackdrop: true, duration: 500 });
 					$ionicListDelegate.closeOptionButtons();
 				} else {
-					/*console.log('unrecognized response from api adder from uid ' + window.localStorage.getItem('fbuid')
-					+ ' to entry_id '+ entryID + ': '+data);*/
+					//console.log('unrecognized response from api adder from uid ' + window.localStorage.getItem('fbuid')
+					//+ ' to entry_id '+ entryID + ': '+data);*/
 				}
 				Lists.loadBookmarksToRootScope();
 			}).error(function (data, status, headers, config) {
