@@ -112,32 +112,34 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
     },
   };
     
+  $scope.getPinImage = function(entry, selected) {
+    var pin_color = selected ? 'ffffffff': 'ff330000';
+    var pin_icon = 'spotlight-waypoint-b.png';
+    var pin_text = entry.position;
+    return 'http://mt.google.com/vt/icon/text='+pin_text+'&psize=12&color='
+      +pin_color+'&name=icons/spotlight/'+pin_icon+'&ax=44&ay=48&scale=1';
+  };   
   
-  $scope.getPinImage = function(color) {
-      // Helper which returns a valid google maps marker image in
-      // the given color
-      color = color || '4EB1E8';
-      var icon_api = "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|";
-      return new google.maps.MarkerImage(
-          icon_api + color,
-          new google.maps.Size(21, 34),
-          new google.maps.Point(0, 0),
-          new google.maps.Point(10, 34));
-  };  
   
   $rootScope.selectedEntry = null;
   $scope.selectMapEntry = function(entry, marker, map) {
     var list_item_height = 121; // this could change from scss file
     $rootScope.selectedEntry = entry;
-    $ionicScrollDelegate.scrollTo(0, list_item_height * ($rootScope.selectedEntry.position - 1), true);
+    $ionicScrollDelegate.scrollTo(
+      0, 
+      list_item_height * ($rootScope.selectedEntry.position - 1), 
+      true
+    );
 
     if ($scope.prev_selected_marker) {
-        $scope.prev_selected_marker.setOptions({icon: $scope.getPinImage()});
+      $scope.prev_selected_marker.setOptions(
+        {icon: $scope.getPinImage($scope.prev_selected_entry, false)}
+      );
     }
+    
     $scope.prev_selected_marker = marker;
-    marker.setOptions({icon: $scope.getPinImage('4017B0')});
-    $scope.$broadcast('gmMarkersUpdate', 'list.entries');
-
+    $scope.prev_selected_entry = entry;
+    marker.setOptions({icon: $scope.getPinImage(entry, true)});
     console.log('selected entry', $rootScope.selectedEntry);
   };
   
@@ -181,7 +183,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 	$scope.currentLat = window.localStorage.getItem('lat');
 	$scope.currentLong = window.localStorage.getItem('long');
 
-    var deferred_outer = $q.defer();
+  var deferred_outer = $q.defer();
 	$scope.currentStateName = $ionicHistory.currentStateName();
 	$http.jsonp(
 	  'http://www.whatsnom.com/api/1.0/view_entry.php?entry_id=' + $stateParams.entryId
