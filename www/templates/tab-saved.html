@@ -2,7 +2,7 @@
   <ion-nav-buttons side="secondary" ng-hide="!hideFBLoginButton">
     <button 
       class="button icon {{filterTypeIcon}}"  
-      ng-hide="!hideFBLoginButton"
+      ng-hide="!hideFBLoginButton || hideLocationFilter"
       ng-click="toggleFilter()">
       Sort
     </button>

@@ -1,9 +1,6 @@
 angular.module('starter.services', [])
 
 .factory('Lists', function($http, $rootScope) {
-	
-	// TODO (remove override when actually shipping)
-	//window.localStorage.setItem('fbuid', 10104624213101750);
 
   return {
   	loadBookmarksToRootScope: function() {
@@ -53,7 +50,7 @@ angular.module('starter.services', [])
   	  if ($rootScope.lists) {
   		  angular.forEach($rootScope.lists, function(value, key) {
   			  if (listId in value['items']) {
-  				  //console.log('DEBUG: Set list to $rootScope from $rootScope.lists for id: ', listId);
+  				  console.log('DEBUG: Set list to $rootScope from $rootScope.lists for id: ', listId);
   				  $rootScope.list = value['items'][listId];
   			    $rootScope.addLocationToList($rootScope.list);
   				  return;
@@ -69,12 +66,12 @@ angular.module('starter.services', [])
   	  $http.jsonp(
   	    'http://www.whatsnom.com/api/1.0/view_list.php?list_id=' + listId +'&format=json&callback=JSON_CALLBACK'
   	  ).success(function (data) {
-  	    //console.log('DEBUG: Refetched from API + set list to $rootScope for id: ', listId, 'and data: ',data);
+  	    console.log('DEBUG: Refetched from API + set list to $rootScope for id: ', listId, 'and data: ',data);
   	    $rootScope.list = data;
   	    $rootScope.addLocationToList($rootScope.list);
   	    return true;
   	  }).error(function (data, status, headers, config) {
-  	    //console.log(status);
+  	    console.log(status);
   	    return false;
   	  });	 
     }

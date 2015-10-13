@@ -16,11 +16,10 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 			    console.log('ERROR with current location fetch: ', err);
 	      });
 	  });
-  	}
+  }
 	$rootScope.refreshCurrentLocation();
 
 	$rootScope.addLocationToList = function (list) {
-    //console.log('adding location to list');
 	  if (window.localStorage.getItem('lat') != null && !isNaN(window.localStorage.getItem('lat'))) {
 		  angular.forEach(list.entries, function(value, key) {
 			  // Short circuit if the list already has location
@@ -44,9 +43,9 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 		  //console.log('DEBUG: amended list with location', window.localStorage.getItem('lat'), window.localStorage.getItem('long'));
 		  return list;
 	  } else {
-	    $rootScope.refreshCurrentLocation();	  		
+      $rootScope.refreshCurrentLocation();	  		
 	  }
-  }
+  }  
 })
 
 .controller('ListsCtrl', function($scope, Lists, $rootScope) {	
@@ -99,21 +98,31 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 	Lists.loadThisListToRootScope($stateParams.listId);
 
   // START Map config
-	$scope.currentLat = window.localStorage.getItem('lat');
-	$scope.currentLong = window.localStorage.getItem('long');
-
-	$scope.currentLocation = 
-  [{
-    latitude: $scope.currentLat,
-    longitude: $scope.currentLong,
-    icon: 'http://www.whatsnom.com/icondir/currentloc.png',
-    id: 'currentloc'
-  }];
+  
+  $rootScope.mapCenter = null;
+  if (window.localStorage.getItem('lat') != null && !isNaN(window.localStorage.getItem('lat'))) {
+    $rootScope.mapCenter = new google.maps.LatLng(window.localStorage.getItem('lat'), window.localStorage.getItem('long'));
+  	$scope.currentLocation = 
+    [{
+      latitude: window.localStorage.getItem('lat'),
+      longitude: window.localStorage.getItem('long'),
+      icon: 'http://www.whatsnom.com/icondir/currentloc.png',
+      id: 'currentloc'
+    }];
+  } else if ($rootScope.list && $rootScope.list.entries) {
+  	$scope.currentLocation = null;
+	  angular.forEach($rootScope.list.entries, function(value, key) {
+      if (value.place && value.place.latitude) {
+        $rootScope.mapCenter = new google.maps.LatLng(value.place.latitude, value.place.longitude);
+        return true;
+      }
+    });
+  }
 
   $ionicSideMenuDelegate.canDragContent(false);      
   $scope.mapOptions = {
     map: {
-      center: new google.maps.LatLng($scope.currentLat, $scope.currentLong),
+      center: $rootScope.mapCenter,
       zoom: 13,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       mapTypeControl: false
@@ -166,9 +175,11 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 					//+ ' to entry_id '+ entryID + ': '+data);*/
 				}
 				Lists.loadBookmarksToRootScope();
-			}).error(function (data, status, headers, config) {
-	            console.log(status);
-	        });
+			}).error(
+        function (data, status, headers, config) {
+	        console.log(status);
+	      }
+      );
 		} else {
 		    var confirmPopup = $ionicPopup.confirm({
 		      title: 'Whoops!',
@@ -263,11 +274,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 					$scope.saveEntryActionIconClass = 'saved-bookmark-icon'; 
 					
 				} else {
-					/*
-					console.log('ERROR: unrecognized response from api adder from uid ' 
-					  + window.localStorage.getItem('fbuid')
-					  + ' to target_id '+ $scope.place.id + ': '+data);
-					*/
+					//console.log('ERROR: unrecognized response from api adder from uid ' + window.localStorage.getItem('fbuid') + ' to target_id '+ $scope.place.id + ': '+data);
 				}
 				Lists.loadBookmarksToRootScope();
 	            deferred_inner.resolve(data);
@@ -294,7 +301,6 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 
 	    // Phone number
 	    if ($scope.place.phone) {
-	    	//$scope.displayParams.phoneString = $scope.place.phone.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
 	    	$scope.displayParams.phoneString = $scope.place.phone;
 	    }
 
@@ -354,12 +360,15 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 	            console.log(status);
 	        });
 		} else {
-            //console.log('Error: tried to remove entry without being logged in');
+      //console.log('Error: tried to remove entry without being logged in');
 		}
 	}	
 	
-	//console.log('INIT: Saved Controller');
-	
+  $scope.hideLocationFilter = true;
+  if (window.localStorage.getItem('lat') != null && !isNaN(window.localStorage.getItem('lat'))) {
+    $scope.hideLocationFilter = false;
+	}
+  
 	// User has logged in before, and not logged out
 	$scope.logout_posttext = '';
 	$scope.hideFBLoginButton = false;
@@ -369,13 +378,6 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 			$scope.logout_posttext = ' (' + window.localStorage.getItem('fbname') + ')';
 		}
 	}
-	
-	/*
-	if ($rootScope.bookmarks) {
-		$scope.bookmarks = $rootScope.bookmarks;
-	}
-	*/
-
 	$scope.fbLogin = function () {
 	    ngFB.login({scope: ''}).then(
 	        function (response) {
