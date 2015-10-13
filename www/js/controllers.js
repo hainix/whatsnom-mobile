@@ -132,13 +132,9 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
   };
     
   $scope.getPinImage = function(entry, selected) {
-    var pin_color = selected ? 'ffffffff': 'ff330000';
-    var pin_icon = 'spotlight-waypoint-b.png';
-    var pin_text = entry.position;
-    return 'http://mt.google.com/vt/icon/text='+pin_text+'&psize=12&color='
-      +pin_color+'&name=icons/spotlight/'+pin_icon+'&ax=44&ay=48&scale=1';
-  };   
-  
+    var pin_color = selected ? 'purple-selected': 'grey';
+    return 'http://www.whatsnom.com/icondir/pin-'+pin_color+'.png';
+  };  
   
   $rootScope.selectedEntry = null;
   $scope.selectMapEntry = function(entry, marker, map) {
