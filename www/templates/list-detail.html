@@ -20,8 +20,14 @@
           gm-objects="list.entries"
           gm-id="object.id"
           gm-position="{lat: object.place.latitude, lng: object.place.longitude}"
-          gm-marker-options="{ icon: object.icon }"
+          gm-marker-options="{icon: getPinImage(object, false)}"
           gm-on-click="selectMapEntry(object, marker)">
+        </gm-markers> 
+        <gm-markers 
+          gm-objects="currentLocation"
+          gm-id="object.id"
+          gm-position="{lat: object.latitude, lng: object.longitude}"
+          gm-marker-options="{icon: object.icon}">
         </gm-markers> 
       </gm-map>
       <div 
@@ -29,7 +35,6 @@
 		    class="item item-divider list-header-subtext" 
 		    style="text-align: center">
 		    Based on  <b>{{list.critic_count}} Critics</b> and <b>{{list.review_count}} Reviews</b>
-        Selected: {{selectedEntry.name}}
 	    </div>
     </div>
   </ion-header-bar>
