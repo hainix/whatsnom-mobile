@@ -17,12 +17,18 @@
 	      </div>
 	    </div>
     </div>
-    <ion-refresher ng-hide="!lists" pulling-text="Pull to refresh" on-refresh="pullToRefreshLists()">
+    <ion-refresher 
+      ng-hide="!lists" 
+      pulling-text="Pull to refresh" 
+      on-refresh="pullToRefreshLists()">
     </ion-refresher>
-    <ion-list ng-hide="!lists" ng-repeat="genreList in lists">
+    <ion-list 
+      ng-hide="!lists" 
+      ng-repeat="genreList in lists">
       <ion-item 
         class="item-divider"  
-        style="margin-top: 4px;">{{genreList.name}}
+        style="margin-top: 4px;">
+        {{genreList.name}}
       </ion-item>	
 	    <div class="lists-detail-container">
         <ion-item 

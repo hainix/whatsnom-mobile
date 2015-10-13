@@ -13,7 +13,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 			    window.localStorage.setItem('long', position.coords.longitude);
 			  //console.log('DEBUG: Updated current location to position: ', position.coords);
 	      }, function(err) {
-			    console.log('ERROR with current location fetch: ', err);
+			    //console.log('ERROR with current location fetch: ', err);
 	      });
 	  });
   }
@@ -48,15 +48,15 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
   }  
 })
 
-.controller('ListsCtrl', function($scope, Lists, $rootScope) {	
+.controller('ListsCtrl', function($scope, Lists, $rootScope, $ionicPlatform) {	
   $scope.$on('$ionicView.enter', function() {
 	  Lists.loadListsToRootScope();
   });	
   
 	$scope.pullToRefreshLists = function () {
 		Lists.loadListsToRootScope(true);
-	    $scope.$broadcast('scroll.refreshComplete');
-	    $scope.$apply();
+	  $scope.$broadcast('scroll.refreshComplete');
+	  $scope.$apply();
 	};
   
 	$scope.setupCitySelector = function () {
@@ -73,8 +73,10 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
     $rootScope.lists = null;
 	  Lists.loadListsToRootScope(true);    
   };
-  
-	Lists.loadBookmarksToRootScope();
+  $ionicPlatform.ready(function() {
+	  Lists.loadBookmarksToRootScope();
+	  Lists.loadListsToRootScope(true);    
+  });
 })
 
 .controller('ListDetailCtrl', 
