@@ -7,3 +7,10 @@ Setup:
 - Pull repo as ionic library
 - pull whatsnom repo for server code, particularly the /api directory which serves all jsonp requests
 - follow http://ionicframework.com/docs/guide/testing.html to debug app (easiest is to test on http://localhost:8100/)
+
+
+To rename:
+-ionic platform remove ios
+-ionic platform add ios
+-apply this: https://gist.github.com/mlynch/284699d676fe9ed0abfa
+-open settings and set 'require fullscreen' bit
