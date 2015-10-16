@@ -181,7 +181,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 		} else {
 		    var confirmPopup = $ionicPopup.confirm({
 		      title: 'Whoops!',
-		      template: 'To save a place, log in first.'
+		      template: 'To save a spot, log in first.'
 		    });
 		    confirmPopup.then(function(res) {
 		      if(res) {
@@ -247,7 +247,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 			if (window.localStorage.getItem('fbuid') === null || isNaN(window.localStorage.getItem('fbuid'))) {
 			    var confirmPopup = $ionicPopup.confirm({
 			      title: 'Whoops!',
-			      template: 'To save a place, log in first.'
+			      template: 'To save a spot, log in first.'
 			    });
 			    confirmPopup.then(function(res) {
 			      if(res) {
