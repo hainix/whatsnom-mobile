@@ -232,7 +232,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 		  	msg += ' http://m.yelp.com/biz/'+$scope.place.yelp_id;
 		  }
 		  
-		  msg += ' (via Savor)';
+		  msg += ' (via Spots)';
 
 		  $cordovaSocialSharing
 		    .share(msg) // Share via native share sheet
