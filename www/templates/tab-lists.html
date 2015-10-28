@@ -32,14 +32,14 @@
       </ion-item>	
 	    <div class="lists-detail-container">
         <ion-item 
-          ng-repeat="list in genreList.items" 
-          href="#/tab/lists/{{list.id}}">
+		      ng-repeat="genreListItem in genreList.items" 
+          href="#/tab/lists/{{genreListItem.id}}">
           <div 
             class="list-detail-row animated-in" 
-            style="background: url({{list.cover}}); background-position: center; background-size: cover; ">
+            style="background: url({{genreListItem.cover}}); background-position: center; background-size: cover; ">
 	          <div class="list-detail-row-overlay">
-		          <h2>{{list.name}}</h2>
-		          <p>{{list.snippet}}</p>
+		          <h2>{{genreListItem.name}}</h2>
+		          <p>{{genreListItem.snippet}}</p>
 	          </div>
 	        </div>
         </ion-item>

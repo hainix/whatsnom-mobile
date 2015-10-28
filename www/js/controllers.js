@@ -59,6 +59,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 	  $scope.$apply();
 	};
   
+  
 	$scope.setupCitySelector = function () {
   	if (window.localStorage.getItem('selectedcity') != null 
       && !isNaN(window.localStorage.getItem('selectedcity'))) {
@@ -75,7 +76,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
   };
   $ionicPlatform.ready(function() {
 	  Lists.loadBookmarksToRootScope();
-	  Lists.loadListsToRootScope(true);    
+	  Lists.loadListsToRootScope(true); 
   });
 })
 
@@ -99,8 +100,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 	$rootScope.refreshCurrentLocation();
 	Lists.loadThisListToRootScope($stateParams.listId);
 
-  // START Map config
-  
+  // START Map config  
   $rootScope.mapCenter = null;
   if (window.localStorage.getItem('lat') != null && !isNaN(window.localStorage.getItem('lat'))) {
     $rootScope.mapCenter = new google.maps.LatLng(window.localStorage.getItem('lat'), window.localStorage.getItem('long'));

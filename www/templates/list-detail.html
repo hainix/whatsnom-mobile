@@ -50,10 +50,13 @@
   	  <div 
 	      class="lists-detail-container list-with-entries">
         <ion-item
-		      ng-repeat="entry in list.entries | orderBy:position" 
+		      collection-repeat="entry in list.entries" 
+          item-height="120px"
+          item-width="100%"
 		      type="item-text-wrap" 
 		      ng-attr-href="{{currentStateName == 'tab.saved-list-detail' ?  '#/tab/saved/' + list.id + '/' + entry.id  : '#/tab/lists/' + list.id + '/' + entry.id }}">
           <div 
+            ng-if="entry.list_item_thumbnail"
             class="list-detail-row animated-in" 
   		      style="background: url({{entry.list_item_thumbnail}}); background-position: center; background-size: cover;">
   		      <div 

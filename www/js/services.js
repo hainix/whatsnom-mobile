@@ -29,7 +29,7 @@ angular.module('starter.services', [])
   		}
 
   		$http.jsonp(
-  		  'http://www.whatsnom.com/api/1.0/combined.php?'
+  		  'http://www.whatsnom.com/api/1.1/combined.php?'
         +'uid='+ window.localStorage.getItem('fbuid') 
         +'&city_id=' + window.localStorage.getItem('selectedcity')
         +'&format=json&callback=JSON_CALLBACK'
@@ -38,6 +38,7 @@ angular.module('starter.services', [])
   		  window.localStorage.setItem('most_recent_fetch', unix_now);
         //console.log(data);
   	  	$rootScope.lists = data.lists;
+  	  	$rootScope.listsWithHeaders = data.lists_with_headers;
         $rootScope.supportedCities = data.cities;
   		}).error(function (data, status, headers, config) {
   	    console.log(status);
@@ -48,18 +49,23 @@ angular.module('starter.services', [])
   	  //console.log('DEBUG: Running loadThisListToRootScope for listId: ', listId);
 
   	  if ($rootScope.lists) {
-  		  angular.forEach($rootScope.lists, function(value, key) {
-  			  if (listId in value['items']) {
+  		  angular.forEach($rootScope.lists, function(genreListArray, _j) {
+    		  angular.forEach(genreListArray['items'], function(genreList, _k) {
+  			  if (genreList.id == listId) {
   				  console.log('DEBUG: Set list to $rootScope from $rootScope.lists for id: ', listId);
-  				  $rootScope.list = value['items'][listId];
+  				  $rootScope.list = genreList;
   			    $rootScope.addLocationToList($rootScope.list);
   				  return;
   			  }
   		  });
   		  if ($rootScope.list) {
+          return;
+        }
+      });
+  		  if ($rootScope.list) {
   			  return true;
   		  } else {
-  	  		console.log('ERROR: $rootScope.lists was set, but unable to find list with id: ', listId);
+  	  		console.log('ERROR: $rootScope.lists was set, but unable to find list with id: ', listId, 'rootscope.lists:', $rootScope.lists);
   		  }
   	  }
   	  // Usually when debugging
