@@ -10,7 +10,7 @@
     </select>
   </ion-nav-buttons>
   <ion-content>
-    <div class="center scroll" ng-hide="lists">
+    <div class="center scroll" ng-hide="listsWithHeaders">
       <div class="row">
         <div class="col center spinner-container">
 		      <ion-spinner class="spinner-royal" icon="ripple"></ion-spinner>
@@ -18,28 +18,25 @@
 	    </div>
     </div>
     <ion-refresher 
-      ng-hide="!lists" 
+      ng-hide="!listsWithHeaders" 
       pulling-text="Pull to refresh" 
       on-refresh="pullToRefreshLists()">
     </ion-refresher>
     <ion-list 
-      ng-hide="!lists" 
-      ng-repeat="genreList in lists">
-      <ion-item 
-        class="item-divider"  
-        style="margin-top: 4px;">
-        {{genreList.name}}
-      </ion-item>	
-	    <div class="lists-detail-container">
+      ng-hide="!listsWithHeaders" 
+      class="lists-detail-container">
+      <div 
+        collection-repeat="item in listsWithHeaders"
+        divider-collection-repeat>
         <ion-item 
-		      ng-repeat="genreListItem in genreList.items" 
-          href="#/tab/lists/{{genreListItem.id}}">
+          href="#/tab/lists/{{item.id}}">
           <div 
             class="list-detail-row animated-in" 
-            style="background: url({{genreListItem.cover}}); background-position: center; background-size: cover; ">
+            ng-show="item.cover"
+            style="background: url({{item.cover}}); background-position: center; background-size: cover; ">
 	          <div class="list-detail-row-overlay">
-		          <h2>{{genreListItem.name}}</h2>
-		          <p>{{genreListItem.snippet}}</p>
+		          <h2>{{item.name}}</h2>
+		          <p>{{item.snippet}}</p>
 	          </div>
 	        </div>
         </ion-item>
