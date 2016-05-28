@@ -138,7 +138,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
   
   $rootScope.selectedEntry = null;
   $scope.selectMapEntry = function(entry, marker, map) {
-    var list_item_height = 121; // this could change from scss file
+    var list_item_height = 120; // this could change from scss file
     $rootScope.selectedEntry = entry;
     $ionicScrollDelegate.scrollTo(
       0, 
@@ -232,7 +232,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 		  	msg += ' http://m.yelp.com/biz/'+$scope.place.yelp_id;
 		  }
 		  
-		  msg += ' (via Spots)';
+		  msg += ' (via WhatsNom)';
 
 		  $cordovaSocialSharing
 		    .share(msg) // Share via native share sheet
