@@ -138,7 +138,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
   
   $rootScope.selectedEntry = null;
   $scope.selectMapEntry = function(entry, marker, map) {
-    var list_item_height = 120; // this could change from scss file
+    var list_item_height = 150; // this could change from scss file
     $rootScope.selectedEntry = entry;
     $ionicScrollDelegate.scrollTo(
       0, 
@@ -285,11 +285,11 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 
 	    $scope.displayParams = {};
 	
-		// To open external URL using inappbrowser
-		$scope.openExternalURL = function(ext_url) {
-		    window.open(ext_url, "_blank", "location=yes");
-			return false;
-		};
+  		// To open external URL using inappbrowser
+  		$scope.openExternalURL = function(ext_url) {
+  		    window.open(ext_url, "_blank", "location=yes");
+  			return false;
+  		};
 	
 	    // Snippet
 	    $scope.displayParams.snippet = $scope.listEntryForPlace.snippet;

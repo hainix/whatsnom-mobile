@@ -22,11 +22,15 @@ $royal: $accent-color !default;
 $positive: $accent-color !default;
 $bar-title-font-size:  17px !default;
 $bar-subheader-height: 227px !default;
-$list-row-height:  120px;
+$list-row-height:  150px;
 
 
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
+
+@import url(http://fonts.googleapis.com/css?family=Oxygen);
+$font-family-base: "Oxygen", sans-serif !default;
+
 
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
@@ -184,11 +188,12 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 .lists-detail-container h2 {
 	font-weight:300;
 	text-align:left;
-	padding-top: 36px;
-	font-size:24px;
+	padding-top: 82px;
+	font-size: 22px;
 	color:rgba(255,255,255,1); 
 	text-shadow: 2px 1px rgba(0,0,0,0.8);
-	overflow-y: visible;
+  line-height: 29px;
+  
 }
 
 .lists-detail-container p {
@@ -201,7 +206,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 .lists-detail-container .list-detail-row { 
 	height: $list-row-height; 
 	width: 100%; 
-	box-shadow:inset 1px 1px 40px 0 rgba(0,0,0,0.4); 
+	_box-shadow:inset 1px 1px 40px 0 rgba(0,0,0,0.4); 
 }
 
 .lists-detail-container .list-detail-row .list-entry-position {
@@ -236,12 +241,24 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 	margin-left: 8px;
 }
 
+.lists-detail-container .list-detail-row .list-entry-position h2.entry-rank {
+  padding-top: 56px;
+  padding-left: 2px;
+}
+
 .lists-detail-container .list-detail-row .list-detail-row-overlay {
-	background:rgba(0,0,0,.55);
-	opacity:1; 
+  background: -moz-linear-gradient(top,  rgba(0,0,0,0) 0%, rgba(0,0,0,0) 20%, rgba(0,0,0,0.73) 66%, rgba(0,0,0,0.73) 100%);
+  background: -webkit-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0) 20%,rgba(0,0,0,0.73) 66%,rgba(0,0,0,0.73) 100%);
+  background: linear-gradient(to bottom,  rgba(0,0,0,0) 0%,rgba(0,0,0,0) 20%,rgba(0,0,0,0.73) 66%,rgba(0,0,0,0.73) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#ba000000',GradientType=0 );
 	height: 100%; 
 	border-bottom: 1px solid #fff; 
 	padding-left: 30px;
+}
+
+.lists-detail-container .list-detail-row .list-detail-row-overlay i.icon {
+  margin-left: 3px;
+  margin-right: -1px;
 }
 
 .lists-detail-container .list-detail-row .list-detail-row-overlay .distance-from-me {
@@ -268,7 +285,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 .place-detail-container .lists-detail-container h2 {
 	text-align: center;
-	font-size: 28px;
+	font-size: 24px;
 	padding: 30px 6px 0 6px;
 	margin-bottom: 0;
 }

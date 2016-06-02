@@ -51,7 +51,7 @@
 	      class="lists-detail-container list-with-entries">
         <ion-item
 		      collection-repeat="entry in list.entries" 
-          item-height="120px"
+          item-height="150px"
           item-width="100%"
 		      type="item-text-wrap" 
 		      ng-attr-href="{{currentStateName == 'tab.saved-list-detail' ?  '#/tab/saved/' + list.id + '/' + entry.id  : '#/tab/lists/' + list.id + '/' + entry.id }}">
@@ -65,7 +65,7 @@
                 ? 'list-entry-position list-entry-position-selected' 
                 : 'list-entry-position'" 
               ng-if="entry.position">
-  				    <h2 ng-class="(entry.position > 9) ? 'smaller-text' : ''">
+  				    <h2 ng-class="(entry.position > 9) ? 'entry-rank smaller-text' : 'entry-rank'">
   				      {{entry.position}}
               </h2>
             </div>
@@ -79,14 +79,12 @@
     			      </span>
     			      <span
                   ng-if="entry.place && entry.place.neighborhoods">
+                  <i class="icon ion-ios-location"></i>
                   {{entry.place.neighborhoods}} 
                 </span>
     			      <span
-                  ng-if="entry.place && entry.place.neighborhoods && entry.place.categories">
-                 · 
-                </span>
-    			      <span
                   ng-if="entry.place && entry.place.categories">
+                  <i class="icon ion-flame"></i>
                   {{entry.place.categories}}
                 </span>
     			    </p>

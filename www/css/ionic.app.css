@@ -1,4 +1,5 @@
 @charset "UTF-8";
+@import url(http://fonts.googleapis.com/css?family=Oxygen);
 /*
 To customize the look and feel of Ionic, you can override the variables
 in ionic's _variables.scss file.
@@ -2566,7 +2567,7 @@ body, .ionic-body {
   color: #000;
   word-wrap: break-word;
   font-size: 14px;
-  font-family: "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
+  font-family: "Oxygen", sans-serif;
   line-height: 20px;
   text-rendering: optimizeLegibility;
   -webkit-backface-visibility: hidden;
@@ -2796,7 +2797,7 @@ cite {
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   color: #000;
   font-weight: 500;
-  font-family: "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
+  font-family: "Oxygen", sans-serif;
   line-height: 1.2; }
   h1 small, h2 small, h3 small, h4 small, h5 small, h6 small, .h1 small, .h2 small, .h3 small, .h4 small, .h5 small, .h6 small {
     font-weight: normal;
@@ -5666,7 +5667,7 @@ label, input, button, select, textarea {
   line-height: 1.42857; }
 
 input, button, select, textarea {
-  font-family: "Helvetica Neue", "Roboto", "Segoe UI", sans-serif; }
+  font-family: "Oxygen", sans-serif; }
 
 .item-input {
   display: -webkit-box;
@@ -7820,11 +7821,11 @@ a.button {
 .lists-detail-container h2 {
   font-weight: 300;
   text-align: left;
-  padding-top: 36px;
-  font-size: 24px;
+  padding-top: 82px;
+  font-size: 22px;
   color: white;
   text-shadow: 2px 1px rgba(0, 0, 0, 0.8);
-  overflow-y: visible; }
+  line-height: 29px; }
 
 .lists-detail-container p {
   font-weight: 200;
@@ -7833,9 +7834,9 @@ a.button {
   margin-top: -2px; }
 
 .lists-detail-container .list-detail-row {
-  height: 120px;
+  height: 150px;
   width: 100%;
-  box-shadow: inset 1px 1px 40px 0 rgba(0, 0, 0, 0.4); }
+  _box-shadow: inset 1px 1px 40px 0 rgba(0, 0, 0, 0.4); }
 
 .lists-detail-container .list-detail-row .list-entry-position {
   width: 40px;
@@ -7863,12 +7864,22 @@ a.button {
   font-size: 20px;
   margin-left: 8px; }
 
+.lists-detail-container .list-detail-row .list-entry-position h2.entry-rank {
+  padding-top: 56px;
+  padding-left: 2px; }
+
 .lists-detail-container .list-detail-row .list-detail-row-overlay {
-  background: rgba(0, 0, 0, 0.55);
-  opacity: 1;
+  background: -moz-linear-gradient(top, transparent 0%, transparent 20%, rgba(0, 0, 0, 0.73) 66%, rgba(0, 0, 0, 0.73) 100%);
+  background: -webkit-linear-gradient(top, transparent 0%, transparent 20%, rgba(0, 0, 0, 0.73) 66%, rgba(0, 0, 0, 0.73) 100%);
+  background: linear-gradient(to bottom, transparent 0%, transparent 20%, rgba(0, 0, 0, 0.73) 66%, rgba(0, 0, 0, 0.73) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#ba000000',GradientType=0 );
   height: 100%;
   border-bottom: 1px solid #fff;
   padding-left: 30px; }
+
+.lists-detail-container .list-detail-row .list-detail-row-overlay i.icon {
+  margin-left: 3px;
+  margin-right: -1px; }
 
 .lists-detail-container .list-detail-row .list-detail-row-overlay .distance-from-me {
   color: rgba(255, 255, 255, 0.9); }
@@ -7889,7 +7900,7 @@ a.button {
 
 .place-detail-container .lists-detail-container h2 {
   text-align: center;
-  font-size: 28px;
+  font-size: 24px;
   padding: 30px 6px 0 6px;
   margin-bottom: 0; }
 

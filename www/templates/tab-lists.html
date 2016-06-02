@@ -37,7 +37,11 @@
             style="background: url({{item.cover}}); background-position: center; background-size: cover; ">
 	          <div class="list-detail-row-overlay">
 		          <h2>{{item.name}}</h2>
-		          <p>{{item.snippet}}</p>
+		          <p>
+                <i class="icon ion-ios-location"></i> {{item.spot_count}}
+                <i class="icon ion-star"></i> {{item.review_count}} 
+                <i class="icon ion-android-list"></i> {{item.snippet}}
+              </p>
 	          </div>
 	        </div>
         </ion-item>

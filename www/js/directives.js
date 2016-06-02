@@ -8,7 +8,7 @@ angular.module('starter.Directives').directive('dividerCollectionRepeat', functi
 
     function compile (element, attr) {
 
-        var height = attr.itemHeight || '122';
+        var height = attr.itemHeight || '152';
         attr.$set('itemHeight', 'item.isDivider ? 37 : ' + height);
 
         element.children().attr('ng-hide', 'item.isDivider');
