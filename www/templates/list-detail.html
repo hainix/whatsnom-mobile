@@ -75,7 +75,8 @@
     	          <span 
     				      ng-if="entry.displayed_distance_from_me" 
     				      class="distance-from-me">
-    				      {{entry.displayed_distance_from_me}} mi · 
+                  <i class="icon ion-ios-navigate"></i>
+    				      {{entry.displayed_distance_from_me}} mi
     			      </span>
     			      <span
                   ng-if="entry.place && entry.place.neighborhoods">
@@ -84,7 +85,24 @@
                 </span>
     			      <span
                   ng-if="entry.place && entry.place.categories">
-                  <i class="icon ion-flame"></i>
+                  <i ng-class="
+                    (entry.icon == 'B') 
+                    ? 'icon ion-beer' 
+                    : ((entry.icon == 'M') 
+                      ? 'icon ion-headphone' 
+                      : ((entry.icon == 'A') 
+                        ? 'icon ion-easel' 
+                        : ((entry.icon == 'W') 
+                          ? 'icon ion-wineglass' 
+                          : ((entry.icon == 'C') 
+                            ? 'icon ion-android-bar' 
+                            : ((entry.icon == 'G') 
+                              ? 'icon ion-flag' 
+                              : ((entry.icon == 'S') 
+                                ? 'ion-ios-body' 
+                                : ((entry.icon == 'L') 
+                                  ? 'ion-leaf' 
+                                  : 'icon ion-spoon')))))))"></i>
                   {{entry.place.categories}}
                 </span>
     			    </p>
