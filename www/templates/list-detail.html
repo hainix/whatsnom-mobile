@@ -85,24 +85,7 @@
                 </span>
     			      <span
                   ng-if="entry.place && entry.place.categories">
-                  <i ng-class="
-                    (entry.icon == 'B') 
-                    ? 'icon ion-beer' 
-                    : ((entry.icon == 'M') 
-                      ? 'icon ion-headphone' 
-                      : ((entry.icon == 'A') 
-                        ? 'icon ion-easel' 
-                        : ((entry.icon == 'W') 
-                          ? 'icon ion-wineglass' 
-                          : ((entry.icon == 'C') 
-                            ? 'icon ion-android-bar' 
-                            : ((entry.icon == 'G') 
-                              ? 'icon ion-flag' 
-                              : ((entry.icon == 'S') 
-                                ? 'ion-ios-body' 
-                                : ((entry.icon == 'L') 
-                                  ? 'ion-leaf' 
-                                  : 'icon ion-spoon')))))))"></i>
+                  <i class="icon {{entry.icon}}"></i>
                   {{entry.place.categories}}
                 </span>
     			    </p>
