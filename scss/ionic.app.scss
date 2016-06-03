@@ -256,6 +256,16 @@ $font-family-base: "Oxygen", sans-serif !default;
 	padding-left: 30px;
 }
 
+.lists-detail-container .list-detail-row .list-detail-row-overlay .list-button-container {
+  float:right;
+  margin: 4px;
+}
+
+.lists-detail-container .list-detail-row .list-detail-row-overlay .list-button-container .button {
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+}
+
 .lists-detail-container .list-detail-row .list-detail-row-overlay i.icon {
   margin-left: 3px;
   margin-right: -1px;

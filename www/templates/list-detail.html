@@ -71,6 +71,17 @@
             </div>
             <!-- changes here must also be made in tab-saved.html -->
   		      <div class="list-detail-row-overlay">
+              <div class="list-button-container">
+                <a
+                  ng-click="saveEntry({{entry.id}})">
+                  <button class="button button-small button-clear icon ion-bookmark"></button>
+                </a>
+                <a
+          		    href="tel: {{entry.place.phone}}"
+                  ng-if="entry.place && entry.place.phone">
+                  <button class="button button-small button-clear icon ion-ios-telephone"></button>
+                </a>
+              </div>
               <h2>{{entry.name}}</h2>
     			    <p>
     	          <span 
@@ -93,11 +104,6 @@
   		      </div>
             <!-- End copypasta section -->
   		    </div>
-          <ion-option-button 
-      		  class="button-light" 
-    		    ng-click="saveEntry(entry.id)">
-            Save
-          </ion-option-button>
   	    </ion-item>
       </div>
     </ion-list>

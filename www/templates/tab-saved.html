@@ -41,6 +41,14 @@
 				      </div>
               <!-- changes here must also be made in list-detail.html -->
     		      <div class="list-detail-row-overlay">
+                <div class="list-button-container">
+                  <a
+            		    href="tel: {{entry.place.phone}}"
+                    ng-if="entry.place && entry.place.phone">
+                    <button class="button button-small button-clear icon ion-ios-telephone"></button>
+                  </a>
+                </div>
+                
                 <h2>{{entry.name}}</h2>
       			    <p>
       	          <span 
