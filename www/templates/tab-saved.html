@@ -39,28 +39,29 @@
 					        {{entry.position}}
 				        </h2>
 				      </div>
-			        <div class="list-detail-row-overlay">
-			          <h2>{{entry.name}}</h2>
-				        <p>
-    	          <span 
-    				      ng-if="entry.displayed_distance_from_me" 
-    				      class="distance-from-me">
-    				      {{entry.displayed_distance_from_me}} mi · 
-    			      </span>
-    			      <span
-                  ng-if="entry.place && entry.place.neighborhoods">
-                  {{entry.place.neighborhoods}} 
-                </span>
-    			      <span
-                  ng-if="entry.place && entry.place.neighborhoods && entry.place.categories">
-                 · 
-                </span>
-    			      <span
-                  ng-if="entry.place && entry.place.categories">
-                  {{entry.place.categories}}
-                </span>
-				        </p>
-			        </div>
+              <!-- changes here must also be made in list-detail.html -->
+    		      <div class="list-detail-row-overlay">
+                <h2>{{entry.name}}</h2>
+      			    <p>
+      	          <span 
+      				      ng-if="entry.displayed_distance_from_me" 
+      				      class="distance-from-me">
+                    <i class="icon ion-ios-navigate"></i>
+      				      {{entry.displayed_distance_from_me}} mi
+      			      </span>
+      			      <span
+                    ng-if="entry.place && entry.place.neighborhoods">
+                    <i class="icon ion-ios-location"></i>
+                    {{entry.place.neighborhoods}} 
+                  </span>
+      			      <span
+                    ng-if="entry.place && entry.place.categories">
+                    <i class="icon {{entry.icon}}"></i>
+                    {{entry.place.categories}}
+                  </span>
+      			    </p>
+    		      </div>
+              <!-- End copypasta section -->
 			      </div>
 	          <ion-option-button 
 	  		      class="button-assertive" 
