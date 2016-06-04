@@ -315,7 +315,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 
 })
 
-.controller('SavedCtrl', function($scope,  $rootScope, ngFB, Lists, $http, $ionicListDelegate, $ionicLoading) {
+.controller('SavedCtrl', function($scope,  $rootScope, ngFB, Lists, $http, $ionicListDelegate, $ionicLoading, $state, $ionicHistory) {
 	Lists.loadBookmarksToRootScope();
 	
 	$scope.pullToRefreshBookmarks = function () {
@@ -377,34 +377,36 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 		}
 	}
 	$scope.fbLogin = function () {
-	    ngFB.login({scope: ''}).then(
-	        function (response) {
-	            if (response.status === 'connected') {
-	                //console.log('Facebook login succeeded');
-					$scope.hideFBLoginButton = true;
-				    ngFB.api({
-				         path: '/me',
-				         params: {fields: 'id,first_name'}
-				     }).then(
-				         function (user) {
-							 if (user) {
-								 window.localStorage.setItem('fbuid', user.id);
-								 window.localStorage.setItem('fbname', user.first_name);
-								 $scope.logout_posttext = ' ('+ window.localStorage.getItem('fbname') +')';
- 			 					 Lists.loadBookmarksToRootScope();
-								 return false;							 
-							 }
-				         },
-				         function (error) {
-				             alert('Facebook error: ' + error.error_description);
-				         }
-					 );
-					 return false;
-	            } else {
-	                alert('Facebook login failed');
-	            }
-	        });
-	};
+    ngFB.login({scope: ''}).then(
+	    function (response) {
+	      if (response.status === 'connected') {
+	        //console.log('Facebook login succeeded');
+          $scope.hideFBLoginButton = true;
+			    ngFB.api({
+			      path: '/me',
+			      params: {fields: 'id,first_name'}
+			    }).then(
+			      function (user) {
+						  if (user) {
+							  window.localStorage.setItem('fbuid', user.id);
+							  window.localStorage.setItem('fbname', user.first_name);
+							  $scope.logout_posttext = ' ('+ window.localStorage.getItem('fbname') +')';
+		 					  Lists.loadBookmarksToRootScope();
+							  return false;							 
+						  }
+			      },
+			      function (error) {
+			        alert('Facebook error: ' + error.error_description);
+			      }
+				 );
+				 return false;
+	     } else {
+	       alert('Facebook login failed');
+	     }
+	   }
+   );
+  };
+  
 	$scope.fbLogout = function () {
 	  ngFB.logout().then(
 	    function (response) {
@@ -413,6 +415,10 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 				window.localStorage.removeItem('fbname');
   	    $rootScope.bookmarks = null;
 	  	  $rootScope.bookmarkCount = null;
+        $ionicHistory.nextViewOptions({
+          disableBack: true
+        });
+        $state.go('tab.lists');         
 				return false;
 	    });
 	};
