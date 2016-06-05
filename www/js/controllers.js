@@ -159,6 +159,13 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
   
 	// END Map Config
   
+  
+	// To open external URL using inappbrowser
+	$scope.openExternalURL = function(ext_url) {
+	    window.open(ext_url, "_blank", "location=yes");
+		return false;
+	};
+  
 	$scope.saveEntry = function (entryID) {
 		if (window.localStorage.getItem('fbuid') != null && !isNaN(window.localStorage.getItem('fbuid'))) {
 			$http.jsonp(

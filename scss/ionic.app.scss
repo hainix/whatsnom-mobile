@@ -266,6 +266,15 @@ $font-family-base: "Oxygen", sans-serif !default;
   color: white;
 }
 
+.lists-detail-container .list-detail-row .list-detail-row-overlay .list-button-container .button-small.icon:before {
+  font-size: 20px;
+  margin-top: 3px;
+}
+.lists-detail-container .list-detail-row .list-detail-row-overlay .list-button-container .button-small.ion-ios-bookmarks:before {
+  margin-top: 4px;
+}
+
+
 .lists-detail-container .list-detail-row .list-detail-row-overlay i.icon {
   margin-left: 3px;
   margin-right: -1px;
