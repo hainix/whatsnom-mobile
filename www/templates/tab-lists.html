@@ -32,7 +32,8 @@
         <ion-item 
           href="#/tab/lists/{{item.id}}">
           <div 
-            class="list-detail-row animated-in" 
+            class="list-detail-row animated-in"
+            ng-if="item.cover"
             ng-show="item.cover"
             style="background: url({{item.cover}}); background-position: center; background-size: cover; ">
 	          <div class="list-detail-row-overlay">

@@ -73,6 +73,17 @@
   		      <div class="list-detail-row-overlay">
               <div class="list-button-container">
                 <a
+        	        ng-if="entry.place.opentable_id"
+        		      ng-click="openExternalURL('http://mobile.opentable.com/opentable/?restId={{entry.place.opentable_id}}')">              
+                    <button class="button button-small button-clear icon ion-ios-bookmarks"></button>
+                </a>
+                <a
+        	        ng-if="(!entry.place.opentable_id && entry.place.yelp_seat_me)"
+        	        ng-click="openExternalURL('https://www.seatme.yelp.com/r/{{entry.place.yelp_seat_me}}')"
+                  <button class="button button-small button-clear icon ion-ios-bookmarks"></button>
+                </a>
+
+                <a
                   ng-click="saveEntry({{entry.id}})">
                   <button class="button button-small button-clear icon ion-bookmark"></button>
                 </a>
