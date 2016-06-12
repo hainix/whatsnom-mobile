@@ -21,7 +21,7 @@ Android Release Code:
 - jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore resources/key/my-release-key.keystore platforms/android/build/outputs/apk/android-release-unsigned.apk alias_name
 - enter passowrd for jarsigner
 - ~/Library/Android/sdk/build-tools/23.0.3/zipalign -v 4 platforms/android/build/outputs/apk/android-release-unsigned.apk platforms/android/build/outputs/apk/WhatsNom.apk
-- upload new version to google play store
+- upload new version to google play store https://play.google.com/apps/publish/?dev_acc=14410831066730830338#AppListPlace
 - update version number for next release in config.xml
 
 
