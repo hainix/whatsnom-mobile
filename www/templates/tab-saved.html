@@ -35,8 +35,8 @@
 	          <div class="list-detail-row" 
 			        style="background: url({{entry.list_item_thumbnail}}); background-position: center; background-size: cover;">
 			        <div class="list-entry-position" ng-if="entry.position" >
-				        <h2 ng-class="(entry.position > 9) ? 'smaller-text' : ''">
-					        {{entry.position}}
+  				      <h2 ng-class="(entry.position > 9) ? 'entry-rank smaller-text' : 'entry-rank'">
+                  {{entry.position}}
 				        </h2>
 				      </div>
               <!-- changes here must also be made in list-detail.html -->

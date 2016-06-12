@@ -346,7 +346,13 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 			console.log("ERROR: unrecognized filter type: ", $scope.filterTypeIcon);
 		}	
 	}	
-	
+  
+	// To open external URL using inappbrowser
+	$scope.openExternalURL = function(ext_url) {
+	    window.open(ext_url, "_blank", "location=yes");
+		return false;
+	};
+  
 	$scope.removeEntry = function (entryID) {
 		if (window.localStorage.getItem('fbuid') != null && !isNaN(window.localStorage.getItem('fbuid'))) {
 			$http.jsonp(
