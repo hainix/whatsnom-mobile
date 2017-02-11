@@ -26,15 +26,15 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 			  if (list.entries[key]['displayed_distance_from_me']) {
 				  return list;
 			  }
-			  if (value.place.latitude && !isNaN(value.place.latitude)) {				
-			  	list.entries[key]['distance_from_me'] = 
+			  if (value.place.latitude && !isNaN(value.place.latitude)) {
+			  	list.entries[key]['distance_from_me'] =
 				  getDistanceFromLatLonInMiles(
-					  window.localStorage.getItem('lat'), 
-					  window.localStorage.getItem('long'), 
-					  value.place.latitude, 
+					  window.localStorage.getItem('lat'),
+					  window.localStorage.getItem('long'),
+					  value.place.latitude,
 					  value.place.longitude
 				  );
-				  list.entries[key]['displayed_distance_from_me'] = 
+				  list.entries[key]['displayed_distance_from_me'] =
 				  	parseFloat(Math.round(list.entries[key]['distance_from_me'] * 100) / 100).toFixed(2);
 		  	} else {
 			    list.entries[key]['distance_from_me'] = null;
@@ -43,25 +43,25 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 		  //console.log('DEBUG: amended list with location', window.localStorage.getItem('lat'), window.localStorage.getItem('long'));
 		  return list;
 	  } else {
-      $rootScope.refreshCurrentLocation();	  		
+      $rootScope.refreshCurrentLocation();
 	  }
-  }  
+  }
 })
 
-.controller('ListsCtrl', function($scope, Lists, $rootScope, $ionicPlatform) {	
+.controller('ListsCtrl', function($scope, Lists, $rootScope, $ionicPlatform) {
   $scope.$on('$ionicView.enter', function() {
 	  Lists.loadListsToRootScope();
-  });	
-  
+  });
+
 	$scope.pullToRefreshLists = function () {
 		Lists.loadListsToRootScope(true);
 	  $scope.$broadcast('scroll.refreshComplete');
 	  $scope.$apply();
 	};
-  
-  
+
+
 	$scope.setupCitySelector = function () {
-  	if (window.localStorage.getItem('selectedcity') != null 
+  	if (window.localStorage.getItem('selectedcity') != null
       && !isNaN(window.localStorage.getItem('selectedcity'))) {
       $scope.selectedCity = parseInt(window.localStorage.getItem('selectedcity'));
     } else {
@@ -72,27 +72,27 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 	$scope.updateSelectedCity = function (currentCity) {
     window.localStorage.setItem('selectedcity', parseInt(currentCity));
     $rootScope.lists = null;
-	  Lists.loadListsToRootScope(true);    
+	  Lists.loadListsToRootScope(true);
   };
   $ionicPlatform.ready(function() {
 	  Lists.loadBookmarksToRootScope();
-	  Lists.loadListsToRootScope(true); 
+	  Lists.loadListsToRootScope(true);
   });
 })
 
-.controller('ListDetailCtrl', 
+.controller('ListDetailCtrl',
     function(
       $scope,
-      $stateParams, 
-      Lists, 
-      $rootScope, 
-      $cordovaGeolocation, 
-      $ionicHistory, 
-      $ionicPopup, 
-      $state, 
-      $http, 
-      $ionicListDelegate, 
-      $ionicLoading, 
+      $stateParams,
+      Lists,
+      $rootScope,
+      $cordovaGeolocation,
+      $ionicHistory,
+      $ionicPopup,
+      $state,
+      $http,
+      $ionicListDelegate,
+      $ionicLoading,
       $ionicSideMenuDelegate,
       $ionicScrollDelegate
     ) {
@@ -100,11 +100,11 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 	$rootScope.refreshCurrentLocation();
 	Lists.loadThisListToRootScope($stateParams.listId);
 
-  // START Map config  
+  // START Map config
   $rootScope.mapCenter = null;
   if (window.localStorage.getItem('lat') != null && !isNaN(window.localStorage.getItem('lat'))) {
     $rootScope.mapCenter = new google.maps.LatLng(window.localStorage.getItem('lat'), window.localStorage.getItem('long'));
-  	$scope.currentLocation = 
+  	$scope.currentLocation =
     [{
       latitude: window.localStorage.getItem('lat'),
       longitude: window.localStorage.getItem('long'),
@@ -121,7 +121,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
     });
   }
 
-  $ionicSideMenuDelegate.canDragContent(false);      
+  $ionicSideMenuDelegate.canDragContent(false);
   $scope.mapOptions = {
     map: {
       center: $rootScope.mapCenter,
@@ -130,19 +130,19 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
       mapTypeControl: false
     },
   };
-    
+
   $scope.getPinImage = function(entry, selected) {
     var pin_color = selected ? 'purple-selected': 'grey';
     return 'http://www.whatsnom.com/icondir/pin-'+pin_color+'.png';
-  };  
-  
+  };
+
   $rootScope.selectedEntry = null;
   $scope.selectMapEntry = function(entry, marker, map) {
     var list_item_height = 150; // this could change from scss file
     $rootScope.selectedEntry = entry;
     $ionicScrollDelegate.scrollTo(
-      0, 
-      list_item_height * ($rootScope.selectedEntry.position - 1), 
+      0,
+      list_item_height * ($rootScope.selectedEntry.position - 1),
       true
     );
 
@@ -151,21 +151,21 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
         {icon: $scope.getPinImage($scope.prev_selected_entry, false)}
       );
     }
-    
+
     $scope.prev_selected_marker = marker;
     $scope.prev_selected_entry = entry;
     marker.setOptions({icon: $scope.getPinImage(entry, true)});
   };
-  
+
 	// END Map Config
-  
-  
+
+
 	// To open external URL using inappbrowser
 	$scope.openExternalURL = function(ext_url) {
-	    window.open(ext_url, "_blank", "location=yes");
+	  window.open(ext_url, "_blank", "location=yes");
 		return false;
 	};
-  
+
 	$scope.saveEntry = function (entryID) {
 		if (window.localStorage.getItem('fbuid') != null && !isNaN(window.localStorage.getItem('fbuid'))) {
 			$http.jsonp(
@@ -198,7 +198,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 		      }
 		    });
 		}
-	}	
+	}
 
 })
 
@@ -210,7 +210,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 	$scope.currentStateName = $ionicHistory.currentStateName();
 	$http.jsonp(
 	  'http://www.whatsnom.com/api/1.0/view_entry.php?entry_id=' + $stateParams.entryId
-	  +'&uid='+window.localStorage.getItem('fbuid') 
+	  +'&uid='+window.localStorage.getItem('fbuid')
 	  +'&format=json&callback=JSON_CALLBACK'
 	).success(function (data) {
 		//console.log('DEBUG: Fetched Entry Data: ',data);
@@ -218,17 +218,17 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 		$scope.place = data.place;
 		$scope.listPlaceWasViewedFrom = data.list;
 		$scope.listEntryForPlace = data.entry;
-		
+
 		// TODO: get initial value from 'bookmarks for user' query and set the text correctly here
-		if (window.localStorage.getItem('fbuid') !== null 
+		if (window.localStorage.getItem('fbuid') !== null
 		    && !isNaN(window.localStorage.getItem('fbuid')) && $scope.bookmark != null) {
 			//$scope.saveEntryActionText = 'Remove';
-			$scope.saveEntryActionIconClass = 'saved-bookmark-icon'; 
+			$scope.saveEntryActionIconClass = 'saved-bookmark-icon';
 		} else {
-			//$scope.saveEntryActionText = 'Save'; 
-			$scope.saveEntryActionIconClass = 'not-saved-bookmark-icon'; 
+			//$scope.saveEntryActionText = 'Save';
+			$scope.saveEntryActionIconClass = 'not-saved-bookmark-icon';
 		}
-		
+
 		$scope.shareEntry = function (target_id) {
 		  var msg = '';
 		  msg +=  $scope.place.name;
@@ -238,7 +238,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 		  if ($scope.place.yelp_id) {
 		  	msg += ' http://m.yelp.com/biz/'+$scope.place.yelp_id;
 		  }
-		  
+
 		  msg += ' (via WhatsNom)';
 
 		  $cordovaSocialSharing
@@ -247,9 +247,9 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 				// Success
 		    }, function(err) {
 				// Share error
-		    });			
+		    });
 		};
-		
+
 		$scope.saveEntry = function (target_id) {
 			if (window.localStorage.getItem('fbuid') === null || isNaN(window.localStorage.getItem('fbuid'))) {
 			    var confirmPopup = $ionicPopup.confirm({
@@ -273,11 +273,11 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 				//console.log('DEBUG: bookmark response: ', data);
 				if (data == 'removed') {
 					$ionicLoading.show({ template: 'Removed Bookmark', noBackdrop: true, duration: 600 });
-					$scope.saveEntryActionIconClass = 'not-saved-bookmark-icon'; 
+					$scope.saveEntryActionIconClass = 'not-saved-bookmark-icon';
 				} else if (data == 'added') {
 					$ionicLoading.show({ template: 'Saved Bookmark', noBackdrop: true, duration: 600 });
-					$scope.saveEntryActionIconClass = 'saved-bookmark-icon'; 
-					
+					$scope.saveEntryActionIconClass = 'saved-bookmark-icon';
+
 				} else {
 					//console.log('ERROR: unrecognized response from api adder from uid ' + window.localStorage.getItem('fbuid') + ' to target_id '+ $scope.place.id + ': '+data);
 				}
@@ -291,13 +291,13 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 		};
 
 	    $scope.displayParams = {};
-	
+
   		// To open external URL using inappbrowser
   		$scope.openExternalURL = function(ext_url) {
-  		    window.open(ext_url, "_blank", "location=yes");
+  		  window.open(ext_url, "_blank", "location=yes");
   			return false;
   		};
-	
+
 	    // Snippet
 	    $scope.displayParams.snippet = $scope.listEntryForPlace.snippet;
 
@@ -312,7 +312,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 	    // Place Render
 	    $scope.displayParams.displayableNeighborhood = $scope.place.neighborhoods;
 	    $scope.displayParams.displayableAddress = $scope.place.address;
-		
+
 		deferred_outer.resolve(data);
 	}).error(function (data, status, headers, config) {
       console.log(status);
@@ -324,35 +324,35 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 
 .controller('SavedCtrl', function($scope,  $rootScope, ngFB, Lists, $http, $ionicListDelegate, $ionicLoading, $state, $ionicHistory) {
 	Lists.loadBookmarksToRootScope();
-	
+
 	$scope.pullToRefreshBookmarks = function () {
 		Lists.loadBookmarksToRootScope();
 	    $scope.$broadcast('scroll.refreshComplete');
 	    $scope.$apply();
 	}
 
-	$scope.filterTypeIcon = 'ion-navigate';	
+	$scope.filterTypeIcon = 'ion-navigate';
 	$scope.listOrderField = 'position';
 	$scope.toggleFilter = function () {
 		if ($scope.filterTypeIcon == 'ion-navigate') {
 			$ionicLoading.show({ template: 'Sorted by Distance', noBackdrop: true, duration: 600 });
-			$scope.filterTypeIcon = 'ion-connection-bars';	
+			$scope.filterTypeIcon = 'ion-connection-bars';
 			$scope.listOrderField = 'distance_from_me';
 		} else if ($scope.filterTypeIcon == 'ion-connection-bars') {
-			$ionicLoading.show({ template: 'Sorted by Rank', noBackdrop: true, duration: 600 });			
-			$scope.filterTypeIcon = 'ion-navigate';	
+			$ionicLoading.show({ template: 'Sorted by Rank', noBackdrop: true, duration: 600 });
+			$scope.filterTypeIcon = 'ion-navigate';
 			$scope.listOrderField = 'position';
 		} else {
 			console.log("ERROR: unrecognized filter type: ", $scope.filterTypeIcon);
-		}	
-	}	
-  
+		}
+	}
+
 	// To open external URL using inappbrowser
 	$scope.openExternalURL = function(ext_url) {
 	    window.open(ext_url, "_blank", "location=yes");
 		return false;
 	};
-  
+
 	$scope.removeEntry = function (entryID) {
 		if (window.localStorage.getItem('fbuid') != null && !isNaN(window.localStorage.getItem('fbuid'))) {
 			$http.jsonp(
@@ -373,13 +373,13 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 		} else {
       //console.log('Error: tried to remove entry without being logged in');
 		}
-	}	
-	
+	}
+
   $scope.hideLocationFilter = true;
   if (window.localStorage.getItem('lat') != null && !isNaN(window.localStorage.getItem('lat'))) {
     $scope.hideLocationFilter = false;
 	}
-  
+
 	// User has logged in before, and not logged out
 	$scope.logout_posttext = '';
 	$scope.hideFBLoginButton = false;
@@ -405,7 +405,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 							  window.localStorage.setItem('fbname', user.first_name);
 							  $scope.logout_posttext = ' ('+ window.localStorage.getItem('fbname') +')';
 		 					  Lists.loadBookmarksToRootScope();
-							  return false;							 
+							  return false;
 						  }
 			      },
 			      function (error) {
@@ -419,7 +419,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
 	   }
    );
   };
-  
+
 	$scope.fbLogout = function () {
 	  ngFB.logout().then(
 	    function (response) {
@@ -431,9 +431,9 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB'])
         $ionicHistory.nextViewOptions({
           disableBack: true
         });
-        $state.go('tab.lists');         
+        $state.go('tab.lists');
 				return false;
 	    });
 	};
-		
+
 });
