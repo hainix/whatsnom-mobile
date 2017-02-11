@@ -3,10 +3,21 @@
 Mobile code, built on the ionic platform (which publishes to iOS and Android)
 
 Setup:
-- Install Ionic: http://ionicframework.com/getting-started
+- Install Git (and optionally Git Desktop), if you haven't already
+- Install Ionic: http://ionicframework.com/getting-started (will ask you to install node.js and XCode)
 - Pull repo as ionic library
 - pull whatsnom repo for server code, particularly the /api directory which serves all jsonp requests
 - follow http://ionicframework.com/docs/guide/testing.html to debug app (easiest is to test on http://localhost:8100/)
+
+For Setup, you'll likely have to install some dependencies + setup, including commands like:
+- sudo npm install -g cordova
+- sudo npm install -g ios-sim
+- sudo npm install -g cordova ionic
+- ionic plugin add cordova-plugin-inappbrowser
+- ionic platform add ios
+- ionic build ios
+- ionic emulate ios
+
 
 
 To rename:
